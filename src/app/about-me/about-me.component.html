@@ -1,0 +1,137 @@
+<!--====== ABOUT PART START ======-->
+
+<section id="about" class="about-area pt-125 pb-130">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="section-title text-center">
+          <h2 class="title">About Me</h2>
+          <p>.</p>
+        </div> <!-- section title -->
+      </div>
+    </div> <!-- row -->
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="about-content mt-50">
+          <h5 class="about-title">Hi There! I'm Mazharul Hossain</h5>
+          <p>This is my personal resume website. <span style="color: red;"><b> Under construction,</b> Feel free to look,
+                        just remember "not final".</span></p>
+          <ul class="clearfix">
+            <li>
+              <div class="single-info d-flex align-items-center">
+                <div class="info-icon">
+                  <i class="lni-calendar"></i>
+                </div>
+                <div class="info-text">
+                  <p><span>Job Status:</span> Interested for Summer 2021 Intern and Independent
+                    Projects</p>
+                </div>
+              </div> <!-- single info -->
+            </li>
+            <li>
+              <div class="single-info d-flex align-items-center">
+                <div class="info-icon">
+                  <i class="lni-envelope"></i>
+                </div>
+                <div class="info-text">
+                  <p><span>Email:</span> <a href="mailto:hossain.mazharul@gmail.com">hossain.mazharul@gmail.com</a>
+                  </p>
+                </div>
+              </div> <!-- single info -->
+            </li>
+          </ul>
+        </div> <!-- about content -->
+      </div>
+      <div class="col-xl-5 offset-xl-1 col-lg-6">
+        <div class="about-skills pt-25">
+
+          <div class="skill-item mt-25" *ngFor="let listing of about_skills">
+            <div class="skill-header">
+              <h6 class="skill-title">{{listing.name}}</h6>
+              <div class="skill-percentage">
+                <div class="count-box counted">
+                  <span class="counter" id="counter_{{listing.id}}">{{listing.performance}}</span>
+                </div>
+                %
+              </div>
+            </div>
+            <div class="skill-bar">
+              <div class="bar-inner">
+                <div data-width={{listing.performance}} class="bar progress-line" id="progress-line-{{listing.id}}"></div>
+              </div>
+            </div>
+          </div> <!-- skill item -->
+
+
+<!--          <div class="skill-item mt-25">-->
+<!--            <div class="skill-header">-->
+<!--              <h6 class="skill-title">Python</h6>-->
+<!--              <div class="skill-percentage">-->
+<!--                <div class="count-box counted">-->
+<!--                  <span class="counter">100</span>-->
+<!--                </div>-->
+<!--                %-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="skill-bar">-->
+<!--              <div class="bar-inner">-->
+<!--                <div class="bar progress-line" data-width="100"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+<!--          <div class="skill-item mt-25">-->
+<!--            <div class="skill-header">-->
+<!--              <h6 class="skill-title">Back End Development: PHP, DJANGO, ASP.NET</h6>-->
+<!--              <div class="skill-percentage">-->
+<!--                <div class="count-box counted">-->
+<!--                  <span class="counter">80</span>-->
+<!--                </div>-->
+<!--                %-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="skill-bar">-->
+<!--              <div class="bar-inner">-->
+<!--                <div class="bar progress-line" data-width="80"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+<!--          <div class="skill-item mt-25">-->
+<!--            <div class="skill-header">-->
+<!--              <h6 class="skill-title">Front End Development: HTML, CSS, JS</h6>-->
+<!--              <div class="skill-percentage">-->
+<!--                <div class="count-box counted">-->
+<!--                  <span class="counter">60</span>-->
+<!--                </div>-->
+<!--                %-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="skill-bar">-->
+<!--              <div class="bar-inner">-->
+<!--                <div class="bar progress-line" data-width="60"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+<!--          <div class="skill-item mt-25">-->
+<!--            <div class="skill-header">-->
+<!--              <h6 class="skill-title">TensorFlow</h6>-->
+<!--              <div class="skill-percentage">-->
+<!--                <div class="count-box counted">-->
+<!--                  <span class="counter">50</span>-->
+<!--                </div>-->
+<!--                %-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="skill-bar">-->
+<!--              <div class="bar-inner">-->
+<!--                <div class="bar progress-line" data-width="50"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+
+        </div> <!-- about skills -->
+      </div>
+    </div> <!-- row -->
+  </div> <!-- container -->
+</section>
+
+<!--====== ABOUT PART ENDS ======-->
