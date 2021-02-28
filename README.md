@@ -1,4 +1,4 @@
-# MyApp
+# My personal portfolio
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3b24fe33-de72-4b5d-8129-3b8005b34d4b/deploy-status)](https://app.netlify.com/sites/stoic-lamport-e2ed9d/deploys)
 
