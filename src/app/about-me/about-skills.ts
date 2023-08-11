@@ -4,21 +4,21 @@ export const aboutSkills: AboutSkill[] = [
   {
     id: '1',
     name: 'Python',
-    performance: '80',
+    performance: '100',
   },
   {
     id: '2',
+    name: 'TensorFlow',
+    performance: '90',
+  },
+  {
+    id: '3',
     name: 'Back End Development: PHP, DJANGO, ASP.NET',
     performance: '80',
   },
   {
-    id: '3',
+    id: '4',
     name: 'Front End Development: HTML, CSS, JS',
     performance: '60',
-  },
-  {
-    id: '4',
-    name: 'TensorFlow',
-    performance: '50',
   }
 ];
