@@ -40,7 +40,7 @@
               "./node_modules/jquery.appear/jquery.appear.js",
               "./node_modules/waypoints/lib/jquery.waypoints.js",
               "./node_modules/counterup2/dist/index.js",
-              "./node_modules/startbootstrap-scrolling-nav/js/scrolling-nav.js",
+              "./node_modules/startbootstrap-scrolling-nav/dist/js/scripts.js",
               "./node_modules/jquery.easing/jquery.easing.min.js",
               "src/assets/js/vendor/modernizr-3.6.0.min.js",
               "src/assets/js/parallax.min.js"
