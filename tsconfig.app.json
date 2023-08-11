@@ -7,7 +7,7 @@
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
-    "strictTemplates": true,
+    "strictTemplates": true
   },
   "files": [
     "src/main.ts",

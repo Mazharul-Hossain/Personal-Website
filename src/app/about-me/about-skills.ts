@@ -19,6 +19,6 @@ export const aboutSkills: AboutSkill[] = [
   {
     id: '4',
     name: 'Front End Development: HTML, CSS, JS',
-    performance: '60',
+    performance: '80',
   }
 ];
