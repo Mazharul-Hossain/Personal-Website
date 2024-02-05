@@ -44,8 +44,8 @@ export class ServicesComponent implements OnInit {
             const node = document.createElement('script');
             node.src = dynamicScripts[i];
             node.type = 'text/javascript';
-            node.async = false;
-            document.getElementsByTagName('head')[0].appendChild(node);
+            node.async = true;
+            document.getElementsByTagName('body')[0].appendChild(node);
         }
     }
 }
