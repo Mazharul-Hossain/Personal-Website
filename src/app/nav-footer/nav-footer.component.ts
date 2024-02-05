@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 
 @Component({
@@ -14,7 +14,7 @@ export class NavFooterComponent implements OnInit {
   ngOnInit(): void {
     // ===== Back to top
     // Show or hide the sticky footer button
-    $(window).on('scroll', function(event): void {
+    $(window).on('scroll', function (event): void {
       if ($(this).scrollTop() > 600) {
         $('.back-to-top').fadeIn(200);
       } else {
@@ -24,7 +24,7 @@ export class NavFooterComponent implements OnInit {
 
     // Animate the scroll to yop
     // tslint:disable-next-line:only-arrow-functions
-    $('.back-to-top').on('click', function(event): void {
+    $('.back-to-top').on('click', function (event): void {
       event.preventDefault();
 
       $('html, body').animate({

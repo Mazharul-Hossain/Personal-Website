@@ -1,3 +1,5 @@
+declare const require: any;
+
 import { Component, OnInit } from '@angular/core';
 declare var jQuery: any;
 
@@ -12,7 +14,7 @@ import 'magnific-popup';
 export class ServicesComponent implements OnInit {
 
     constructor() {
-        this.loadScripts();
+        // this.loadScripts();
     }
 
     ngOnInit(): void {
@@ -24,6 +26,12 @@ export class ServicesComponent implements OnInit {
             }
         });
     }
+
+    ngAfterViewInit() {
+        //We loading the script on after view is loaded
+        this.loadScripts();
+    }
+
     // Method to dynamically load JavaScript
     loadScripts() {
         // This array contains all the files/CDNs
