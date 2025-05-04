@@ -34,7 +34,8 @@
               "./node_modules/magnific-popup/dist/magnific-popup.css",
               "src/assets/css/LineIcons.css",
               "src/assets/css/default.css",
-              "src/assets/css/style.css"
+              "src/assets/css/style.css",
+              "src/assets/css/retainable.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
@@ -47,7 +48,8 @@
               "./node_modules/startbootstrap-scrolling-nav/dist/js/scripts.js",
               "./node_modules/jquery.easing/jquery.easing.min.js",
               "src/assets/js/vendor/modernizr-3.6.0.min.js",
-              "src/assets/js/parallax.min.js"
+              "src/assets/js/parallax.min.js",
+              "src/assets/js/retainable.js"
             ],
             "serviceWorker": "ngsw-config.json",
             "browser": "src/main.ts"
