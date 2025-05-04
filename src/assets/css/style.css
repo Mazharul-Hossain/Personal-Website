@@ -6,7 +6,7 @@
     Author: Uideck
     Author URI: https://uideck.com/
     Support: https://uideck.com/support/
-    Version: 1.0
+    Version: 1.1
 
 -----------------------------------------------------------------------------------
 
@@ -32,6 +32,10 @@
 ===========================*/
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800");
 
+/** anchor links - smooth scroll effect **/ 
+html {
+  scroll-behavior: smooth;
+}
 body {
   font-family: "Poppins", sans-serif;
   font-weight: normal;
@@ -557,7 +561,7 @@ p {
 }
 
 .navigation.sticky {
-  padding: 20px 0;
+  padding: 5px 0;
   -webkit-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;
   -ms-transition: all 0.3s ease-out 0s;

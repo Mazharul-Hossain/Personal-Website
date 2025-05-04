@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 @Component({
-  selector: 'app-nav-footer',
-  templateUrl: './nav-footer.component.html',
-  styleUrls: ['./nav-footer.component.css']
+    selector: 'app-nav-footer',
+    templateUrl: './nav-footer.component.html',
+    styleUrls: ['./nav-footer.component.css'],
+    standalone: false
 })
 export class NavFooterComponent implements OnInit {
 

@@ -3,12 +3,13 @@ import {Component, OnInit} from '@angular/core';
 declare var jQuery: any;
 declare var Parallax: any;
 
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.css']
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrls: ['./nav-bar.component.css'],
+    standalone: false
 })
 export class NavBarComponent implements OnInit {
 
@@ -51,7 +52,7 @@ export class NavBarComponent implements OnInit {
 
       scrollLink.each(function(): void {
 
-        const sectionOffset = $(this.hash).offset().top - 73;
+        const sectionOffset = $(this.hash).offset().top - 200;
 
         if (sectionOffset <= scrollbarLocation) {
           $(this).parent().addClass('active');

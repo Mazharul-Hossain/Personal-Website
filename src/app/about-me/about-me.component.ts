@@ -6,14 +6,15 @@ import { aboutSkills } from './about-skills';
 declare var jQuery: any;
 declare var Waypoint: any;
 
-import * as $ from 'jquery';
+import $ from 'jquery';
 import 'jquery.appear';
 import counterUp from 'counterup2';
 
 @Component({
-  selector: 'app-about-me',
-  templateUrl: './about-me.component.html',
-  styleUrls: ['./about-me.component.css']
+    selector: 'app-about-me',
+    templateUrl: './about-me.component.html',
+    styleUrls: ['./about-me.component.css'],
+    standalone: false
 })
 export class AboutMeComponent implements OnInit, AfterViewInit {
   // tslint:disable-next-line:variable-name

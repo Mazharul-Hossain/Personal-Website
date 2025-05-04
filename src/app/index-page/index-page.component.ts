@@ -1,12 +1,13 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 declare var Parallax: any;
 
 @Component({
-  selector: 'app-index-page',
-  templateUrl: './index-page.component.html',
-  styleUrls: ['./index-page.component.css']
+    selector: 'app-index-page',
+    templateUrl: './index-page.component.html',
+    styleUrls: ['./index-page.component.css'],
+    standalone: false
 })
 export class IndexPageComponent implements OnInit, AfterViewInit {
 
