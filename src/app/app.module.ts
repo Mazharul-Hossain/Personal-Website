@@ -3,6 +3,7 @@ import { NgModule, isDevMode } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { provideHttpClient } from  '@angular/common/http';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NavFooterComponent } from './nav-footer/nav-footer.component';
 import { ContactMeComponent } from './contact-me/contact-me.component';
@@ -29,9 +30,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
