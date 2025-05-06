@@ -19,7 +19,8 @@ export class ServicesComponent implements OnInit {
 
     // This service can now make HTTP requests via `this.http`.
     private http = inject(HttpClient); 
-    private url = 'https://medium.hmazharul.com/feed';
+    private proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    private rssUrl = "https://medium.com/feed/@hossain.mazharul";
 
     constructor() {}
 
@@ -38,7 +39,7 @@ export class ServicesComponent implements OnInit {
         this.loadScripts();
 
         // Fetch RSS feed
-        this.fetchRSSFeed(this.url).then(items => {
+        this.fetchRSSFeed(this.rssUrl).then(items => {
             this.populateRSSFeed(items);
         }).catch(error => {
             console.error('Error in ngAfterViewInit while fetching RSS feed:', error);
