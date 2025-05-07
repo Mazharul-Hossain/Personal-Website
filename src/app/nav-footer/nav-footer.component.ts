@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import $ from 'jquery';
 
 @Component({
@@ -7,31 +7,31 @@ import $ from 'jquery';
     styleUrls: ['./nav-footer.component.css'],
     standalone: false
 })
-export class NavFooterComponent implements OnInit {
+export class NavFooterComponent {
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  ngOnInit(): void {
-    // ===== Back to top
-    // Show or hide the sticky footer button
-    $(window).on('scroll', function (event): void {
-      if ($(this).scrollTop() > 600) {
-        $('.back-to-top').fadeIn(200);
-      } else {
-        $('.back-to-top').fadeOut(200);
-      }
-    });
+    ngAfterViewInit(): void {
+        // ===== Back to top
+        // Show or hide the sticky footer button
+        $(window).on('scroll', function (event): void {
+            if ($(this).scrollTop() > 600) {
+                $('.back-to-top').fadeIn(200);
+            } else {
+                $('.back-to-top').fadeOut(200);
+            }
+        });
 
-    // Animate the scroll to yop
-    // tslint:disable-next-line:only-arrow-functions
-    $('.back-to-top').on('click', function (event): void {
-      event.preventDefault();
+        // Animate the scroll to yop
+        // tslint:disable-next-line:only-arrow-functions
+        $('.back-to-top').on('click', function (event): void {
+            event.preventDefault();
 
-      $('html, body').animate({
-        scrollTop: 0,
-      }, 1500);
-    });
-  }
+            $('html, body').animate({
+                scrollTop: 0,
+            }, 1500);
+        });
+    }
 
 }

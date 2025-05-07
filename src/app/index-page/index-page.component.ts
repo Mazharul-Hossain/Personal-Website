@@ -15,13 +15,13 @@ export class IndexPageComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        $('.preloader').delay(200).fadeOut(500);
     }
 
     ngOnLoad(): void {
     }
 
     ngAfterViewInit(): void {
-        $('.preloader').delay(200).fadeOut(500);
 
         if ($('#parallax').length) {
             const scene = document.getElementById('parallax');

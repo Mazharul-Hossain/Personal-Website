@@ -1,9 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-
-declare var jQuery: any;
-declare var Parallax: any;
-
-import $ from 'jquery';
+import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-nav-bar',
@@ -11,54 +9,100 @@ import $ from 'jquery';
     styleUrls: ['./nav-bar.component.css'],
     standalone: false
 })
-export class NavBarComponent implements OnInit {
+export class NavBarComponent implements OnDestroy {
 
-  constructor() {
-  }
+    private pageScrollLinks = document.getElementsByClassName('page-scroll');
+    private activeRoute: string | null = null; // Track the active route
+    private routerSubscription: Subscription;
 
-  ngOnInit(): void {
-    // ===== Mobile Menu
-    $('.navbar-toggler').on('click', function(): void {
-      $(this).toggleClass('active');
-    });
+    constructor(private router: Router, private location: Location) {
+        this.routerSubscription = this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.activeRoute = event.urlAfterRedirects; // Update based on the current route
 
-    // tslint:disable-next-line:only-arrow-functions
-    $('.navbar-nav a').on('click', function(): void {
-      $('.navbar-toggler').removeClass('active');
-    });
+                const currentPath = this.location.path();
+                Array.from(this.pageScrollLinks).forEach((link: Element) => {
+                    const sectionId = (link as HTMLElement).dataset.customId;
+                    if (currentPath.endsWith(sectionId)) {
+                        link.parentElement.classList.add('active');
+                        this.removeActiveFromSiblings(link.parentElement);
+                    }
+                });
+            }
+        });
+    }
 
-    // ===== close navbar-collapse when a  clicked
-    // tslint:disable-next-line:only-arrow-functions
-    $('.navbar-nav a').on('click', function(): void {
-      $('.navbar-collapse').removeClass('show');
-    });
+    ngAfterViewInit(): void {
+        // ===== Mobile Menu
+        document.querySelector('.navbar-toggler')?.addEventListener('click', function (): void {
+            this.classList.toggle('active');
+        });
 
-    // ===== Sticky
-    // tslint:disable-next-line:only-arrow-functions
-    $(window).on('scroll', function(event): void {
-      const scroll = $(window).scrollTop();
-      if (scroll < 10) {
-        $('.navigation').removeClass('sticky');
-      } else {
-        $('.navigation').addClass('sticky');
-      }
-    });
+        document.querySelectorAll('.navbar-nav a').forEach(anchor => {
+            anchor.addEventListener('click', () => {
+                document.querySelector('.navbar-toggler')?.classList.remove('active');
+                document.querySelector('.navbar-collapse')?.classList.remove('show');
+            });
+        });
+    }
 
-    // ===== Section Menu Active
-    const scrollLink = $('.page-scroll');
-    // Active link switching
-    $(window).scroll(function(): void {
-      const scrollbarLocation = $(this).scrollTop();
-
-      scrollLink.each(function(): void {
-
-        const sectionOffset = $(this.hash).offset().top - 200;
-
-        if (sectionOffset <= scrollbarLocation) {
-          $(this).parent().addClass('active');
-          $(this).parent().siblings().removeClass('active');
+    ngOnDestroy(): void {
+        if (this.routerSubscription) {
+            this.routerSubscription.unsubscribe();
         }
-      });
-    });
-  }
+    }
+
+    @HostListener('window:scroll', [])
+    onWindowScroll(): void {
+        const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+
+        Array.from(this.pageScrollLinks).forEach((link: Element) => {
+            const sectionId = (link as HTMLElement).dataset.customId;
+            const section = document.getElementById(sectionId);
+
+            if (section) {
+                const sectionTop = section.getBoundingClientRect().top + window.scrollY - 200;
+                const sectionBottom = sectionTop + section.offsetHeight;
+
+                console.log(sectionTop, scrollPosition, sectionBottom)
+
+                if (sectionTop <= scrollPosition && scrollPosition <= sectionBottom) {
+                    link.parentElement.classList.add('active');
+                    this.removeActiveFromSiblings(link.parentElement);
+                }
+            }
+        });
+
+        const navigationElement = document.querySelector('.navigation');
+
+        if (navigationElement) {
+            if (scrollPosition < 10) {
+                navigationElement.classList.remove('sticky');
+            } else {
+                navigationElement.classList.add('sticky');
+            }
+        }
+    }
+
+    private removeActiveFromSiblings(activeElement: HTMLElement): void {
+        const siblings = Array.from(activeElement.parentElement?.children || []);
+        siblings.forEach((sibling: Element) => {
+            if (sibling !== activeElement) {
+                sibling.classList.remove('active');
+            }
+        });
+    }
+
+    navigateToSection(sectionId: string): void {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            // Scroll to the section if it exists on the current page
+            section.scrollIntoView({ behavior: 'smooth' });
+            // Update the URL with the section ID
+            this.location.replaceState(`#${sectionId}`);
+        } else {
+            // Navigate to the route if the section is not on the current page
+            this.router.navigate([`/${sectionId}`]);
+        }
+    }
 }
