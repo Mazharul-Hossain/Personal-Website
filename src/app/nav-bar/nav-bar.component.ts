@@ -97,9 +97,34 @@ export class NavBarComponent implements OnDestroy {
         const section = document.getElementById(sectionId);
         if (section) {
             // Scroll to the section if it exists on the current page
-            section.scrollIntoView({ behavior: 'smooth' });
+            // section.scrollIntoView({ behavior: 'smooth' });
+            
+            // Custom smooth scrolling
+            const targetPosition = section.getBoundingClientRect().top + window.scrollY;
+            const startPosition = window.scrollY;
+            const distance = targetPosition - startPosition;
+            const duration = 1000; // Duration in milliseconds
+            let startTime: number | null = null;
+
+            const scrollAnimation = (currentTime: number) => {
+                if (!startTime) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+                window.scrollTo(0, run);
+                if (timeElapsed < duration) requestAnimationFrame(scrollAnimation);
+            };
+
+            const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
+                t /= d / 2;
+                if (t < 1) return (c / 2) * t * t + b;
+                t--;
+                return (-c / 2) * (t * (t - 2) - 1) + b;
+            };
+
+            requestAnimationFrame(scrollAnimation);
+
             // Update the URL with the section ID
-            this.location.replaceState(`#${sectionId}`);
+            this.location.replaceState(`${sectionId}`);
         } else {
             // Navigate to the route if the section is not on the current page
             this.router.navigate([`/${sectionId}`]);
