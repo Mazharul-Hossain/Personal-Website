@@ -11,72 +11,60 @@
             </div>
         </div> <!-- row -->
 
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="single-work text-center mt-30">
-                    <div class="work-image">
-                        <picture>
-                            <source type="image/webp" srcset="assets/images/next_gen/work/w-1.webp" alt="work">
-                            <img loading="lazy" alt="work" src="assets/images/work/w-1.png">
-                        </picture>
-                    </div>
-                    <div class="work-overlay">
-                        <div class="work-content">
-                            <h3 class="work-title">Map901</h3>
-                            <p>Indoor LiDAR and Image Dataset | Indoor Object Detection using DNN</p>
-                            <ul>
-                                <li><a class="image-popup" href="assets/images/work/w-1.png">
-                                        <i class="lni-plus"></i></a></li>
-                                <li><a href="http://map901.memphis.edu/" target="_blank"
-                                        rel="nofollow noopener noreferrer">
-                                        <i class="lni-link"></i></a></li>
-                            </ul>
+        <div class="container-fluid">
+            <ng-template #cdkPopup let-imageSrc>
+                <div class="popup-container">
+                    <img [src]="imageSrc" alt="Popup Image" class="popup-image" />
+                </div>
+            </ng-template>
+            <div class="row flex-row flex-nowrap overflow-auto">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="single-work text-center mt-30">
+                        <div class="work-image">
+                            <picture>
+                                <source type="image/webp" srcset="assets/images/next_gen/work/w-1.webp" alt="work">
+                                <img loading="lazy" alt="work" src="assets/images/work/w-1.png">
+                            </picture>
                         </div>
-                    </div>
-                </div> <!-- single work -->
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="single-work text-center mt-30">
-                    <div class="work-image">
-                        <picture>
-                            <source type="image/webp" srcset="assets/images/next_gen/work/w-2.webp" alt="work">
-                            <img loading="lazy" alt="work" src="assets/images/work/w-2.png">
-                        </picture>
-                    </div>
-                    <div class="work-overlay">
-                        <div class="work-content">
-                            <h3 class="work-title">Personal Website</h3>
-                            <ul>
-                                <li><a class="image-popup" href="assets/images/work/w-2.png">
-                                        <i class="lni-plus"></i></a></li>
-                                <li><a href="https://github.com/Mazharul-Hossain/Personal-Website" target="_blank"
-                                        rel="nofollow noopener noreferrer"><i class="lni-link"></i></a></li>
-                            </ul>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">Map901</h3>
+                                <p>Indoor LiDAR and Image Dataset | Indoor Object Detection using DNN</p>
+                                <ul>
+                                    <li><a class="image-popup" (click)="openImagePopup('assets/images/work/w-1.png')">
+                                            <i class="lni-plus"></i></a></li>
+                                    <li><a href="http://map901.memphis.edu/" target="_blank"
+                                            rel="nofollow noopener noreferrer">
+                                            <i class="lni-link"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </div> <!-- single work -->
-            </div>
+                    </div> <!-- single work -->
+                </div>
 
-            <!--      <div class="col-lg-4 col-md-6 col-sm-6">-->
-            <!--        <div class="single-work text-center mt-30">-->
-            <!--          <div class="work-image">-->
-            <!--            <img loading="lazy" alt="work" src="assets/images/work/w-1.jpg">-->
-            <!--          </div>-->
-            <!--          <div class="work-overlay">-->
-            <!--            <div class="work-content">-->
-            <!--              <h3 class="work-title">Product Design</h3>-->
-            <!--              <ul>-->
-            <!--                <li><a class="image-popup" href="assets/images/work/w-1.jpg"><i-->
-            <!--                  class="lni-plus"></i></a></li>-->
-            <!--                <li><a href="#"><i class="lni-link"></i></a></li>-->
-            <!--              </ul>-->
-            <!--            </div>-->
-            <!--          </div>-->
-            <!--        </div> &lt;!&ndash; single work &ndash;&gt;-->
-            <!--      </div>-->
-
-        </div> <!-- row -->
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="single-work text-center mt-30">
+                        <div class="work-image">
+                            <picture>
+                                <source type="image/webp" srcset="assets/images/next_gen/work/w-2.webp" alt="work">
+                                <img loading="lazy" alt="work" src="assets/images/work/w-2.png">
+                            </picture>
+                        </div>
+                        <div class="work-overlay">
+                            <div class="work-content">
+                                <h3 class="work-title">Personal Website</h3>
+                                <ul>
+                                    <li><a class="image-popup" (click)="openImagePopup('assets/images/work/w-2.png')">
+                                            <i class="lni-plus"></i></a></li>
+                                    <li><a href="https://github.com/Mazharul-Hossain/Personal-Website" target="_blank"
+                                            rel="nofollow noopener noreferrer"><i class="lni-link"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> <!-- single work -->
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container-fluid -->
     </div> <!-- container -->
 </section>
 

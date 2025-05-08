@@ -64,8 +64,6 @@ export class NavBarComponent implements OnDestroy {
                 const sectionTop = section.getBoundingClientRect().top + window.scrollY - 200;
                 const sectionBottom = sectionTop + section.offsetHeight;
 
-                console.log(sectionTop, scrollPosition, sectionBottom)
-
                 if (sectionTop <= scrollPosition && scrollPosition <= sectionBottom) {
                     link.parentElement.classList.add('active');
                     this.removeActiveFromSiblings(link.parentElement);

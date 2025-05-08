@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import $ from 'jquery';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 
 declare var Parallax: any;
 
@@ -11,21 +10,27 @@ declare var Parallax: any;
 })
 export class IndexPageComponent implements OnInit, AfterViewInit {
 
-    constructor() {
+    constructor(private elementRef: ElementRef) {
     }
 
     ngOnInit(): void {
-        $('.preloader').delay(200).fadeOut(500);
+        const preloader = this.elementRef.nativeElement.querySelector('.preloader');
+        if (preloader) {
+            setTimeout(() => {
+                preloader.style.transition = 'opacity 0.5s';
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }, 200);
+        }
     }
 
     ngOnLoad(): void {
     }
 
     ngAfterViewInit(): void {
-
-        if ($('#parallax').length) {
-            const scene = document.getElementById('parallax');
-            const parallax = new Parallax(scene);
+        const parallaxElement = this.elementRef.nativeElement.querySelector('#parallax');
+        if (parallaxElement) {
+            const parallax = new Parallax(parallaxElement);
         }
     }
 }

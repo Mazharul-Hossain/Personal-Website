@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import $ from 'jquery';
+import { Component, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
 
 @Component({
     selector: 'app-nav-footer',
@@ -7,31 +6,55 @@ import $ from 'jquery';
     styleUrls: ['./nav-footer.component.css'],
     standalone: false
 })
-export class NavFooterComponent {
+export class NavFooterComponent implements AfterViewInit {
 
-    constructor() {
-    }
+    constructor(private renderer: Renderer2, private el: ElementRef) { }
 
     ngAfterViewInit(): void {
-        // ===== Back to top
+        const backToTopButton = this.el.nativeElement.querySelector('.back-to-top');
+
         // Show or hide the sticky footer button
-        $(window).on('scroll', function (event): void {
-            if ($(this).scrollTop() > 600) {
-                $('.back-to-top').fadeIn(200);
+        this.renderer.listen(window, 'scroll', () => {
+            if (window.scrollY > 400) {
+                this.renderer.setStyle(backToTopButton, 'display', 'block');
+                this.renderer.setStyle(backToTopButton, 'opacity', '1');
+                this.renderer.setStyle(backToTopButton, 'transition', 'opacity 0.2s');
             } else {
-                $('.back-to-top').fadeOut(200);
+                this.renderer.setStyle(backToTopButton, 'opacity', '0');
+                this.renderer.setStyle(backToTopButton, 'transition', 'opacity 0.2s');
+                setTimeout(() => {
+                    this.renderer.setStyle(backToTopButton, 'display', 'none');
+                }, 200);
             }
         });
 
-        // Animate the scroll to yop
-        // tslint:disable-next-line:only-arrow-functions
-        $('.back-to-top').on('click', function (event): void {
+        // Animate the scroll to top
+        this.renderer.listen(backToTopButton, 'click', (event: Event) => {
             event.preventDefault();
 
-            $('html, body').animate({
-                scrollTop: 0,
-            }, 1500);
+            // Custom smooth scrolling
+            const targetPosition = 0;
+            const startPosition = window.scrollY;
+            const distance = targetPosition - startPosition;
+            const duration = 1500; // Duration in milliseconds
+            let startTime: number | null = null;
+
+            const scrollAnimation = (currentTime: number) => {
+                if (!startTime) startTime = currentTime;
+                const timeElapsed = currentTime - startTime;
+                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+                window.scrollTo(0, run);
+                if (timeElapsed < duration) requestAnimationFrame(scrollAnimation);
+            };
+
+            const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
+                t /= d / 2;
+                if (t < 1) return (c / 2) * t * t + b;
+                t--;
+                return (-c / 2) * (t * (t - 2) - 1) + b;
+            };
+
+            requestAnimationFrame(scrollAnimation);
         });
     }
-
 }
