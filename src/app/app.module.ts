@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { NgModule, isDevMode } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
@@ -57,7 +57,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
   ],
   exports: [RouterModule],
-  providers: [provideHttpClient()],
+  providers: [provideHttpClient(), provideClientHydration(withEventReplay())],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

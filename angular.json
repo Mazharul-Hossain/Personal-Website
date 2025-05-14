@@ -50,7 +50,12 @@
               "src/assets/js/retainable.js"
             ],
             "serviceWorker": "ngsw-config.json",
-            "browser": "src/main.ts"
+            "browser": "src/main.ts",
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {

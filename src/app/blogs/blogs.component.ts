@@ -12,19 +12,20 @@ export class BlogsComponent {
 
     // This service can now make HTTP requests via `this.http`.
     private http = inject(HttpClient); 
-    private proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-    private rssUrl = "https://medium.com/feed/@hossain.mazharul";
+    // private proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    // private rssUrl = "https://medium.com/feed/@hossain.mazharul";
+    private rssUrl = "/feed";
 
     ngAfterViewInit() {
         //We loading the script on after view is loaded
-        this.loadScripts();
+        // this.loadScripts();
 
-        // // Fetch RSS feed
-        // this.fetchRSSFeed(this.rssUrl).then(items => {
-        //     this.populateRSSFeed(items);
-        // }).catch(error => {
-        //     console.error('Error in ngAfterViewInit while fetching RSS feed:', error);
-        // });
+        // Fetch RSS feed
+        this.fetchRSSFeed(this.rssUrl).then(items => {
+            this.populateRSSFeed(items);
+        }).catch(error => {
+            console.error('Error in ngAfterViewInit while fetching RSS feed:', error);
+        });
     }
 
     // Method to dynamically load JavaScript
