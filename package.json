@@ -41,6 +41,7 @@
     "startbootstrap-scrolling-nav": "^5.0.6",
     "tslib": "^2.0.0",
     "waypoints": "^4.0.1",
+    "xml2js": "^0.6.2",
     "zone.js": "^0.15.0"
   },
   "devDependencies": {
