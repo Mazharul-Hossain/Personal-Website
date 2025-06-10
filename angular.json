@@ -46,8 +46,7 @@
               "./node_modules/startbootstrap-scrolling-nav/dist/js/scripts.js",
               "./node_modules/jquery.easing/jquery.easing.min.js",
               "src/assets/js/vendor/modernizr-3.6.0.min.js",
-              "src/assets/js/parallax.min.js",
-              "src/assets/js/retainable.js"
+              "src/assets/js/parallax.min.js"
             ],
             "serviceWorker": "ngsw-config.json",
             "browser": "src/main.ts",
