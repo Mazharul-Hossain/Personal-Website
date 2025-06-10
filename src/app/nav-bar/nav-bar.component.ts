@@ -1,7 +1,8 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { WindowRef } from '../shared/window.token';
 
 @Component({
     selector: 'app-nav-bar',
@@ -11,14 +12,29 @@ import { Subscription } from 'rxjs';
 })
 export class NavBarComponent implements OnDestroy {
 
-    private pageScrollLinks = document.getElementsByClassName('page-scroll');
-    private activeRoute: string | null = null; // Track the active route
+    private pageScrollLinks: any;
+    // private activeRoute: string | null; // Track the active route
     private routerSubscription: Subscription;
+    private winRef: Window | undefined;
 
-    constructor(private router: Router, private location: Location) {
+    constructor(
+        private router: Router,
+        private location: Location,
+        @Inject(WindowRef) private windowRef: any
+    ) {
+        this.winRef = this.windowRef.nativeWindow();
+    }
+
+    ngAfterViewInit(): void {
+        // Only add scroll listener if windowRef is defined
+        if (!this.winRef) {
+            return;
+        }
+        this.pageScrollLinks = document.getElementsByClassName('page-scroll');
         this.routerSubscription = this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                this.activeRoute = event.urlAfterRedirects; // Update based on the current route
+                // // Update based on the current route
+                // this.activeRoute = event.urlAfterRedirects;
 
                 const currentPath = this.location.path();
                 Array.from(this.pageScrollLinks).forEach((link: Element) => {
@@ -30,11 +46,9 @@ export class NavBarComponent implements OnDestroy {
                 });
             }
         });
-    }
 
-    ngAfterViewInit(): void {
         // ===== Mobile Menu
-        document.querySelector('.navbar-toggler')?.addEventListener('click', function (): void {
+        document.querySelector('.navbar-toggler').addEventListener('click', function (): void {
             this.classList.toggle('active');
         });
 
@@ -44,6 +58,8 @@ export class NavBarComponent implements OnDestroy {
                 document.querySelector('.navbar-collapse')?.classList.remove('show');
             });
         });
+
+        window.addEventListener('scroll', () => this.onWindowScroll());
     }
 
     ngOnDestroy(): void {
@@ -96,10 +112,10 @@ export class NavBarComponent implements OnDestroy {
         if (section) {
             // Scroll to the section if it exists on the current page
             // section.scrollIntoView({ behavior: 'smooth' });
-            
+
             // Custom smooth scrolling
-            const targetPosition = section.getBoundingClientRect().top + window.scrollY;
-            const startPosition = window.scrollY;
+            const targetPosition = section.getBoundingClientRect().top + (window.scrollY || 0);
+            const startPosition = window.scrollY || 0;
             const distance = targetPosition - startPosition;
             const duration = 1000; // Duration in milliseconds
             let startTime: number | null = null;

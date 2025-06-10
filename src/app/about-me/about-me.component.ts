@@ -1,7 +1,8 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, Inject } from '@angular/core';
 import { AboutSkill } from './types';
 import { aboutSkills } from './about-skills';
-import counterUp from 'counterup2';
+import { WindowRef } from '../shared/window.token';
+// import counterUp from 'counterup2';
 
 @Component({
   selector: 'app-about-me',
@@ -10,16 +11,27 @@ import counterUp from 'counterup2';
   standalone: false
 })
 export class AboutMeComponent implements OnInit, AfterViewInit {
+  private counterUp: any;
   about_skills: AboutSkill[] = [];
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(
+    private elementRef: ElementRef,
+    @Inject(WindowRef) private windowRef: Window | undefined
+  ) { }
 
   ngOnInit(): void {
     this.about_skills = aboutSkills;
   }
 
-  ngAfterViewInit(): void {
-    this.show_skills();
+  async ngAfterViewInit(): Promise<void> {
+    if (this.windowRef) {
+      // windowRef is available
+      const lib = await import('counterup2');
+      this.counterUp = lib.default; // or use lib directly
+
+      // require("./node_modules/counterup2/dist/index.js");
+      this.show_skills();
+    }
   }
 
   show_skills(): void {
@@ -46,7 +58,7 @@ export class AboutMeComponent implements OnInit, AfterViewInit {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              counterUp(counterElement, {
+              this.counterUp(counterElement, {
                 duration: 1000,
                 delay: 32,
               });

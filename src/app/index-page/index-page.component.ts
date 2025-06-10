@@ -1,5 +1,5 @@
-import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
-
+import { Component, OnInit, AfterViewInit, ElementRef, Inject } from '@angular/core';
+import { WindowRef } from '../shared/window.token';
 declare var Parallax: any;
 
 @Component({
@@ -9,18 +9,25 @@ declare var Parallax: any;
     standalone: false
 })
 export class IndexPageComponent implements OnInit, AfterViewInit {
+    private winRef: Window | undefined;
 
-    constructor(private elementRef: ElementRef) {
+    constructor(
+        private elementRef: ElementRef,
+        @Inject(WindowRef) private windowRef: any
+    ) {
+        this.winRef = this.windowRef.nativeWindow();
     }
 
     ngOnInit(): void {
-        const preloader = this.elementRef.nativeElement.querySelector('.preloader');
-        if (preloader) {
-            setTimeout(() => {
-                preloader.style.transition = 'opacity 0.5s';
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 500);
-            }, 200);
+        if (this.winRef) {
+            const preloader = this.elementRef.nativeElement.querySelector('.preloader');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.transition = 'opacity 0.5s';
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 500);
+                }, 200);
+            }
         }
     }
 
@@ -28,9 +35,11 @@ export class IndexPageComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        const parallaxElement = this.elementRef.nativeElement.querySelector('#parallax');
-        if (parallaxElement) {
-            const parallax = new Parallax(parallaxElement);
+        if (this.winRef) {
+            const parallaxElement = this.elementRef.nativeElement.querySelector('#parallax');
+            if (parallaxElement) {
+                const parallax = new Parallax(parallaxElement);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { WindowRef } from '../shared/window.token';
 
 @Component({
   selector: 'app-page-not-found',
@@ -8,12 +9,18 @@ import { Router } from '@angular/router';
   standalone: false
 })
 export class PageNotFoundComponent {
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    @Inject(WindowRef) private windowRef: any
+  ) { }
 
   ngOnInit() {
-    // Redirect after a delay of 3 seconds
-    setTimeout(() => {
-      this.router.navigate(['/']); 
-    }, 5000);
+    const winRef = this.windowRef.nativeWindow();
+    if (winRef) {
+      // Redirect after a delay of 3 seconds
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 5000);
+    }
   }
 }
