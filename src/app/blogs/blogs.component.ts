@@ -78,10 +78,9 @@ export class BlogsComponent {
                 card.innerHTML = `
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">${item.title}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${item['dc:creator']}</h6>
-                            <p class="card-text">${item['content:encoded']}</p>
-                            <a href="${item.link}" class="card-link" target="_blank">Read more</a>
+                            <h5 class="card-title"><a href="${item.link}" class="card-link" target="_blank">${item.title}</a></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${item['dc:creator']}| ${item.pubDate}</h6>
+                            <p class="card-text">${(item['content:encoded'] || '').slice(0, 300)}${(item['content:encoded'] || '').length > 300 ? '...' : ''}</p>
                         </div>
                     </div>
                 `;
