@@ -25,8 +25,8 @@ export class NavFooterComponent implements AfterViewInit {
         const backToTopButton = this.el.nativeElement.querySelector('.back-to-top');
 
         // Show or hide the sticky footer button
-        this.renderer.listen(this.windowRef, 'scroll', () => {
-            if ((this.windowRef?.scrollY || 0) > 400) {
+        this.renderer.listen(window, 'scroll', () => {
+            if ((window.scrollY || 0) > 400) {
                 this.renderer.setStyle(backToTopButton, 'display', 'block');
                 this.renderer.setStyle(backToTopButton, 'opacity', '1');
                 this.renderer.setStyle(backToTopButton, 'transition', 'opacity 0.2s');
@@ -45,7 +45,7 @@ export class NavFooterComponent implements AfterViewInit {
 
             // Custom smooth scrolling
             const targetPosition = 0;
-            const startPosition = this.windowRef?.scrollY || 0;
+            const startPosition = window.scrollY || 0;
             const distance = targetPosition - startPosition;
             const duration = 1500; // Duration in milliseconds
             let startTime: number | null = null;
@@ -54,7 +54,7 @@ export class NavFooterComponent implements AfterViewInit {
                 if (!startTime) startTime = currentTime;
                 const timeElapsed = currentTime - startTime;
                 const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
-                this.windowRef?.scrollTo(0, run);
+                window.scrollTo(0, run);
                 if (timeElapsed < duration) requestAnimationFrame(scrollAnimation);
             };
 
