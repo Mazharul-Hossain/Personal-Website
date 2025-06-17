@@ -6,23 +6,27 @@
                     <a class="navbar-brand" href="/">
                         <img loading="lazy" src="assets/images/logo.png" alt="Logo">
                     </a> <!-- Logo -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler"
+                            type="button"
+                            aria-controls="navbarSupportedContent"
+                            [attr.aria-expanded]="navbarOpen"
+                            aria-label="Toggle navigation"
+                            (click)="toggleNavbar()"
+                            [class.active]="navbarOpen">
                         <span class="toggler-icon"></span>
                         <span class="toggler-icon"></span>
                         <span class="toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="collapse navbar-collapse" [class.show]="navbarOpen" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a class="page-scroll" data-custom-id="home" (click)="navigateToSection('home')" href="javascript:void(0)">Home</a></li>
-                            <li class="nav-item"><a class="page-scroll" data-custom-id="publications" (click)="navigateToSection('publications')" href="javascript:void(0)">Publications</a></li>
-                            <li class="nav-item"><a class="page-scroll" data-custom-id="service" (click)="navigateToSection('service')" href="javascript:void(0)">Experience</a></li>
-                            <li class="nav-item"><a class="page-scroll" data-custom-id="work" (click)="navigateToSection('work')" href="javascript:void(0)">Portfolio</a></li>
-                            <li class="nav-item"><a class="page-scroll" data-custom-id="blog" (click)="navigateToSection('blog')" href="javascript:void(0)">Blog</a></li>
-                            <li class="nav-item"><a class="page-scroll" data-custom-id="about" (click)="navigateToSection('about')" href="javascript:void(0)">About</a></li>
-                            <li class="nav-item"><a class="page-scroll" data-custom-id="contact" (click)="navigateToSection('contact')" href="javascript:void(0)">Contact</a></li>
+                            <li class="nav-item active"><a class="page-scroll" data-custom-id="home" (click)="navigateToSection('home'); closeNavbar()" href="javascript:void(0)">Home</a></li>
+                            <li class="nav-item"><a class="page-scroll" data-custom-id="publications" (click)="navigateToSection('publications'); closeNavbar()" href="javascript:void(0)">Publications</a></li>
+                            <li class="nav-item"><a class="page-scroll" data-custom-id="service" (click)="navigateToSection('service'); closeNavbar()" href="javascript:void(0)">Experience</a></li>
+                            <li class="nav-item"><a class="page-scroll" data-custom-id="work" (click)="navigateToSection('work'); closeNavbar()" href="javascript:void(0)">Portfolio</a></li>
+                            <li class="nav-item"><a class="page-scroll" data-custom-id="blog" (click)="navigateToSection('blog'); closeNavbar()" href="javascript:void(0)">Blog</a></li>
+                            <li class="nav-item"><a class="page-scroll" data-custom-id="about" (click)="navigateToSection('about'); closeNavbar()" href="javascript:void(0)">About</a></li>
+                            <li class="nav-item"><a class="page-scroll" data-custom-id="contact" (click)="navigateToSection('contact'); closeNavbar()" href="javascript:void(0)">Contact</a></li>
                         </ul>
                     </div> <!-- navbar collapse -->
                 </nav> <!-- navbar -->

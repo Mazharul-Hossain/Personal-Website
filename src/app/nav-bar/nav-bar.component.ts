@@ -11,6 +11,7 @@ import { WindowRef } from '../shared/window.token';
     standalone: false
 })
 export class NavBarComponent implements OnDestroy {
+    navbarOpen = false;
 
     private pageScrollLinks: any;
     // private activeRoute: string | null; // Track the active route
@@ -23,6 +24,14 @@ export class NavBarComponent implements OnDestroy {
         @Inject(WindowRef) private windowRef: any
     ) {
         this.winRef = this.windowRef.nativeWindow();
+    }
+
+    toggleNavbar() {
+        this.navbarOpen = !this.navbarOpen;
+    }
+
+    closeNavbar() {
+        this.navbarOpen = false;
     }
 
     ngAfterViewInit(): void {
@@ -47,18 +56,8 @@ export class NavBarComponent implements OnDestroy {
             }
         });
 
-        // ===== Mobile Menu
-        document.querySelector('.navbar-toggler').addEventListener('click', function (): void {
-            this.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.navbar-nav a').forEach(anchor => {
-            anchor.addEventListener('click', () => {
-                document.querySelector('.navbar-toggler')?.classList.remove('active');
-                document.querySelector('.navbar-collapse')?.classList.remove('show');
-            });
-        });
-
+        // Remove all direct DOM event listeners for toggler and nav links!
+        // window.addEventListener('scroll', ...) is fine if you need it.
         window.addEventListener('scroll', () => this.onWindowScroll());
     }
 
