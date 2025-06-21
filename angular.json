@@ -29,7 +29,6 @@
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.css",
-              "./node_modules/magnific-popup/dist/magnific-popup.css",
               "src/assets/css/LineIcons.css",
               "src/assets/css/default.css",
               "src/assets/css/style.css",
@@ -39,7 +38,6 @@
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
               "./node_modules/jquery.appear/jquery.appear.js",
               "./node_modules/waypoints/lib/jquery.waypoints.js",
               "./node_modules/counterup2/dist/index.js",
@@ -68,7 +66,9 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
+              "aot": true,
               "extractLicenses": true,
+              "deleteOutputPath": true,
               "budgets": [
                 {
                   "type": "initial",
