@@ -1,11 +1,14 @@
-import { CommonEngine } from '@angular/ssr/node';
-import { render } from "@netlify/angular-runtime/common-engine.mjs";
+import { AngularAppEngine, createRequestHandler } from '@angular/ssr'
+import { getContext } from '@netlify/angular-runtime/context.mjs'
+
 import https from 'https';
 import xml2js from 'xml2js';
 
-const commonEngine = new CommonEngine();
+const angularAppEngine = new AngularAppEngine()
 
-export default async function handler(request: Request, context: any): Promise<Response> {
+export async function netlifyAppEngineHandler(request: Request): Promise<Response> {
+    const context = getContext()
+
     const pathname = new URL(request.url).pathname;
     if (pathname === "/feed") {
         // Fetch XML from Medium using https
@@ -40,5 +43,11 @@ export default async function handler(request: Request, context: any): Promise<R
         return new Response(JSON.stringify(items), { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
 
-    return await render(commonEngine);
+    const result = await angularAppEngine.handle(request, context)
+    return result || new Response('Not found', { status: 404 })
 }
+
+/**
+ * The request handler used by the Angular CLI (dev-server and during build).
+ */
+export const reqHandler = createRequestHandler(netlifyAppEngineHandler)
