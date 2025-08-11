@@ -5,7 +5,7 @@ import xml2js from 'xml2js';
 
 const commonEngine = new CommonEngine();
 
-export async function netlifyCommonEngineHandler(request: Request, context: any): Promise<Response> {
+export default async function handler(request: Request, context: any): Promise<Response> {
     const pathname = new URL(request.url).pathname;
     if (pathname === "/feed") {
         // Fetch XML from Medium using https
