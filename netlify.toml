@@ -4,4 +4,4 @@
   
 [[edge_functions]]
     path = "/feed"
-    function = "server"
+    function = "angular-ssr"
