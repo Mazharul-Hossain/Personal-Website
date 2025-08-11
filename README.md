@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3b24fe33-de72-4b5d-8129-3b8005b34d4b/deploy-status)](https://app.netlify.com/sites/stoic-lamport-e2ed9d/deploys)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 20.0.2 and Node.js version 22.15.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 20.1.5 and Node.js version 22.15.
 
 ## Download Node.js®
 
