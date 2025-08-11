@@ -2,7 +2,7 @@ import { AngularAppEngine, createRequestHandler } from '@angular/ssr'
 import { getContext } from '@netlify/angular-runtime/context.mjs'
 
 import https from 'https';
-import xml2js from 'xml2js';
+// import xml2js from 'xml2js';
 
 const angularAppEngine = new AngularAppEngine()
 
@@ -29,6 +29,7 @@ export async function netlifyAppEngineHandler(request: Request): Promise<Respons
             req.end();
         });
         // Parse XML to JSON
+        const xml2js = await import('xml2js');
         const parser = new xml2js.Parser({ explicitArray: false });
         let json: any;
         try {
