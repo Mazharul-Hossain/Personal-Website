@@ -17,7 +17,6 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '/', component: IndexPageComponent },
   { path: '', component: IndexPageComponent },
   { path: 'home', component: IndexPageComponent },
   { path: 'publications', component: PublicationsComponent },
