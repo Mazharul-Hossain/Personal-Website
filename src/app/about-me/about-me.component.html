@@ -41,22 +41,23 @@
               </div> <!-- single info -->
             </li>
             <!-- <li>
-              <div class="single-info d-flex align-items-center">
-                <div class="info-icon">
-                  <i class="lni-envelope"></i>
-                </div>
-                <div class="info-text">
-                  <p><span>Email:</span> hossain dot mazharul at gmail dot com</p>
-                </div>
-              </div> 
-            </li> --> <!-- single info -->
-          </ul>
-        </div> <!-- about content -->
-      </div>
-      <div class="col-xl-5 offset-xl-1 col-lg-6">
-        <div class="about-skills pt-25">
+            <div class="single-info d-flex align-items-center">
+              <div class="info-icon">
+                <i class="lni-envelope"></i>
+              </div>
+              <div class="info-text">
+                <p><span>Email:</span> hossain dot mazharul at gmail dot com</p>
+              </div>
+            </div>
+          </li> --> <!-- single info -->
+        </ul>
+      </div> <!-- about content -->
+    </div>
+    <div class="col-xl-5 offset-xl-1 col-lg-6">
+      <div class="about-skills pt-25">
 
-          <div class="skill-item mt-25" *ngFor="let listing of about_skills">
+        @for (listing of about_skills; track listing) {
+          <div class="skill-item mt-25">
             <div class="skill-header">
               <h6 class="skill-title">{{listing.name}}</h6>
               <div class="skill-percentage">
@@ -74,7 +75,8 @@
                 </div>
               </div>
             </div>
-          </div> <!-- skill item -->
+          </div>
+          } <!-- skill item -->
 
 
           <!--          <div class="skill-item mt-25">-->
@@ -83,69 +85,69 @@
           <!--              <div class="skill-percentage">-->
           <!--                <div class="count-box counted">-->
           <!--                  <span class="counter">100</span>-->
-          <!--                </div>-->
-          <!--                %-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--            <div class="skill-bar">-->
-          <!--              <div class="bar-inner">-->
-          <!--                <div class="bar progress-line" data-width="100"></div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
-          <!--          <div class="skill-item mt-25">-->
-          <!--            <div class="skill-header">-->
-          <!--              <h6 class="skill-title">Back End Development: PHP, DJANGO, ASP.NET</h6>-->
-          <!--              <div class="skill-percentage">-->
-          <!--                <div class="count-box counted">-->
-          <!--                  <span class="counter">80</span>-->
-          <!--                </div>-->
-          <!--                %-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--            <div class="skill-bar">-->
-          <!--              <div class="bar-inner">-->
-          <!--                <div class="bar progress-line" data-width="80"></div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
-          <!--          <div class="skill-item mt-25">-->
-          <!--            <div class="skill-header">-->
-          <!--              <h6 class="skill-title">Front End Development: HTML, CSS, JS</h6>-->
-          <!--              <div class="skill-percentage">-->
-          <!--                <div class="count-box counted">-->
-          <!--                  <span class="counter">60</span>-->
-          <!--                </div>-->
-          <!--                %-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--            <div class="skill-bar">-->
-          <!--              <div class="bar-inner">-->
-          <!--                <div class="bar progress-line" data-width="60"></div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
-          <!--          <div class="skill-item mt-25">-->
-          <!--            <div class="skill-header">-->
-          <!--              <h6 class="skill-title">TensorFlow</h6>-->
-          <!--              <div class="skill-percentage">-->
-          <!--                <div class="count-box counted">-->
-          <!--                  <span class="counter">50</span>-->
-          <!--                </div>-->
-          <!--                %-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--            <div class="skill-bar">-->
-          <!--              <div class="bar-inner">-->
-          <!--                <div class="bar progress-line" data-width="50"></div>-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+        <!--                </div>-->
+        <!--                %-->
+      <!--              </div>-->
+    <!--            </div>-->
+    <!--            <div class="skill-bar">-->
+    <!--              <div class="bar-inner">-->
+    <!--                <div class="bar progress-line" data-width="100"></div>-->
+  <!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+<!--          <div class="skill-item mt-25">-->
+<!--            <div class="skill-header">-->
+<!--              <h6 class="skill-title">Back End Development: PHP, DJANGO, ASP.NET</h6>-->
+<!--              <div class="skill-percentage">-->
+<!--                <div class="count-box counted">-->
+<!--                  <span class="counter">80</span>-->
+<!--                </div>-->
+<!--                %-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="skill-bar">-->
+<!--              <div class="bar-inner">-->
+<!--                <div class="bar progress-line" data-width="80"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+<!--          <div class="skill-item mt-25">-->
+<!--            <div class="skill-header">-->
+<!--              <h6 class="skill-title">Front End Development: HTML, CSS, JS</h6>-->
+<!--              <div class="skill-percentage">-->
+<!--                <div class="count-box counted">-->
+<!--                  <span class="counter">60</span>-->
+<!--                </div>-->
+<!--                %-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="skill-bar">-->
+<!--              <div class="bar-inner">-->
+<!--                <div class="bar progress-line" data-width="60"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
+<!--          <div class="skill-item mt-25">-->
+<!--            <div class="skill-header">-->
+<!--              <h6 class="skill-title">TensorFlow</h6>-->
+<!--              <div class="skill-percentage">-->
+<!--                <div class="count-box counted">-->
+<!--                  <span class="counter">50</span>-->
+<!--                </div>-->
+<!--                %-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="skill-bar">-->
+<!--              <div class="bar-inner">-->
+<!--                <div class="bar progress-line" data-width="50"></div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
 
-        </div> <!-- about skills -->
-      </div>
-    </div> <!-- row -->
-  </div> <!-- container -->
+</div> <!-- about skills -->
+</div>
+</div> <!-- row -->
+</div> <!-- container -->
 </section>
 
 <!--====== ABOUT PART ENDS ======-->
