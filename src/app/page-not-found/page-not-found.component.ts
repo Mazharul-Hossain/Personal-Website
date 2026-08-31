@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { WindowRef } from '../shared/window.token';
 
@@ -6,6 +6,7 @@ import { WindowRef } from '../shared/window.token';
   selector: 'app-page-not-found',
   templateUrl: './page-not-found.component.html',
   styleUrl: './page-not-found.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class PageNotFoundComponent {

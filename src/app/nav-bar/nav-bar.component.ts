@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, Inject } from '@angular/core';
+import { Component, HostListener, OnDestroy, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,7 @@ import { WindowRef } from '../shared/window.token';
     selector: 'app-nav-bar',
     templateUrl: './nav-bar.component.html',
     styleUrls: ['./nav-bar.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class NavBarComponent implements OnDestroy {

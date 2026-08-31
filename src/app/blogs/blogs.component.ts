@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WindowRef } from '../shared/window.token';
@@ -7,6 +7,7 @@ import { WindowRef } from '../shared/window.token';
     selector: 'app-blogs',
     templateUrl: './blogs.component.html',
     styleUrl: './blogs.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class BlogsComponent {

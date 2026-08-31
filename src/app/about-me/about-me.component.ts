@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { AboutSkill } from './types';
 import { aboutSkills } from './about-skills';
 import { WindowRef } from '../shared/window.token';
@@ -8,6 +8,7 @@ import { WindowRef } from '../shared/window.token';
     selector: 'app-about-me',
     templateUrl: './about-me.component.html',
     styleUrls: ['./about-me.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AboutMeComponent implements OnInit, AfterViewInit {

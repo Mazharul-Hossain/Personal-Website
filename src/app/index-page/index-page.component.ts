@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
 declare var Parallax: any;
 
@@ -6,6 +6,7 @@ declare var Parallax: any;
     selector: 'app-index-page',
     templateUrl: './index-page.component.html',
     styleUrls: ['./index-page.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class IndexPageComponent implements OnInit, AfterViewInit {

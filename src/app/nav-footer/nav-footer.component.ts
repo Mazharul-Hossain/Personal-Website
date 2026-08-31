@@ -1,10 +1,11 @@
-import { Component, Renderer2, ElementRef, AfterViewInit, Inject } from '@angular/core';
+import { Component, Renderer2, ElementRef, AfterViewInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
 
 @Component({
     selector: 'app-nav-footer',
     templateUrl: './nav-footer.component.html',
     styleUrls: ['./nav-footer.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class NavFooterComponent implements AfterViewInit {
