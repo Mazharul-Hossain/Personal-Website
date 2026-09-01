@@ -8,7 +8,7 @@ describe('PublicationsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PublicationsComponent]
+      declarations: [PublicationsComponent]
     })
     .compileComponents();
 
@@ -19,5 +19,11 @@ describe('PublicationsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('renders the publication heading and Scholar link', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('h2')?.textContent).toContain('My Research Publications');
+    expect(element.querySelector('a[href*="scholar.google.com"]')).not.toBeNull();
   });
 });
