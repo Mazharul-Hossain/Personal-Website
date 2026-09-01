@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Inject, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -11,12 +11,12 @@ import { WindowRef } from '../shared/window.token';
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class NavBarComponent implements OnDestroy {
+export class NavBarComponent implements AfterViewInit, OnDestroy {
     navbarOpen = false;
 
-    private pageScrollLinks: any;
+    private pageScrollLinks: Element[] = [];
     // private activeRoute: string | null; // Track the active route
-    private routerSubscription: Subscription;
+    private routerSubscription?: Subscription;
     private winRef: Window | undefined;
 
     constructor(
@@ -40,26 +40,23 @@ export class NavBarComponent implements OnDestroy {
         if (!this.winRef) {
             return;
         }
-        this.pageScrollLinks = document.getElementsByClassName('page-scroll');
+        this.pageScrollLinks = Array.from(document.getElementsByClassName('page-scroll'));
         this.routerSubscription = this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 // // Update based on the current route
                 // this.activeRoute = event.urlAfterRedirects;
 
                 const currentPath = this.location.path();
-                Array.from(this.pageScrollLinks).forEach((link: Element) => {
+                this.pageScrollLinks.forEach((link) => {
                     const sectionId = (link as HTMLElement).dataset.customId;
-                    if (currentPath.endsWith(sectionId)) {
-                        link.parentElement.classList.add('active');
-                        this.removeActiveFromSiblings(link.parentElement);
+                    const navItem = link.parentElement;
+                    if (sectionId && navItem && currentPath.endsWith(sectionId)) {
+                        navItem.classList.add('active');
+                        this.removeActiveFromSiblings(navItem);
                     }
                 });
             }
         });
-
-        // Remove all direct DOM event listeners for toggler and nav links!
-        // window.addEventListener('scroll', ...) is fine if you need it.
-        window.addEventListener('scroll', () => this.onWindowScroll());
     }
 
     ngOnDestroy(): void {
@@ -72,17 +69,21 @@ export class NavBarComponent implements OnDestroy {
     onWindowScroll(): void {
         const scrollPosition = window.scrollY || document.documentElement.scrollTop;
 
-        Array.from(this.pageScrollLinks).forEach((link: Element) => {
+        this.pageScrollLinks.forEach((link) => {
             const sectionId = (link as HTMLElement).dataset.customId;
+            if (!sectionId) {
+                return;
+            }
             const section = document.getElementById(sectionId);
+            const navItem = link.parentElement;
 
-            if (section) {
+            if (section && navItem) {
                 const sectionTop = section.getBoundingClientRect().top + window.scrollY - 200;
                 const sectionBottom = sectionTop + section.offsetHeight;
 
                 if (sectionTop <= scrollPosition && scrollPosition <= sectionBottom) {
-                    link.parentElement.classList.add('active');
-                    this.removeActiveFromSiblings(link.parentElement);
+                    navItem.classList.add('active');
+                    this.removeActiveFromSiblings(navItem);
                 }
             }
         });

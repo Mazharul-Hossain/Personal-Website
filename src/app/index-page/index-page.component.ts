@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
-declare var Parallax: any;
+interface ParallaxWindow extends Window {
+    Parallax?: new (element: Element) => unknown;
+}
 
 @Component({
     selector: 'app-index-page',
@@ -38,8 +40,9 @@ export class IndexPageComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         if (this.winRef) {
             const parallaxElement = this.elementRef.nativeElement.querySelector('#parallax');
-            if (parallaxElement) {
-                const parallax = new Parallax(parallaxElement);
+            const ParallaxConstructor = (this.winRef as ParallaxWindow).Parallax;
+            if (parallaxElement && ParallaxConstructor) {
+                new ParallaxConstructor(parallaxElement);
             }
         }
     }

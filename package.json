@@ -24,7 +24,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^22.1.4",
-    "@angular/cdk": "^21.0.3",
+    "@angular/cdk": "^22.1.4",
     "@angular/common": "^22.1.4",
     "@angular/compiler": "^22.1.4",
     "@angular/core": "^22.1.4",
@@ -62,6 +62,7 @@
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.17.19",
+    "cypress": "^15.21.1",
     "istanbul-lib-instrument": "^6.0.3",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.0",

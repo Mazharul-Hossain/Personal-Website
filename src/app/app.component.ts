@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     constructor(
         private elementRef: ElementRef,
         private gtagService: GtagService,
-        @Inject(WindowRef) private windowRef: WindowRef | undefined
+        @Inject(WindowRef) private windowRef: WindowRef
     ) { }
 
     ngOnInit(): void {
