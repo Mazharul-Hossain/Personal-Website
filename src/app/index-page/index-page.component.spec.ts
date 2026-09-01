@@ -28,7 +28,7 @@ describe('IndexPageComponent', () => {
   it('renders the portfolio owner and primary sections', () => {
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('h1')?.textContent).toContain('Mazharul Hossain');
-    expect(element.querySelector('app-publications')).not.toBeNull();
+    expect(element.querySelector('app-selected-publications')).not.toBeNull();
     expect(element.querySelector('app-about-me')).not.toBeNull();
     expect(element.querySelector('app-contact-me')).not.toBeNull();
   });

@@ -1,0 +1,29 @@
+<section class="selected-publications" id="publications" aria-labelledby="selected-publications-title">
+    <div class="container">
+        <div class="section-title text-center">
+            <p class="section-label">Research output</p>
+            <h2 id="selected-publications-title" class="title">Selected Publications</h2>
+            <p>Representative work in computational imaging, robust machine learning, and scientific AI.</p>
+        </div>
+
+        <ol class="publication-list">
+            @for (publication of publications; track publication.title) {
+                <li>
+                    <span class="publication-year">{{ publication.year }}</span>
+                    <div>
+                        <h3>
+                            <a [href]="publication.url" target="_blank" rel="noopener noreferrer">
+                                {{ publication.title }}
+                            </a>
+                        </h3>
+                        <p>{{ publication.venue }}</p>
+                    </div>
+                </li>
+            }
+        </ol>
+
+        <div class="publication-cta">
+            <a routerLink="/publications">View all publications <span aria-hidden="true">→</span></a>
+        </div>
+    </div>
+</section>
