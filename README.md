@@ -1,69 +1,95 @@
-# My personal portfolio
+# Mazharul Hossain — Personal Portfolio
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3b24fe33-de72-4b5d-8129-3b8005b34d4b/deploy-status)](https://app.netlify.com/sites/stoic-lamport-e2ed9d/deploys)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3 and Node.js version 22.15.
+This repository contains the Angular application for [hmazharul.com](https://www.hmazharul.com/), Mazharul Hossain's personal research and professional portfolio. The site presents research publications, selected work, technical experience, writing, and contact information in a responsive, server-rendered interface.
 
-## Download Node.js®
+The application is built with Angular 22 and deployed through Netlify's connected CI/CD workflow. The production build supports server-side rendering, hydration, prerendered routes, and service-worker registration.
 
-First, we need to install or update Node.js <https://nodejs.org/en/download> and <https://stackoverflow.com/a/6237400>.
+## Run and Test Locally
 
-## Download Angular
+### Prerequisites
 
-Follow instructions from <https://angular.dev/update-guide>.
+- Node.js compatible with Angular 22; Node 24.15 or newer is recommended.
+- npm, included with Node.js.
+- Chrome or Chromium for Karma's headless unit tests.
 
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Install the locked dependency tree:
 
 ```bash
-ng generate component component-name
+npm ci
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Start the development server:
 
 ```bash
-ng generate --help
+npm start
 ```
 
-## Building
+Open `http://localhost:4200`. Angular rebuilds and reloads the application when source files change.
 
-To build the project run:
+### Verification Commands
 
 ```bash
-ng build
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Creates the optimized browser and SSR bundles in `dist/my-app/` and prerenders configured routes. This is the primary release check.
 
 ```bash
-ng test
+npm test -- --watch=false --progress=false
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Runs the Jasmine/Karma unit suite once in the CI-safe headless Chrome launcher.
 
 ```bash
-ng e2e
+npm run cypress:run
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Runs Cypress smoke tests. Start the application with `npm start` in another terminal first. Use `npm run cypress:open` for interactive test development.
 
-## Additional Resources
+```bash
+npm run watch
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Continuously rebuilds using the development configuration without starting the dev server.
+
+Before requesting review, run the production build, unit tests, and Cypress suite. Do not commit `dist/`, coverage output, Cypress screenshots/videos, or `node_modules/`.
+
+## Project Structure
+
+```text
+src/app/                 Angular components, routing, services, and specs
+src/app/publications/    Homepage selection and lazy-loaded full bibliography
+src/assets/              Images, fonts, documents, CSS, and legacy scripts
+src/server.ts            Angular SSR and Netlify `/feed` request handling
+cypress/e2e/             Browser-level smoke tests
+docs/                    Redesign and optimization plans
+```
+
+## Angular Engineering Demonstrated
+
+This portfolio is also a practical Angular showcase. It demonstrates:
+
+- Angular 22 NgModule architecture with strict TypeScript 6 compilation.
+- SSR, client hydration, event replay, and route prerendering.
+- Lazy-loaded feature routing for the complete publications page.
+- Data-driven templates using Angular control-flow syntax such as `@for`.
+- SSR-safe browser access through an injectable `WindowRef` abstraction.
+- Explicit change-detection strategies and lifecycle-driven UI behavior.
+- Responsive, component-scoped styling alongside an established global theme.
+- A custom Netlify-compatible server handler for the Medium RSS feed.
+- PWA support through Angular's service worker and web manifest.
+- Unit testing with Jasmine/Karma and browser regression testing with Cypress.
+- Production budgets, optimized output hashing, and separate development/production configurations.
+
+## Deployment
+
+Netlify owns the deployment configuration and CI/CD connection outside this repository.
+
+## Further Work
+
+The implementation roadmap is documented in:
+
+- [`docs/HOMEPAGE_REDESIGN_PLAN.md`](docs/HOMEPAGE_REDESIGN_PLAN.md)
+- [`docs/BUNDLE_OPTIMIZATION_PLAN.md`](docs/BUNDLE_OPTIMIZATION_PLAN.md)
