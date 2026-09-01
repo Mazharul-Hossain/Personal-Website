@@ -15,11 +15,12 @@ The target page order is:
 7. Research journey
 8. Recognition
 9. About
-10. Optional compact methods/tools strip
-11. Contact
-12. Footer
+10. Selected writing
+11. Optional compact methods/tools strip
+12. Contact
+13. Footer
 
-Remove Blogs, generic “My Expertise,” skill percentages, Map901/personal-site cards, empty address/phone fields, and the publication disclaimer from the homepage. Preserve complete publication/legal material on `/publications`.
+Remove generic “My Expertise,” skill percentages, Map901/personal-site cards, empty address/phone fields, and the publication disclaimer from the homepage. Preserve complete publication/legal material on `/publications`.
 
 ## Current-state map
 
@@ -93,13 +94,43 @@ Create `src/app/home/current-research/` as a visually distinct but restrained se
 
 Create `src/app/home/selected-publications/` that renders five or six typed records ordered by narrative importance, not automatically by date. Include year, title, venue, author context, and available Paper/PDF/Code/Slides links plus `View all publications → /publications`.
 
+#### Selecting and updating the short publication list
+
+Treat the homepage list as an editorial selection, not a citation-count ranking or a copy of the six newest papers. The current selection is provisional: the repository does not contain enough verified information about 2026 publications, citation counts, current research priorities, or Mazhar's contribution to each work to finalize it confidently.
+
+Before changing the list, collect one authoritative publication inventory with:
+
+- Complete citation, publication status, DOI, year, venue, and public links.
+- Current Google Scholar citation count and retrieval date.
+- Mazhar's role and contribution, including first/co-first/corresponding authorship where applicable.
+- Available code, datasets, figures, talks, awards, press, or demonstrated adoption.
+- A short note explaining how the work supports the current computational-imaging research narrative.
+- Any confidentiality, embargo, preprint, or figure-rights restrictions.
+
+Score candidates using the following priorities, in order:
+
+1. **Research alignment:** supports robust/generalizable ML, computational imaging, physics-informed inverse problems, or biomedical/scientific AI.
+2. **Trajectory coverage:** helps visitors understand the progression from microscopy reconstruction through hyperspectral robustness to current biomedical imaging.
+3. **Contribution strength:** clearly demonstrates Mazhar's intellectual or technical ownership.
+4. **Evidence:** strong result, respected venue, citations relative to publication age, reuse, award, code, or other verifiable impact.
+5. **Recency:** favors current work when bibliographically public, but does not displace a foundational paper solely because it is newer.
+6. **Visitor clarity:** the problem and contribution can be understood in one concise title/venue entry.
+
+Aim for a balanced six-paper set rather than six papers from one topic. A useful target is two robust/generalizable hyperspectral works, two physics-informed or computational-imaging works, one domain-adaptation/segmentation work, and one current or bridging scientific-AI work. This is a balance guideline, not a predetermined selection.
+
+Mazhar must approve the final six and their order. Record the reason for each selection in a non-public content note. Review the list whenever a paper is accepted, a substantial citation/adoption milestone occurs, the target audience changes, or at least every six months. Update the typed homepage records and `/publications` inventory together, then verify every external link and rerun component and Cypress tests.
+
 Refactor `src/app/publications/` into the complete bibliography page, update the dissertation record and 2026 works, and move its copyright notice below the list in a compact disclosure.
 
 Create `src/app/home/research-journey/` as a short accessible timeline: NCI/NIH → Ph.D., University of Memphis → Neuron23 (plus earlier entries only when they clarify the research trajectory). Add a small Recognition subsection for verified, meaningful items only.
 
-### 6. About, methods, contact, and footer
+### 6. About and selected writing
 
 Rewrite `about-me` to a 120–170 word research biography beside a photo. Remove `about-skills.ts`, percentage UI, CounterUp imports, PMP from the headline, stale doctoral language, and job-seeking copy. If retained, show methods/tools as factual labels near the bottom.
+
+Keep Blogs as part of the website and redesign it as a compact **Selected writing** section after About. Preserve the existing blog content and `/blog` route; do not delete either during homepage cleanup. Show two or three recent or research-relevant posts with title, date, short summary, and a clear `View all writing → /blog` link. Load remote feed data progressively so a slow or unavailable feed does not block the homepage, and provide an accessible empty/error state. Blogs may move out of the primary navigation to keep the research focus, but they must remain discoverable from the homepage and footer.
+
+### 7. Contact and footer
 
 Rewrite `contact-me` as “Let’s Connect,” with one collaboration sentence and Email, LinkedIn, Scholar, and GitHub links. Simplify `nav-footer` to `© 2026 Mazharul Hossain` and the same core links. Remove template attribution only after license verification.
 
@@ -113,7 +144,7 @@ Agents should claim one package and avoid files owned by another package.
 | B — Shell/hero | `nav-bar/*`, `home/hero/*` | Responsive nav, hero, fragments | A fields/schema |
 | C — Research story | `home/research-overview/*`, `home/selected-research/*`, `home/current-research/*` | Research narrative and case studies | A and approved figures |
 | D — Evidence | `home/selected-publications/*`, `home/research-journey/*`, `publications/*` | Selected/full publications, timeline, recognition | A and verified citations |
-| E — Personal/contact | `about-me/*`, `contact-me/*`, `nav-footer/*` | Short bio, collaboration CTA, minimal footer | A and license decision |
+| E — Personal/writing/contact | `about-me/*`, `blogs/*`, `contact-me/*`, `nav-footer/*` | Short bio, selected writing, collaboration CTA, minimal footer | A, feed behavior, and license decision |
 | F — Integration/design/QA | `index-page/*`, `app.module.ts`, routing files, `src/styles.css`, tests | Assemble sections, tokens, routing cleanup, regression checks | B–E complete |
 
 Package F alone should change composition, route declarations, and global design tokens. Feature owners keep styles in their component CSS. New components must be declared in `app.module.ts` by the integrator to prevent merge conflicts.
@@ -131,7 +162,8 @@ Package F alone should change composition, route declarations, and global design
 ## Acceptance and verification
 
 - First viewport clearly answers who Mazhar is, what he studies, and why it matters.
-- Homepage order matches this plan and contains no stale doctoral/internship language, skill percentages, generic expertise, blog carousel, or legal wall.
+- Homepage order matches this plan and contains no stale doctoral/internship language, skill percentages, generic expertise, or legal wall.
+- Existing blog content and the `/blog` route remain available; selected writing is discoverable from both the homepage and footer even if it is omitted from primary navigation.
 - All fragments, CTAs, external links, `/publications`, CV, mobile menu, and back navigation work with SSR/hydration.
 - Heading order is logical; images have useful alt text; controls are keyboard accessible; focus is visible; color contrast meets WCAG AA; reduced motion is respected.
 - No claims, dates, affiliations, metrics, citations, or asset rights remain unverified.
