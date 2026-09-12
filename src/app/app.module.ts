@@ -14,6 +14,7 @@ import { SelectedPublicationsComponent } from './publications/selected-publicati
 import { WorksComponent } from './works/works.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { ResearchOverviewComponent } from './home/research-overview/research-overview.component';
+import { SelectedResearchComponent } from './home/selected-research/selected-research.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
@@ -29,6 +30,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     WorksComponent,
     BlogsComponent,
     ResearchOverviewComponent,
+    SelectedResearchComponent,
     PageNotFoundComponent
   ],
   imports: [

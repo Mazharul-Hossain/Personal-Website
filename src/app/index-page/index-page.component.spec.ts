@@ -33,6 +33,7 @@ describe('IndexPageComponent', () => {
     expect(element.querySelector('#parallax .header-shape')).not.toBeNull();
     expect(element.querySelector('.main-btn')?.getAttribute('href')).toBe('#research');
     expect(element.querySelector('app-research-overview')).not.toBeNull();
+    expect(element.querySelector('app-selected-research')).not.toBeNull();
     expect(element.querySelector('app-selected-publications')).not.toBeNull();
     expect(element.querySelector('app-about-me')).not.toBeNull();
     expect(element.querySelector('app-contact-me')).not.toBeNull();

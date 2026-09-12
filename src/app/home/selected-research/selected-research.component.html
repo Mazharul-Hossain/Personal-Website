@@ -1,0 +1,40 @@
+<section class="selected-research" id="selected-research" aria-labelledby="selected-research-heading">
+    <div class="container">
+        <div class="section-title text-center">
+            <p class="section-label">Selected research</p>
+            <h2 class="title" id="selected-research-heading">From measurement challenges to reliable models</h2>
+        </div>
+
+        <div class="research-study-grid">
+            @for (study of studies; track study.title; let first = $first) {
+                <article class="research-study" [class.featured]="first">
+                    <div class="research-figure-placeholder" role="img" [attr.aria-label]="study.figurePlaceholder">
+                        <p>{{ study.figurePlaceholder }}</p>
+                    </div>
+                    <div class="research-study-copy">
+                        <h3>{{ study.title }}</h3>
+                        <dl>
+                            <div>
+                                <dt>Problem</dt>
+                                <dd>{{ study.problem }}</dd>
+                            </div>
+                            <div>
+                                <dt>Method</dt>
+                                <dd>{{ study.method }}</dd>
+                            </div>
+                            <div>
+                                <dt>Evidence</dt>
+                                <dd>{{ study.evidence }}</dd>
+                            </div>
+                        </dl>
+                        <div class="research-study-links">
+                            @for (link of study.links; track link.label) {
+                                <a [href]="link.href" target="_blank" rel="noopener noreferrer">{{ link.label }} <span aria-hidden="true">↗</span></a>
+                            }
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</section>
