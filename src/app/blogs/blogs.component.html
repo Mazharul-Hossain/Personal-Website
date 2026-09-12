@@ -1,36 +1,32 @@
 <!--====== Blogs PART START ======-->
-
-<section class="work-area pt-25 pb-30" id="blog">
+<section class="writing-area pt-25 pb-30" id="blog" aria-labelledby="writing-heading">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="section-title text-center pb-30">
-                    <h2 class="title" style="margin-top: 20px; padding: 20px;">My Blogs</h2>
-                    <!-- <p>.</p> -->
-                </div> <!-- section title -->
-            </div>
-        </div> <!-- row -->
-
-        <!-- https://stackoverflow.com/a/42117768 
-           https://getbootstrap.com/docs/4.0/components/card/ -->
-        <div class="container-fluid">
-            <div class="row flex-row flex-nowrap overflow-auto" id="medium-rss">
-
-                <!-- <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
-                            <a href="#" class="card-link" target="_blank">Card link</a>
-                        </div>
-                    </div>
-                </div> -->
-
-            </div>
+        <div class="writing-heading">
+            <p class="writing-kicker">Selected writing</p>
+            <h2 id="writing-heading">Notes on research, engineering, and learning</h2>
         </div>
 
+        @if (loading) {
+            <p class="writing-state" role="status">Loading recent writing…</p>
+        } @else if (posts.length) {
+            <div class="row">
+                @for (post of posts; track post.link) {
+                    <div class="col-lg-4">
+                        <article class="writing-post">
+                            @if (post.date) {
+                                <p class="writing-date">{{ post.date }}</p>
+                            }
+                            <h3><a [href]="post.link" target="_blank" rel="noopener noreferrer">{{ post.title }}</a></h3>
+                            <p>{{ post.summary }}</p>
+                        </article>
+                    </div>
+                }
+            </div>
+        } @else {
+            <p class="writing-state">Recent posts are unavailable right now. The complete writing archive remains available below.</p>
+        }
+
+        <a class="writing-link" href="https://medium.hmazharul.com/" target="_blank" rel="noopener noreferrer">View all writing <span aria-hidden="true">↗</span></a>
     </div> <!-- container -->
 </section>
 
