@@ -1,153 +1,52 @@
 <!--====== ABOUT PART START ======-->
 
-<section id="about" class="about-area pt-25 pb-30">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="section-title text-center">
-          <h2 class="title" style="margin-top: 20px; padding: 20px;">About Me</h2>
-          <!-- <p>.</p> -->
-        </div> <!-- section title -->
-      </div>
-    </div> <!-- row -->
-
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="about-content mt-25">
-          <h5 class="about-title">I am Mazharul Hossain, PMP</h5>
-          <p>
-            I am a machine learning researcher with five years of experience. I am skilled in data mining, analytics,
-            and creating machine learning systems. I am also a software developer, science enthusiast, and PMI-certified
-            Project Management Professional (PMP). <br>
-
-            After completing my Master's degree here, I am pursuing a Doctorate in Computer Science at the University of
-            Memphis. I am working as a Graduate Research Assistant at the university. Before relocating to the USA, I
-            worked as a software engineer and procurement specialist in Bangladesh's IT and power industries. <br>
-
-            I love exploring new ideas and working with others to achieve goals. I am passionate about crafting
-            effective and impactful data science models. I am currently looking for opportunities as a data scientist
-            and ML engineer.
-          </p>
-
-          <ul class="clearfix">
-            <li style="width: 100%;">
-              <div class="single-info d-flex align-items-center">
-                <div class="info-icon">
-                  <i class="lni-calendar"></i>
+<section id="about" class="about-area pt-25 pb-30" aria-labelledby="about-heading">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="section-title text-center">
+                    <p class="about-kicker">About</p>
+                    <h2 class="title" id="about-heading">Research grounded in measurements and real-world change</h2>
                 </div>
-                <div class="info-text">
-                  <p><span>Job Status:</span> Interested for Internship and Fulltime.</p>
-                </div>
-              </div> <!-- single info -->
-            </li>
-            <!-- <li>
-            <div class="single-info d-flex align-items-center">
-              <div class="info-icon">
-                <i class="lni-envelope"></i>
-              </div>
-              <div class="info-text">
-                <p><span>Email:</span> hossain dot mazharul at gmail dot com</p>
-              </div>
             </div>
-          </li> --> <!-- single info -->
-        </ul>
-      </div> <!-- about content -->
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="about-content">
+                    <p>I am an AI researcher working at the intersection of computational imaging, scientific machine learning, and robust computer vision. My research asks how learning systems can produce dependable results when measurements are incomplete and deployment conditions differ from training.</p>
+                    <p>My work has progressed from physics-aware microscopy reconstruction to generalizable hyperspectral analysis and biomedical computational imaging. Across these settings, I combine knowledge of the sensing process with data-driven models, aiming for methods that are scientifically grounded and useful beyond a single benchmark.</p>
+                    <p class="about-placeholder">TODO:&lt;ADD TRUE DETAILS&gt; — verify completed Ph.D. information, current role, and any additional biographical details before publishing.</p>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <aside class="about-skills" aria-labelledby="skills-heading">
+                    <h3 id="skills-heading">Skills</h3>
+                    <dl>
+                        <div>
+                            <dt>Machine Learning &amp; AI</dt>
+                            <dd>Deep Learning, Domain Adaptation, Anomaly Detection, Computer Vision, Representation Learning</dd>
+                        </div>
+                        <div>
+                            <dt>Frameworks</dt>
+                            <dd>PyTorch, TensorFlow, Keras, Scikit-learn</dd>
+                        </div>
+                        <div>
+                            <dt>Data Tools</dt>
+                            <dd>Python, NumPy, Pandas, OpenCV</dd>
+                        </div>
+                        <div>
+                            <dt>Infrastructure</dt>
+                            <dd>Linux, SLURM, HPC clusters, Docker, AWS</dd>
+                        </div>
+                        <div>
+                            <dt>Backend &amp; Services</dt>
+                            <dd>ASP.NET, Flask, REST APIs, Celery, Redis</dd>
+                        </div>
+                    </dl>
+                </aside>
+            </div>
+        </div>
     </div>
-    <div class="col-xl-5 offset-xl-1 col-lg-6">
-      <div class="about-skills pt-25">
-
-        @for (listing of about_skills; track listing) {
-          <div class="skill-item mt-25">
-            <div class="skill-header">
-              <h6 class="skill-title">{{listing.name}}</h6>
-              <div class="skill-percentage">
-                <div class="count-box counted">
-                  <span class="counter" id="counter_{{listing.id}}">{{listing.performance}}</span>
-                </div>
-                %
-              </div>
-            </div>
-            <div class="skill-bar">
-              <div class="bar-inner">
-                <!-- https://stackoverflow.com/a/34542844/2049763 -->
-                <div attr.data-width={{listing.performance}} class="bar progress-line"
-                  id="progress-line-{{listing.id}}">
-                </div>
-              </div>
-            </div>
-          </div>
-          } <!-- skill item -->
-
-
-          <!--          <div class="skill-item mt-25">-->
-          <!--            <div class="skill-header">-->
-          <!--              <h6 class="skill-title">Python</h6>-->
-          <!--              <div class="skill-percentage">-->
-          <!--                <div class="count-box counted">-->
-          <!--                  <span class="counter">100</span>-->
-        <!--                </div>-->
-        <!--                %-->
-      <!--              </div>-->
-    <!--            </div>-->
-    <!--            <div class="skill-bar">-->
-    <!--              <div class="bar-inner">-->
-    <!--                <div class="bar progress-line" data-width="100"></div>-->
-  <!--              </div>-->
-<!--            </div>-->
-<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
-<!--          <div class="skill-item mt-25">-->
-<!--            <div class="skill-header">-->
-<!--              <h6 class="skill-title">Back End Development: PHP, DJANGO, ASP.NET</h6>-->
-<!--              <div class="skill-percentage">-->
-<!--                <div class="count-box counted">-->
-<!--                  <span class="counter">80</span>-->
-<!--                </div>-->
-<!--                %-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="skill-bar">-->
-<!--              <div class="bar-inner">-->
-<!--                <div class="bar progress-line" data-width="80"></div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
-<!--          <div class="skill-item mt-25">-->
-<!--            <div class="skill-header">-->
-<!--              <h6 class="skill-title">Front End Development: HTML, CSS, JS</h6>-->
-<!--              <div class="skill-percentage">-->
-<!--                <div class="count-box counted">-->
-<!--                  <span class="counter">60</span>-->
-<!--                </div>-->
-<!--                %-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="skill-bar">-->
-<!--              <div class="bar-inner">-->
-<!--                <div class="bar progress-line" data-width="60"></div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
-<!--          <div class="skill-item mt-25">-->
-<!--            <div class="skill-header">-->
-<!--              <h6 class="skill-title">TensorFlow</h6>-->
-<!--              <div class="skill-percentage">-->
-<!--                <div class="count-box counted">-->
-<!--                  <span class="counter">50</span>-->
-<!--                </div>-->
-<!--                %-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="skill-bar">-->
-<!--              <div class="bar-inner">-->
-<!--                <div class="bar progress-line" data-width="50"></div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div> &lt;!&ndash; skill item &ndash;&gt;-->
-
-</div> <!-- about skills -->
-</div>
-</div> <!-- row -->
-</div> <!-- container -->
 </section>
 
 <!--====== ABOUT PART ENDS ======-->
