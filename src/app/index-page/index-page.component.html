@@ -1,6 +1,6 @@
 <!--====== PRELOADER PART START ======-->
-
-<div class="preloader">
+<!-- The CSS timeout reveals the page even if client-side initialization fails. -->
+<div class="preloader" [class.is-hidden]="!preloaderVisible" aria-hidden="true">
   <div class="loader_34">
     <div class="ytp-spinner">
       <div class="ytp-spinner-container">
@@ -16,9 +16,7 @@
     </div>
   </div>
 </div>
-
-<!--====== PRELOADER ENDS START ======-->
-
+<!--====== PRELOADER ENDS ======-->
 
 <!--====== HEADER PART START ======-->
 
@@ -62,8 +60,9 @@
           <div class="header-content-right">
             <h4 class="sub-title">Hello, I am</h4>
             <h1 class="title">Mazharul Hossain</h1>
-            <p>Doctoral Candidate - Late Stage & Graduate Assistant, University of Memphis</p>
-            <a class="main-btn" href="#work">View my Work</a>
+            <p class="research-title">AI Researcher in Computational Imaging &amp; Scientific Machine Learning</p>
+            <p>I develop robust, generalizable, physics-informed machine learning methods for scientific and biomedical imaging.</p>
+            <a class="main-btn" href="#publications">Explore my research</a>
           </div> <!-- header content right -->
         </div>
         <div class="col-lg-6 offset-xl-1">
@@ -73,6 +72,7 @@
               <img loading="lazy" src="assets/images/banner/hero.png" alt="hero">
             </picture>
           </div> <!-- header image -->
+          <p class="header-image-caption d-none d-lg-block">Computational imaging · Robust ML · Scientific AI</p>
         </div>
       </div> <!-- row -->
     </div> <!-- container -->

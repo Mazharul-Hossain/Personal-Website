@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
 interface ParallaxWindow extends Window {
     Parallax?: new (element: Element) => unknown;
@@ -11,7 +11,8 @@ interface ParallaxWindow extends Window {
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class IndexPageComponent implements OnInit, AfterViewInit {
+export class IndexPageComponent implements AfterViewInit {
+    preloaderVisible = true;
     private winRef: Window | undefined;
 
     constructor(
@@ -21,24 +22,9 @@ export class IndexPageComponent implements OnInit, AfterViewInit {
         this.winRef = this.windowRef.nativeWindow();
     }
 
-    ngOnInit(): void {
-        if (this.winRef) {
-            const preloader = this.elementRef.nativeElement.querySelector('.preloader');
-            if (preloader) {
-                setTimeout(() => {
-                    preloader.style.transition = 'opacity 0.5s';
-                    preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 500);
-                }, 200);
-            }
-        }
-    }
-
-    ngOnLoad(): void {
-    }
-
     ngAfterViewInit(): void {
         if (this.winRef) {
+            setTimeout(() => this.preloaderVisible = false, 500);
             const parallaxElement = this.elementRef.nativeElement.querySelector('#parallax');
             const ParallaxConstructor = (this.winRef as ParallaxWindow).Parallax;
             if (parallaxElement && ParallaxConstructor) {
