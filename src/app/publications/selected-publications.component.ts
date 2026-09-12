@@ -45,12 +45,6 @@ export class SelectedPublicationsComponent {
             title: 'Hyperspectral Unmixing-Based Anomaly Detection',
             venue: 'SPIE Computational Imaging VII',
             url: 'https://doi.org/10.1117/12.2664706'
-        },
-        {
-            year: 2022,
-            title: 'Building Rich Interior Hazard Maps for Public Safety',
-            venue: 'Communications in Computer and Information Science',
-            url: 'https://link.springer.com/chapter/10.1007/978-3-031-17098-0_9'
         }
     ];
 }

@@ -5,7 +5,7 @@ describe("Portfolio smoke tests", () => {
 
         cy.get("h1").should("contain.text", "Mazharul Hossain");
         cy.get("#publications").should("be.visible");
-        cy.get("#publications .publication-list li").should("have.length", 6);
+        cy.get("#publications .publication-list li").should("have.length", 5);
         cy.get('#publications a[href="/publications"]').should("contain.text", "View all publications");
         cy.get("#about").should("exist");
         cy.get("#contact").should("exist");

@@ -15,8 +15,8 @@ describe('SelectedPublicationsComponent', () => {
         fixture.detectChanges();
     });
 
-    it('renders six selected publications', () => {
-        expect(fixture.nativeElement.querySelectorAll('.publication-list li').length).toBe(6);
+    it('renders five selected publications', () => {
+        expect(fixture.nativeElement.querySelectorAll('.publication-list li').length).toBe(5);
     });
 
     it('links to the complete publications route', () => {
