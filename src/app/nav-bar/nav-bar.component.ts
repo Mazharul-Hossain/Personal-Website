@@ -140,8 +140,8 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
 
             requestAnimationFrame(scrollAnimation);
 
-            // Keep the homepage route while recording the selected section.
-            this.winRef?.history.replaceState(null, '', `/#${sectionId}`);
+            // Update the URL with the section ID
+            this.location.replaceState(`${sectionId}`);
         } else {
             // Navigate to the route if the section is not on the current page
             this.router.navigate([`/${sectionId}`]);

@@ -22,4 +22,11 @@ describe('ContactMeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('renders professional contact links without an email address', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('h2')?.textContent).toContain('Let’s Connect');
+    expect(element.querySelector('a[href*="linkedin.com"]')?.textContent).toContain('LinkedIn');
+    expect(element.textContent).not.toContain('hossain dot mazharul');
+  });
 });

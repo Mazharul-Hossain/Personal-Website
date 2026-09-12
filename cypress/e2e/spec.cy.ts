@@ -20,17 +20,24 @@ describe("Portfolio smoke tests", () => {
         cy.get("#research h2").should("contain.text", "My Research");
     });
 
-    it("updates the active navigation item when scrolling to About", () => {
+    it("updates the active navigation item when navigating to About", () => {
         cy.intercept("GET", "/feed", []);
         cy.visit("/");
         cy.get('.navigation [data-custom-id="about"]').click();
-        cy.location("pathname").should("eq", "/");
-        cy.location("hash").should("eq", "#about");
+        cy.location("pathname").should("eq", "/about");
         cy.get('.navigation [data-custom-id="about"]').parent().should("have.class", "active");
         cy.get('.navigation [data-custom-id="home"]').parent().should("not.have.class", "active");
         cy.wait(1100);
         cy.get("#research").scrollIntoView();
         cy.get('.navigation [data-custom-id="research"]').parent().should("have.class", "active");
+    });
+
+    it("uses the Blog route from the Writing navigation item", () => {
+        cy.intercept("GET", "/feed", []);
+        cy.visit("/");
+        cy.get('.navigation [data-custom-id="blog"]').click();
+        cy.location("pathname").should("eq", "/blog");
+        cy.contains("h2", "Notes on research, engineering, and learning").should("be.visible");
     });
 
     it("opens the standalone publications route", () => {
