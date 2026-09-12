@@ -31,6 +31,8 @@ describe('IndexPageComponent', () => {
     expect(element.querySelector('.research-title')?.textContent).toContain('Computational Imaging');
     expect(element.querySelector('.header-image-caption')?.textContent).toContain('Robust ML');
     expect(element.querySelector('#parallax .header-shape')).not.toBeNull();
+    expect(element.querySelector('.main-btn')?.getAttribute('href')).toBe('#research');
+    expect(element.querySelector('app-research-overview')).not.toBeNull();
     expect(element.querySelector('app-selected-publications')).not.toBeNull();
     expect(element.querySelector('app-about-me')).not.toBeNull();
     expect(element.querySelector('app-contact-me')).not.toBeNull();

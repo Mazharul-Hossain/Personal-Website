@@ -14,7 +14,6 @@ import { WindowRef } from '../shared/window.token';
 export class NavBarComponent implements AfterViewInit, OnDestroy {
     navbarOpen = false;
 
-    private pageScrollLinks: Element[] = [];
     // private activeRoute: string | null; // Track the active route
     private routerSubscription?: Subscription;
     private winRef: Window | undefined;
@@ -40,14 +39,13 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
         if (!this.winRef) {
             return;
         }
-        this.pageScrollLinks = Array.from(document.getElementsByClassName('page-scroll'));
         this.routerSubscription = this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 // // Update based on the current route
                 // this.activeRoute = event.urlAfterRedirects;
 
                 const currentPath = this.location.path();
-                this.pageScrollLinks.forEach((link) => {
+                this.pageScrollLinks().forEach((link) => {
                     const sectionId = (link as HTMLElement).dataset.customId;
                     const navItem = link.parentElement;
                     if (sectionId && navItem && currentPath.endsWith(sectionId)) {
@@ -69,7 +67,7 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
     onWindowScroll(): void {
         const scrollPosition = window.scrollY || document.documentElement.scrollTop;
 
-        this.pageScrollLinks.forEach((link) => {
+        this.pageScrollLinks().forEach((link) => {
             const sectionId = (link as HTMLElement).dataset.customId;
             if (!sectionId) {
                 return;
@@ -108,6 +106,10 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
         });
     }
 
+    private pageScrollLinks(): Element[] {
+        return Array.from(document.getElementsByClassName('page-scroll'));
+    }
+
     navigateToSection(sectionId: string): void {
         const section = document.getElementById(sectionId);
         if (section) {
@@ -138,8 +140,8 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
 
             requestAnimationFrame(scrollAnimation);
 
-            // Update the URL with the section ID
-            this.location.replaceState(`${sectionId}`);
+            // Keep the homepage route while recording the selected section.
+            this.winRef?.history.replaceState(null, '', `/#${sectionId}`);
         } else {
             // Navigate to the route if the section is not on the current page
             this.router.navigate([`/${sectionId}`]);

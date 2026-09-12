@@ -13,6 +13,7 @@ import { AboutMeComponent } from './about-me/about-me.component';
 import { SelectedPublicationsComponent } from './publications/selected-publications.component';
 import { WorksComponent } from './works/works.component';
 import { BlogsComponent } from './blogs/blogs.component';
+import { ResearchOverviewComponent } from './home/research-overview/research-overview.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     SelectedPublicationsComponent,
     WorksComponent,
     BlogsComponent,
+    ResearchOverviewComponent,
     PageNotFoundComponent
   ],
   imports: [
