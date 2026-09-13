@@ -37,7 +37,7 @@ export class SelectedResearchComponent {
             problem: 'Reconstructing 3D structured-illumination microscopy images from noisy measurements requires both fine detail and fidelity to how the microscope forms an image.',
             method: 'USR combines a learned image prior with repeated corrections based on the microscope point spread function. UPIGAN extends this physics-informed, unrolled approach with adversarial learning to improve reconstruction.',
             evidence: 'Both studies used 18 fixed-cell mitochondrial samples. Their visual comparisons and reported PSNR and SSIM plots favor physics-informed unrolling over the respective non-physics baselines, but neither paper reports an independent external test.',
-            figurePlaceholder: '3D-SIM reconstruction examples and model diagrams appear in the linked papers.',
+            figurePlaceholder: 'UPIGAN GAN block diagram: assets/images/work/upigan-gan-block-diagram.png',
             links: [
                 { label: 'USR paper', href: 'https://doi.org/10.1364/3D.2023.JTu4A.42' },
                 { label: 'UPIGAN paper', href: 'https://doi.org/10.1117/12.2663268' }
