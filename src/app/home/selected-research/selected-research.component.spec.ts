@@ -14,9 +14,9 @@ describe('SelectedResearchComponent', () => {
         fixture.detectChanges();
     });
 
-    it('renders three studies with explicit approval placeholders', () => {
+    it('renders three studies with image arrays', () => {
         const element: HTMLElement = fixture.nativeElement;
         expect(element.querySelectorAll('.research-study').length).toBe(3);
-        expect(element.textContent).toContain('TODO:<ADD TRUE DETAILS>');
+        expect(element.querySelectorAll('.research-figure img').length).toBe(4);
     });
 });
