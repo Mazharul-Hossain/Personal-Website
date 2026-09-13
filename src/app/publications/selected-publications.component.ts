@@ -17,6 +17,12 @@ interface SelectedPublication {
 export class SelectedPublicationsComponent {
     readonly publications: SelectedPublication[] = [
         {
+            year: 2026,
+            title: 'GMoE-AD: Generalized Hyperspectral Anomaly Detection via Mixture-of-Experts and Domain-Invariant Learning',
+            venue: 'Sensors',
+            url: 'https://doi.org/10.3390/s26175661'
+        },
+        {
             year: 2025,
             title: 'Improving Semantic Segmentation through Task Adaptation for UAV Hyperspectral Agricultural Imagery',
             venue: 'SPIE Autonomous Air and Ground Sensing Systems',
@@ -30,21 +36,15 @@ export class SelectedPublicationsComponent {
         },
         {
             year: 2023,
-            title: 'USR: Unrolled Super-Resolution with Deep Priors for Structured Illumination Microscopy',
-            venue: 'Optica Imaging Systems and Applications',
-            url: 'https://doi.org/10.1364/3D.2023.JTu4A.42'
-        },
-        {
-            year: 2023,
-            title: 'Structured Illumination Microscope Image Reconstruction Using UPIGAN',
+            title: 'Structured Illumination Microscope Image Reconstruction Using Unrolled Physics-Informed Generative Adversarial Network (UPIGAN)',
             venue: 'SPIE Computational Imaging VII',
             url: 'https://doi.org/10.1117/12.2663268'
         },
         {
-            year: 2023,
-            title: 'Hyperspectral Unmixing-Based Anomaly Detection',
-            venue: 'SPIE Computational Imaging VII',
-            url: 'https://doi.org/10.1117/12.2664706'
+            year: 2022,
+            title: 'Building Rich Interior Hazard Maps for Public Safety',
+            venue: 'Springer Communications in Computer and Information Science',
+            url: 'https://doi.org/10.1007/978-3-031-17098-0_9'
         }
     ];
 }
