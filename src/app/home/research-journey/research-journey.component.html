@@ -1,0 +1,25 @@
+<section class="research-journey gray-bg pt-25 pb-30" id="experience" aria-labelledby="journey-heading">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="section-title text-center pb-30">
+                    <h2 class="title" id="journey-heading">Research Journey</h2>
+                    <p>From measurement-aware reconstruction to robust learning and biomedical imaging.</p>
+                </div>
+            </div>
+        </div>
+
+        <ol class="journey-list row justify-content-center">
+            @for (entry of entries; track entry.organization) {
+                <li class="col-lg-5 col-md-6 col-sm-8">
+                    <article class="journey-entry single-service text-center mt-30">
+                        <p class="journey-stage">{{ entry.stage }}</p>
+                        <h3>{{ entry.organization }}</h3>
+                        <p class="journey-role">{{ entry.role }}</p>
+                        <p>{{ entry.description }}</p>
+                    </article>
+                </li>
+            }
+        </ol>
+    </div>
+</section>

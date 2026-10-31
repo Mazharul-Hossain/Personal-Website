@@ -22,4 +22,11 @@ describe('NavBarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('orders About before Writing and Contact', () => {
+    const labels = Array.from(fixture.nativeElement.querySelectorAll('.navbar-nav .page-scroll') as NodeListOf<HTMLAnchorElement>)
+      .map((link: HTMLAnchorElement) => link.textContent?.trim());
+
+    expect(labels.slice(-3)).toEqual(['About', 'Writing', 'Contact']);
+  });
 });
