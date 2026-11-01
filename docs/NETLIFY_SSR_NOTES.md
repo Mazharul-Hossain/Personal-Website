@@ -1,0 +1,9 @@
+# Netlify SSR and Express notes
+
+- In commit `020c237` ("upgrade to SSR"), `src/server.ts` used Express to serve static files, render Angular with `CommonEngine`, and provide `/feed`. Express was needed by that implementation.
+- Commit `46cedde` replaced that server with a Netlify `CommonEngine` handler. The current `src/server.ts` uses `AngularAppEngine` and `netlifyAppEngineHandler`; it handles `/feed` through `src/writing-feed.ts` and does not import Express.
+- The installed `@netlify/angular-runtime` generates an Angular SSR Edge Function that imports `netlifyAppEngineHandler` from the built server. This generated function is separate from user-authored functions. Netlify's [Angular documentation](https://docs.netlify.com/build/frameworks/framework-setup-guides/angular/) describes automatic SSR configuration.
+- Netlify's [functions documentation](https://docs.netlify.com/build/functions/configuration/) identifies `netlify/functions` under the site base directory as the default directory for user-authored functions. The directory can also be configured in the Netlify UI.
+- This checkout has no `netlify/functions` directory, and its `netlify.toml` is empty. No files under `netlify/functions` appear in the locally available Git history. This does not establish what is configured or deployed in Netlify, in another repository, or in an earlier deploy whose source is unavailable locally.
+- Before deploying dependency removals, inspect the Netlify project's current deploy and Functions/Edge Functions lists, build base directory, and functions directory. If any separately maintained function imports Express, verify how it obtains dependencies before removing Express from its package.
+- The current `serve:ssr:my-app` command has not been verified as a standalone HTTP server after the Netlify handler replaced the Express server. Revisit it if standalone Node hosting is needed.
