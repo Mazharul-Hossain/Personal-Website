@@ -30,7 +30,7 @@
 /*===========================
     1. COMMON css
 ===========================*/
-@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800");
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800&display=swap");
 @import "@angular/cdk/overlay-prebuilt.css";
 
 /** anchor links - smooth scroll effect **/ 
@@ -147,7 +147,7 @@ p {
   font-size: 16px;
   font-weight: 400;
   line-height: 28px;
-  color: #8a8fa3;
+  color: #626a7a;
   margin: 0px;
 }
 
@@ -1938,6 +1938,10 @@ p.form-message.success.form-message.error, p.form-message.error.form-message.err
 
 .footer-copyright .copyright-text p {
   color: #fff;
+}
+
+.footer-copyright .copyright-text a {
+  color: #b7caff;
 }
 
 .back-to-top {
