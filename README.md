@@ -43,6 +43,12 @@ npm test -- --watch=false --progress=false
 Runs the Jasmine/Karma unit suite once in the CI-safe headless Chrome launcher.
 
 ```bash
+npm run test:feed
+```
+
+Tests the server-side writing feed using simulated Medium responses.
+
+```bash
 npm run cypress:run
 ```
 

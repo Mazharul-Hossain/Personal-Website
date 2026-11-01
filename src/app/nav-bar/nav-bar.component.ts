@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { WindowRef } from '../shared/window.token';
+import { ScrollAnimationService } from '../shared/scroll-animation.service';
 
 @Component({
     selector: 'app-nav-bar',
@@ -21,7 +22,8 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
     constructor(
         private router: Router,
         private location: Location,
-        @Inject(WindowRef) private windowRef: any
+        @Inject(WindowRef) private windowRef: any,
+        private scrollAnimation: ScrollAnimationService
     ) {
         this.winRef = this.windowRef.nativeWindow();
     }
@@ -58,6 +60,7 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        this.scrollAnimation.cancel();
         if (this.routerSubscription) {
             this.routerSubscription.unsubscribe();
         }
@@ -65,6 +68,7 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
 
     @HostListener('window:scroll', [])
     onWindowScroll(): void {
+        if (!this.winRef) return;
         const scrollPosition = window.scrollY || document.documentElement.scrollTop;
 
         this.pageScrollLinks().forEach((link) => {
@@ -102,43 +106,33 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
         siblings.forEach((sibling: Element) => {
             if (sibling !== activeElement) {
                 sibling.classList.remove('active');
+                sibling.querySelector('a')?.removeAttribute('aria-current');
             }
         });
+        activeElement.querySelector('a')?.setAttribute('aria-current', 'location');
     }
 
     private pageScrollLinks(): Element[] {
         return Array.from(document.getElementsByClassName('page-scroll'));
     }
 
-    navigateToSection(sectionId: string): void {
+    navigateToSection(sectionId: string, animate = true): void {
+        if (!this.winRef) return;
+        this.scrollAnimation.cancel();
         const section = document.getElementById(sectionId);
         if (section) {
             // Scroll to the section if it exists on the current page
             // section.scrollIntoView({ behavior: 'smooth' });
 
             // Custom smooth scrolling
-            const targetPosition = section.getBoundingClientRect().top + (window.scrollY || 0);
-            const startPosition = window.scrollY || 0;
-            const distance = targetPosition - startPosition;
-            const duration = 1000; // Duration in milliseconds
-            let startTime: number | null = null;
-
-            const scrollAnimation = (currentTime: number) => {
-                if (!startTime) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
-                window.scrollTo(0, run);
-                if (timeElapsed < duration) requestAnimationFrame(scrollAnimation);
-            };
-
-            const easeInOutQuad = (t: number, b: number, c: number, d: number) => {
-                t /= d / 2;
-                if (t < 1) return (c / 2) * t * t + b;
-                t--;
-                return (-c / 2) * (t * (t - 2) - 1) + b;
-            };
-
-            requestAnimationFrame(scrollAnimation);
+            const expandedMenuHeight = document.querySelector('.navbar-collapse.show')?.getBoundingClientRect().height || 0;
+            const headerHeight = (document.querySelector('.navigation')?.getBoundingClientRect().height || 0) - expandedMenuHeight;
+            const targetPosition = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerHeight - 16);
+            if (!animate) {
+                window.scrollTo({ top: targetPosition, behavior: 'instant' });
+            } else {
+                this.scrollAnimation.scrollTo(targetPosition, 1000);
+            }
 
             // Update the URL with the section ID
             this.location.replaceState(`${sectionId}`);

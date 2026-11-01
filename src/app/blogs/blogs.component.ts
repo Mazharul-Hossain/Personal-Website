@@ -1,5 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, Input, inject, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { timeout } from 'rxjs';
 import { WindowRef } from '../shared/window.token';
 
 interface FeedItem {
@@ -27,6 +29,8 @@ interface WritingItem {
 export class BlogsComponent implements AfterViewInit {
     private readonly http = inject(HttpClient);
     private readonly changeDetector = inject(ChangeDetectorRef);
+    private readonly destroyRef = inject(DestroyRef);
+    @Input() preview = false;
 
     loading = true;
     posts: WritingItem[] = [];
@@ -38,9 +42,13 @@ export class BlogsComponent implements AfterViewInit {
             return;
         }
 
-        this.http.get<FeedItem[]>('/feed').subscribe({
+        this.http.get<FeedItem[]>('/feed').pipe(
+            timeout(10000),
+            takeUntilDestroyed(this.destroyRef)
+        ).subscribe({
             next: items => {
-                this.posts = items.slice(0, 3).map(item => ({
+                const feed = Array.isArray(items) ? items : [];
+                this.posts = (this.preview ? feed.slice(0, 3) : feed).map(item => ({
                     title: item.title || 'Untitled',
                     link: item.link || 'https://medium.hmazharul.com/',
                     date: item.pubDate || '',

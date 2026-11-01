@@ -1,25 +1,38 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { NavFooterComponent } from './nav-footer.component';
 
 describe('NavFooterComponent', () => {
-  let component: NavFooterComponent;
-  let fixture: ComponentFixture<NavFooterComponent>;
+    let component: NavFooterComponent;
+    let fixture: ComponentFixture<NavFooterComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ NavFooterComponent ]
-    })
-    .compileComponents();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [NavFooterComponent]
+        })
+            .compileComponents();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(NavFooterComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(NavFooterComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('keeps the button visible when scrolling down during its fade-out', fakeAsync(() => {
+        const button: HTMLElement = fixture.nativeElement.querySelector('.back-to-top');
+        spyOnProperty(window, 'scrollY', 'get').and.returnValues(100, 500);
+
+        window.dispatchEvent(new Event('scroll'));
+        tick(100);
+        window.dispatchEvent(new Event('scroll'));
+        tick(200);
+
+        expect(button.style.display).toBe('block');
+        expect(button.style.opacity).toBe('1');
+    }));
 });

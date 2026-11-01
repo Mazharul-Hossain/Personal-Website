@@ -16,6 +16,7 @@ import { BlogsComponent } from './blogs/blogs.component';
 import { ResearchOverviewComponent } from './home/research-overview/research-overview.component';
 import { SelectedResearchComponent } from './home/selected-research/selected-research.component';
 import { ResearchJourneyComponent } from './home/research-journey/research-journey.component';
+import { AboutPageComponent, ContactPageComponent, ExperiencePageComponent, ResearchPageComponent, WritingPageComponent } from './home/standalone-pages.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
@@ -33,6 +34,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ResearchOverviewComponent,
     SelectedResearchComponent,
     ResearchJourneyComponent,
+    AboutPageComponent,
+    ContactPageComponent,
+    ExperiencePageComponent,
+    ResearchPageComponent,
+    WritingPageComponent,
     PageNotFoundComponent
   ],
   imports: [

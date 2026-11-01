@@ -23,11 +23,12 @@ describe('AboutMeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('renders the research biography without stale job-search content', () => {
+  it('renders biography, education, and skills without stale job-search content', () => {
     const element: HTMLElement = fixture.nativeElement;
-    expect(element.querySelector('h2')?.textContent).toContain('Research grounded in measurements');
+    expect(element.querySelector('h2')?.textContent).toContain('About Me');
     expect(element.querySelector('#skills-heading')?.textContent).toContain('Skills');
-    expect(element.textContent).toContain('Machine Learning & AI');
+    expect(element.textContent).toContain('Machine Learning Tools');
+    expect(element.textContent).toContain('Ph.D. in Computer Science');
     expect(element.textContent).toContain('TODO:<ADD TRUE DETAILS>');
     expect(element.textContent).not.toContain('Interested for Internship and Fulltime');
   });

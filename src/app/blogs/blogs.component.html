@@ -2,7 +2,7 @@
 <section class="writing-area pt-25 pb-30" id="blog" aria-labelledby="writing-heading">
     <div class="container">
         <div class="writing-heading">
-            <p class="writing-kicker">Selected writing</p>
+            <p class="writing-kicker">{{ preview ? 'Selected writing' : 'Writing' }}</p>
             <h2 id="writing-heading">Notes on research, engineering, and learning</h2>
         </div>
 
@@ -23,10 +23,14 @@
                 }
             </div>
         } @else {
-            <p class="writing-state">Recent posts are unavailable right now. The complete writing archive remains available below.</p>
+            <p class="writing-state">Recent posts are unavailable right now. Visit my writing on Medium.</p>
         }
 
-        <a class="writing-link" href="https://medium.hmazharul.com/" target="_blank" rel="noopener noreferrer">View all writing <span aria-hidden="true">↗</span></a>
+        @if (preview && (loading || posts.length)) {
+            <a class="writing-link" routerLink="/blog">View all writing <span aria-hidden="true">→</span></a>
+        } @else {
+            <a class="writing-link" href="https://medium.hmazharul.com/" target="_blank" rel="noopener noreferrer">Visit my Medium archive <span aria-hidden="true">↗</span></a>
+        }
     </div> <!-- container -->
 </section>
 

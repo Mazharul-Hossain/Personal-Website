@@ -1,7 +1,7 @@
-import { Component, AfterViewInit, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ElementRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
 interface ParallaxWindow extends Window {
-    Parallax?: new (element: Element) => unknown;
+    Parallax?: new (element: Element) => { enable(): void; disable(): void };
 }
 
 @Component({
@@ -11,9 +11,10 @@ interface ParallaxWindow extends Window {
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class IndexPageComponent implements AfterViewInit {
+export class IndexPageComponent implements AfterViewInit, OnDestroy {
     preloaderVisible = true;
     private winRef: Window | undefined;
+    private parallax?: { enable(): void; disable(): void };
 
     constructor(
         private elementRef: ElementRef,
@@ -25,11 +26,19 @@ export class IndexPageComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         if (this.winRef) {
             setTimeout(() => this.preloaderVisible = false, 500);
-            const parallaxElement = this.elementRef.nativeElement.querySelector('#parallax');
+            const element = this.elementRef.nativeElement.querySelector('#parallax');
             const ParallaxConstructor = (this.winRef as ParallaxWindow).Parallax;
-            if (parallaxElement && ParallaxConstructor) {
-                new ParallaxConstructor(parallaxElement);
-            }
+            if (element && ParallaxConstructor) this.parallax = new ParallaxConstructor(element);
+        }
+    }
+
+    ngOnDestroy(): void {
+        if (this.parallax) {
+            // The bundled library's pending orientation check can call enable()
+            // after disable(). Prevent that instance from restarting after teardown.
+            this.parallax.enable = () => {};
+            this.parallax.disable();
+            this.parallax = undefined;
         }
     }
 }

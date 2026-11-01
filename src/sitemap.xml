@@ -9,8 +9,11 @@
 
   <url>
     <loc>https://www.hmazharul.com/</loc>
-    <lastmod>2020-12-28</lastmod>
   </url>
-
-
+  <url><loc>https://www.hmazharul.com/publications</loc></url>
+  <url><loc>https://www.hmazharul.com/research</loc></url>
+  <url><loc>https://www.hmazharul.com/experience</loc></url>
+  <url><loc>https://www.hmazharul.com/blog</loc></url>
+  <url><loc>https://www.hmazharul.com/about</loc></url>
+  <url><loc>https://www.hmazharul.com/contact</loc></url>
 </urlset>

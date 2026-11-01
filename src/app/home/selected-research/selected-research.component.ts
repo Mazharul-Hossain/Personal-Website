@@ -33,11 +33,13 @@ export class SelectedResearchComponent {
             figures: [
                 {
                     src: 'assets/images/work/gmoe-ad-graphical-abstract.png',
-                    alt: 'GMoE-AD graphical abstract'
+                    alt: 'GMoE-AD graphical abstract',
+                    caption: 'TODO:<ADD TRUE DETAILS> — GMoE-AD figure caption, source citation, and reuse permission.'
                 },
                 {
                     src: 'assets/images/work/ge-ad-graphical-abstract.png',
-                    alt: 'GE-AD graphical abstract'
+                    alt: 'GE-AD graphical abstract',
+                    caption: 'TODO:<ADD TRUE DETAILS> — GE-AD figure caption, source citation, and reuse permission.'
                 }
             ],
             links: [
@@ -55,7 +57,8 @@ export class SelectedResearchComponent {
             figures: [
                 {
                     src: 'assets/images/work/upigan-gan-block-diagram.png',
-                    alt: 'UPIGAN GAN block diagram'
+                    alt: 'UPIGAN GAN block diagram',
+                    caption: 'TODO:<ADD TRUE DETAILS> — UPIGAN figure caption, source citation, and reuse permission.'
                 }
             ],
             links: [
@@ -71,7 +74,8 @@ export class SelectedResearchComponent {
             figures: [
                 {
                     src: 'assets/images/work/w-1.png',
-                    alt: 'Map901 project banner'
+                    alt: 'Map901 project banner',
+                    caption: 'TODO:<ADD TRUE DETAILS> — Map901 figure caption, source citation, and reuse permission.'
                 }
             ],
             links: [

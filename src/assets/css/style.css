@@ -14,7 +14,7 @@
     ===================
 
     1.COMMON
-	2.HEADER
+	  2.HEADER
     3.ABOUT
     4.SERVICES
     4.CALL TO ACTION
@@ -67,6 +67,32 @@ button:focus {
 a:focus,
 a:hover {
   text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #754ef9;
+  outline-offset: 4px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+section[id] {
+  scroll-margin-top: 100px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 i,
@@ -933,6 +959,8 @@ p {
 
 .header-content-right .sub-title {
   font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
   color: #754ef9;
   text-transform: uppercase;
   padding-bottom: 15px;
@@ -956,7 +984,7 @@ p {
   }
 }
 
-.header-content-right p {
+.header-content-right p:not(.sub-title) {
   padding-bottom: 24px;
 }
 

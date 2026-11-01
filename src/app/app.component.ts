@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GtagService } from './gtag/gtag.service';
 import { WindowRef } from './shared/window.token';
+import { PageMetadataService } from './shared/page-metadata.service';
 
 @Component({
     selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
         private elementRef: ElementRef,
         private gtagService: GtagService,
         @Inject(WindowRef) private windowRef: WindowRef,
-        private router: Router
+        private router: Router,
+        private pageMetadata: PageMetadataService
     ) { }
 
     ngOnInit(): void {
@@ -28,14 +30,16 @@ export class AppComponent implements OnInit, OnDestroy {
         }
 
         const browserWindow = this.windowRef.nativeWindow();
+        this.pageMetadata.update(this.router.url);
         if (browserWindow) {
             this.gtagService.addGtagScript();
-            this.routerSubscription = this.router.events.subscribe(event => {
-                if (event instanceof NavigationEnd) {
-                    browserWindow.requestAnimationFrame(() => browserWindow.scrollTo(0, 0));
-                }
-            });
         }
+        this.routerSubscription = this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+                this.pageMetadata.update(event.urlAfterRedirects);
+                browserWindow?.requestAnimationFrame(() => browserWindow.scrollTo(0, 0));
+            }
+        });
     }
 
     ngOnDestroy(): void {
