@@ -25,10 +25,12 @@ describe('NavFooterComponent', () => {
 
     it('keeps the button visible when scrolling down during its fade-out', fakeAsync(() => {
         const button: HTMLElement = fixture.nativeElement.querySelector('.back-to-top');
-        spyOnProperty(window, 'scrollY', 'get').and.returnValues(100, 500);
+        let scrollPosition = 100;
+        spyOnProperty(window, 'scrollY', 'get').and.callFake(() => scrollPosition);
 
         window.dispatchEvent(new Event('scroll'));
         tick(100);
+        scrollPosition = 500;
         window.dispatchEvent(new Event('scroll'));
         tick(200);
 
