@@ -30,4 +30,13 @@ describe("ResearchJourneyComponent", () => {
         expect(element.textContent).not.toContain("TODO:<ADD TRUE DETAILS>");
         expect(element.textContent).not.toContain("Ph.D. in Computer Science");
     });
+
+    it("renders all three recognition entries", () => {
+        const entries = fixture.nativeElement.querySelectorAll("aside p") as NodeListOf<HTMLElement>;
+
+        expect(entries.length).toBe(3);
+        expect(entries[0].textContent).toContain("First Place, Long Talk · 2026");
+        expect(entries[1].textContent).toContain("First Place · 2021");
+        expect(entries[2].textContent).toContain("Best Student Paper Nominee · 2021");
+    });
 });
