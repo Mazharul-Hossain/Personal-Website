@@ -34,12 +34,12 @@ export class SelectedResearchComponent {
                 {
                     src: 'assets/images/work/gmoe-ad-graphical-abstract.png',
                     alt: 'GMoE-AD graphical abstract',
-                    caption: 'TODO:<ADD TRUE DETAILS> — GMoE-AD figure caption, source citation, and reuse permission.'
+                    caption: 'GMoE-AD combines neural experts and domain-adversarial learning for cross-domain detection. Graphical abstract: Hossain et al., Sensors, 2026, doi:10.3390/s26175661. © 2026 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).'
                 },
                 {
                     src: 'assets/images/work/ge-ad-graphical-abstract.png',
                     alt: 'GE-AD graphical abstract',
-                    caption: 'TODO:<ADD TRUE DETAILS> — GE-AD figure caption, source citation, and reuse permission.'
+                    caption: 'GE-AD selects and combines complementary anomaly detectors using a greedy ensemble. Graphical abstract: Hossain et al., Journal of Imaging, 2024, doi:10.3390/jimaging10060131. © 2024 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).'
                 }
             ],
             links: [
@@ -58,7 +58,7 @@ export class SelectedResearchComponent {
                 {
                     src: 'assets/images/work/upigan-gan-block-diagram.png',
                     alt: 'UPIGAN GAN block diagram',
-                    caption: 'TODO:<ADD TRUE DETAILS> — UPIGAN figure caption, source citation, and reuse permission.'
+                    caption: 'UPIGAN discriminator and generator architecture, including the microscope point spread function. Dajkhosh, Hossain, and Preza, Computational Imaging VII, SPIE, 2023, Figure 3, doi:10.1117/12.2663268.'
                 }
             ],
             links: [
@@ -75,7 +75,7 @@ export class SelectedResearchComponent {
                 {
                     src: 'assets/images/work/w-1.png',
                     alt: 'Map901 project banner',
-                    caption: 'TODO:<ADD TRUE DETAILS> — Map901 figure caption, source citation, and reuse permission.'
+                    caption: 'Map901 project website banner. Source: map901.memphis.edu.'
                 }
             ],
             links: [

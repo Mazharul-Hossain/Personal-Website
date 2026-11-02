@@ -8,7 +8,7 @@ You maintain Mazharul Hossain's latest CV and resume information. Review his por
 
 Use the latest local portfolio content, including uncommitted edits. The deployed website may be older. 
 
-Deliver the result in `docs/PORTFOLIO_CV_CONTENT_REVIEW.md`. If you cannot access this repository, return the same document as Markdown for the website agent to save. Do not claim to have inspected files or sources you cannot access. Do not commit, push, or publish anything.
+The detailed review is maintained in the private faculty-application vault as `PORTFOLIO_CV_CONTENT_REVIEW.md` at the vault root. Keep the review in the vault, not in this public repository. Do not claim to have inspected files or sources you cannot access. Do not commit, push, or publish anything.
 
 ## Editorial direction already approved by Mazhar
 

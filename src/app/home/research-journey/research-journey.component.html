@@ -8,17 +8,29 @@
             </div>
         </div>
 
-        <ol class="journey-list row justify-content-center">
-            @for (entry of entries; track entry.organization) {
-                <li class="col-lg-5 col-md-6 col-sm-8">
-                    <article class="journey-entry single-service text-center mt-30">
-                        <p class="journey-stage">{{ entry.stage }}</p>
-                        <h3>{{ entry.organization }}</h3>
-                        <p class="journey-role">{{ entry.role }}</p>
-                        <p>{{ entry.description }}</p>
-                    </article>
-                </li>
-            }
-        </ol>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <ol class="journey-list">
+                    @for (entry of entries; track entry.organization) {
+                        <li>
+                            <article class="journey-entry single-service mt-30">
+                                <p class="journey-stage">{{ entry.stage }}</p>
+                                <h3>{{ entry.organization }}</h3>
+                                <p class="journey-role">{{ entry.role }}</p>
+                                <p>{{ entry.description }}</p>
+                            </article>
+                        </li>
+                    }
+                </ol>
+            </div>
+            <aside class="col-lg-4" aria-labelledby="recognition-heading">
+                <div class="journey-entry single-service mt-30">
+                    <h3 id="recognition-heading">Recognition</h3>
+                    <p><strong>First Place, Long Talk · 2026</strong><br>21st Annual Computer Science Research Symposium, University of Memphis</p>
+                    <p><strong>First Place · 2021</strong><br>33rd Annual Student Research Forum, University of Memphis</p>
+                    <p><strong>Best Student Paper Nominee · 2021</strong><br>International Conference on Smart Cities and Green ICT Systems (SMARTGREENS)</p>
+                </div>
+            </aside>
+        </div>
     </div>
 </section>

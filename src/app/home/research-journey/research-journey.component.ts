@@ -17,22 +17,22 @@ interface JourneyEntry {
 export class ResearchJourneyComponent {
     readonly entries: JourneyEntry[] = [
         {
-            stage: "Current — TODO:<ADD TRUE DETAILS> — start date",
+            stage: "June 2026 – Present",
             organization: "National Cancer Institute, National Institutes of Health",
             role: "Visiting Fellow",
-            description: "My work focuses on computational cryo-electron microscopy. TODO:<ADD TRUE DETAILS> — add the official unit, day-to-day responsibilities, and contributions that may be described publicly."
+            description: "I develop and validate computational methods and software for cryo-electron microscopy."
         },
         {
-            stage: "TODO:<ADD TRUE DETAILS> — employment dates",
+            stage: "August 2018 – May 2026",
             organization: "University of Memphis",
             role: "Graduate Assistant",
-            description: "TODO:<ADD TRUE DETAILS> — confirm the official appointment title and department, and describe research, teaching, or other responsibilities actually held."
+            description: "I researched hyperspectral imaging, LiDAR indoor mapping, microscopy reconstruction, and responsible AI."
         },
         {
             stage: "May 2022 – August 2022",
             organization: "Neuron23",
-            role: "Intern",
-            description: "TODO:<ADD TRUE DETAILS> — add the official internship title, team, responsibilities, and contributions."
+            role: "Data Scientist Intern",
+            description: "I developed compound-modeling software and interpretable molecular-property models."
         }
     ];
 }

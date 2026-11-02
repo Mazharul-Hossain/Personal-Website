@@ -29,7 +29,7 @@ describe('AboutMeComponent', () => {
     expect(element.querySelector('#skills-heading')?.textContent).toContain('Skills');
     expect(element.textContent).toContain('Machine Learning Tools');
     expect(element.textContent).toContain('Ph.D. in Computer Science');
-    expect(element.textContent).toContain('TODO:<ADD TRUE DETAILS>');
+    expect(element.textContent).toContain('hiking, exploring nature, and cycling');
     expect(element.textContent).not.toContain('Interested for Internship and Fulltime');
   });
 });
