@@ -4,6 +4,7 @@ Implementation: src/app/publications/selected-publications.component.ts */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { formatSelectedAuthors, SelectedPublicationsComponent } from './selected-publications.component';
+import { SELECTED_PUBLICATION_BASELINE } from "./publication-inventory.fixture";
 
 describe('SelectedPublicationsComponent', () => {
     let fixture: ComponentFixture<SelectedPublicationsComponent>;
@@ -27,6 +28,14 @@ describe('SelectedPublicationsComponent', () => {
     it('links to the complete publications route', () => {
         const link = fixture.nativeElement.querySelector('.publication-cta a');
         expect(link.getAttribute('href')).toBe('/publications');
+    });
+
+    it("preserves the five selected records, their ordering and resource choices", () => {
+        expect(fixture.componentInstance.publications.map(({ id, ...record }) => record))
+            .toEqual(SELECTED_PUBLICATION_BASELINE.map(record => ({ ...record, authors: [...record.authors] })));
+        const element: HTMLElement = fixture.nativeElement;
+        expect(Array.from(element.querySelectorAll(".publication-list h3 a")).map(link => link.getAttribute("href")))
+            .toEqual(SELECTED_PUBLICATION_BASELINE.map(record => record.url));
     });
 });
 

@@ -44,7 +44,7 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Style
                         </dl>
                         <div class="research-study-links">
                             @for (link of study.links; track link.label) {
-                                <a [href]="link.href" target="_blank" rel="noopener noreferrer">{{ link.label }} <span aria-hidden="true">↗</span></a>
+                                <a [href]="link.href" [attr.data-publication-id]="link.publicationId" target="_blank" rel="noopener noreferrer">{{ link.label }} <span aria-hidden="true">↗</span></a>
                             }
                         </div>
                     </div>

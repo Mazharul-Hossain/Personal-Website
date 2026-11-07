@@ -1,8 +1,14 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-content/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
-Template: src/app/home/selected-research/selected-research.component.html; Styles: src/app/home/selected-research/selected-research.component.css */
-// TODO<Migration>[MIG-01]: resolve paper links from shared publication IDs; preserve evidence and attribution; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
+Template: src/app/home/selected-research/selected-research.component.html; Styles: src/app/home/selected-research/selected-research.component.css
+Paper references: src/app/publications/publication-core.ts; attribution remains figure-specific. */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { getPublication, publicationAuthorSurnames, publicationDoi, publicationLink } from "../../publications/publication-core";
+import type { PublicationId } from "../../publications/publication-core";
+
+const gmoe = getPublication("gmoe-ad-2026");
+const gead = getPublication("ge-ad-2024");
+const upigan = getPublication("upigan-2023");
 
 interface ResearchStudy {
     title: string;
@@ -10,7 +16,7 @@ interface ResearchStudy {
     method: string;
     evidence: string;
     figures: ResearchFigure[];
-    links: Array<{ label: string; href: string }>;
+    links: Array<{ label: string; href: string; publicationId?: PublicationId }>;
 }
 
 interface ResearchFigure {
@@ -38,19 +44,20 @@ export class SelectedResearchComponent {
                 {
                     src: 'assets/images/work/gmoe-ad-graphical-abstract.png',
                     alt: 'GMoE-AD graphical abstract',
-                    caption: 'GMoE-AD combines neural experts and domain-adversarial learning for cross-domain detection. Graphical abstract: Hossain et al., Sensors, 2026, doi:10.3390/s26175661. © 2026 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).'
+                    caption: `GMoE-AD combines neural experts and domain-adversarial learning for cross-domain detection. Graphical abstract: Hossain et al., ${gmoe.venue}, ${gmoe.year}, doi:${publicationDoi(gmoe.id)}. © 2026 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).`
                 },
                 {
                     src: 'assets/images/work/ge-ad-graphical-abstract.png',
                     alt: 'GE-AD graphical abstract',
-                    caption: 'GE-AD selects and combines complementary anomaly detectors using a greedy ensemble. Graphical abstract: Hossain et al., Journal of Imaging, 2024, doi:10.3390/jimaging10060131. © 2024 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).'
+                    caption: `GE-AD selects and combines complementary anomaly detectors using a greedy ensemble. Graphical abstract: Hossain et al., ${gead.venue}, ${gead.year}, doi:${publicationDoi(gead.id)}. © 2024 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).`
                 }
             ],
             links: [
-                { label: 'GMoE-AD paper', href: 'https://www.mdpi.com/1424-8220/26/17/5661' },
-                { label: 'GE-AD paper', href: 'https://www.mdpi.com/2313-433X/10/6/131' },
+                publicationLink("gmoe-ad-2026", "publisher", "GMoE-AD paper"),
+                publicationLink("ge-ad-2024", "publisher", "GE-AD paper"),
+                // TODO<Content>[CONTENT-ARXIV]: establish the arXiv/published version relationship; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
                 { label: 'Ensemble comparison', href: 'https://arxiv.org/abs/2408.07114' },
-                { label: 'HUE-AD paper', href: 'https://doi.org/10.1117/12.2664706' }
+                publicationLink("hue-ad-2023", "doi", "HUE-AD paper")
             ]
         },
         {
@@ -62,12 +69,12 @@ export class SelectedResearchComponent {
                 {
                     src: 'assets/images/work/upigan-gan-block-diagram.png',
                     alt: 'UPIGAN GAN block diagram',
-                    caption: 'UPIGAN discriminator and generator architecture, including the microscope point spread function. Dajkhosh, Hossain, and Preza, Computational Imaging VII, SPIE, 2023, Figure 3, doi:10.1117/12.2663268.'
+                    caption: `UPIGAN discriminator and generator architecture, including the microscope point spread function. ${publicationAuthorSurnames(upigan.id)}, ${upigan.venue}, SPIE, ${upigan.year}, Figure 3, doi:${publicationDoi(upigan.id)}.`
                 }
             ],
             links: [
-                { label: 'USR paper', href: 'https://doi.org/10.1364/3D.2023.JTu4A.42' },
-                { label: 'UPIGAN paper', href: 'https://doi.org/10.1117/12.2663268' }
+                publicationLink("usr-2023", "doi", "USR paper"),
+                publicationLink("upigan-2023", "doi", "UPIGAN paper")
             ]
         },
         {
@@ -83,8 +90,8 @@ export class SelectedResearchComponent {
                 }
             ],
             links: [
-                { label: '2021 conference paper', href: 'https://doi.org/10.5220/0010454400450056' },
-                { label: '2022 book chapter', href: 'https://doi.org/10.1007/978-3-031-17098-0_9' }
+                publicationLink("indoor-point-clouds-2021", "doi", "2021 conference paper"),
+                publicationLink("interior-hazard-maps-2022", "doi", "2022 book chapter")
             ]
         }
     ];

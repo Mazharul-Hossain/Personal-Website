@@ -17,9 +17,9 @@ The editorial handoff is a source-checking guide, not proof its old draft remain
 
 Reusable structured facts belong in TypeScript. HTML renders records with bindings/control flow; narrative-only presentation and composition may remain in templates. Do not copy identical citations into another independent store.
 
-For MIG-01, inventory complete legacy bibliography HTML: authors/order, titles, venues, years/status, URLs/DOIs, theses, categories/order. Use stable publication IDs and an ordered selected-ID list. Research links resolve shared IDs/URLs. Keep full details in the lazy bibliography; share only the core needed eagerly. Measure initial/lazy chunks after changing imports.
+Follow the current content map for the shared core, lazy citation details, ordered selected IDs and research references. Edit authoritative facts once, then verify their consuming views. Distinct manuscript/publisher/DOI/slides/archive targets are not interchangeable. Keep full citation details lazy and measure initial/lazy chunks after import changes.
 
-Until migration lands, check corrections against selected TS records, full HTML citations and research records. Preserve information and register mismatches. An active plan is not an implemented shared model.
+The frozen pre-migration fixture is test evidence, not a runtime content store. Change its expectations only for intentional editorial updates. An active plan alone does not prove implementation; consult its current verification record. Do not infer the unresolved arXiv version association from similar topic/title wording.
 
 ## Validate
 

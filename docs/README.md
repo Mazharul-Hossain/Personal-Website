@@ -15,22 +15,28 @@ Agent-readiness implementation is recorded within the active plan. Historical pr
 
 ## Content ownership and migration
 
-**Governing rule:** reusable structured facts are stored once in typed TypeScript records; HTML presents them. There is no application database. TypeScript is authoritative for migrated records; legacy HTML remains the inventory to preserve until migration, not permission to discard details.
+**Governing rule:** reusable structured facts are stored once in typed TypeScript records; HTML presents them. There is no application database. Publication templates now render a shared core and lazy citation details. Test fixtures freeze the pre-migration expectations; they are not application content sources.
 
 | Content | Current source / consumer | Work |
 | --- | --- | --- |
-| Selected publications | `src/app/publications/selected-publications.component.ts` → sibling HTML | MIG-01: selected IDs reference shared records |
-| Full bibliography, theses, categories, complete citations | `src/app/publications/publications.component.html` | MIG-01: inventory and migrate; keep details in lazy feature |
-| Research studies, figures, paper links | `src/app/home/selected-research/selected-research.component.ts` → sibling HTML | MIG-01: reuse stable publication IDs/links |
+| Shared publication facts, resource URLs and ordered selected IDs | [publication-core.ts](../src/app/publications/publication-core.ts) | One authority for all 14 records; selected component resolves IDs and derives its view |
+| Full bibliography/thesis citation details and category labels | [publication-details.ts](../src/app/publications/publication-details.ts) → full component → HTML | Runtime details are imported only by the lazy bibliography feature |
+| Research studies and figures | `src/app/home/selected-research/selected-research.component.ts` → sibling HTML | Seven paper links and figure publication facts resolve shared records; arXiv association remains CONTENT-ARXIV |
 | Employment | `src/app/home/research-journey/research-journey.component.ts` → sibling HTML | Existing typed source; verify facts against evidence |
 | Recognition, biography, skills, static introductions | Research-journey/About and section HTML | MIG-06: extract reusable structured facts when editing; narrative presentation may remain in HTML |
 | Hero and section order | `src/app/index-page/index-page.component.html` | Composition is presentation, not a second structured store |
 | Writing | `src/writing-feed.ts` → `blogs.component.ts` view records → HTML | External feed is the source; do not copy articles manually |
 | Metadata | `src/app/shared/page-metadata.service.ts`, initial `src/index.html` | MIG-06: keep shared identity/profile facts consistent |
 
-For MIG-01, inventory every citation, introduce stable IDs and an ordered selected-ID list, keep full details behind the lazy feature, and render templates from records. Check citation completeness, author formatting, categories/order, selections, research links and initial/lazy bundle sizes. Sharing a title must not load the entire bibliography on the homepage.
+### Maintaining publications
 
-Until consolidation lands, check all affected current locations for a publication correction and register unresolved differences. Do not introduce a third record or declare the migration finished while citations remain independently maintained in HTML.
+Edit shared titles, ordered authors, years, venues and semantic resources in the core. `shortVenue` is an intentional abbreviated presentation label only when it differs from the full venue. The core's array order defines entry order within categories; `SELECTED_PUBLICATION_IDS` defines homepage order. Do not sort either implicitly.
+
+Edit citation-specific text, author presentation, category labels and title-link choices in lazy details. Citation parts reference shared year/venue/resources and contain plain text, never stored HTML or a second title/author list. Core author names use initial-first form; the bibliography formatter preserves each original citation's name presentation. Preserve full citation details and alternate manuscript/publisher/DOI/slides/archive targets. A missing ID/resource fails explicitly rather than producing an undefined href.
+
+Research paper links use `publicationLink(id, resource, label)`; figure citations derive shared publication facts while keeping their figure-specific explanation, attribution and rights text. Do not attach the existing arXiv link to a record until its relationship is verified. Never import citation details (directly or through a barrel/provider) into homepage/research code. Import model types with `import type`.
+
+For a changed publication, update only its authoritative records and verify every consuming view. Update frozen test expectations only for intentional editorial changes, not merely to make a regression pass. For additions, include the core record, matching details, any intentional selected/research references, and coverage. Verify category/selection order, complete citations, author shortening, resources, research attribution and initial/lazy bundles.
 
 ## File guidance conventions
 

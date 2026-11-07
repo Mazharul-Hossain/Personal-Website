@@ -28,7 +28,8 @@ Add newly discovered issues here. Every entry needs evidence (source or reproduc
 
 | ID | Status / evidence | Required outcome / exit check |
 | --- | --- | --- |
-| MIG-01 | Planned, Phase 1D/Phase 2. Selected TS records and full HTML bibliography are independently maintained. | One typed authority with stable IDs, ordered selections and shared research links; preserve all citation details/categories, lazy boundary and measured bundles. |
+| MIG-01 | Resolved locally. Shared typed core, ordered selected IDs, lazy citation details and rendered category loops replace duplicated publication facts. All 14 citation/resource baselines, five selections, research attribution, local browser/prerender and eager/lazy checks passed. | Maintain the single authority and reference tests. Netlify deployment remains a separate unverified stage; CONTENT-ARXIV is not closed by consolidation. |
+| CONTENT-ARXIV | Unverified association: research links to arXiv 2408.07114, but the bibliography does not explicitly establish its relationship to the published detector-comparison paper. | Retain the existing link as an external resource; associate a publication ID/version only after primary evidence or user confirmation. |
 | MIG-02 | Source-confirmed legacy pattern: navbar/footer use guarded browser globals; several injected WindowRef consumers were typed `any`. | Use typed WindowRef and injected DOCUMENT consistently without altering navigation/scroll behavior; browser and server regression checks. |
 | MIG-03 | Source-confirmed exception: xml2js ambient declaration returns `any`; strict mode cannot validate upstream RSS structure. | Narrow external data and/or adopt suitable maintained types; retain feed response/error tests. |
 | MIG-04 | Source-confirmed compatibility exception: seven JS-only navbar hrefs; see Phase 1A. | Equivalent mobile/keyboard/history/metadata behavior plus usable ordinary navigation without JS before adopting replacements. |
@@ -42,8 +43,9 @@ Add newly discovered issues here. Every entry needs evidence (source or reproduc
 | BUG-06 | Reported by earlier Lighthouse run, not reproduced in this pass: narrow viewport overflow. | Identify offending bounds at 360px/menu states and moving shapes; no document overflow; preserve gallery's internal scrolling. |
 | BUG-07 | Karma run logged 404s for `/assets/images/next_gen/banner/hero.webp`; test build asset configuration points to `public`, whereas the application uses `src/assets`. | Align test asset serving with actual assets or intentionally isolate image loading; verify the warning cause and retain meaningful component checks. |
 | DESIGN-01 | Source-confirmed fragmented template/component styling, repeated colors/spacing and empty component stylesheets. | Establish reusable common tokens/patterns and component ownership during visual work; rendered desktop/mobile evidence, no unrequested theme rewrite. |
-| VERIFY-01 | Local build produced no `*ngsw*` files in `dist/my-app/browser`; registration exists without an explicit build service-worker option. Netlify deployment and standalone listening remain unverified. | Verify generated output and actual Netlify routes/feed/SSR/cache lifecycle; do not infer PWA success from registration source. |
+| VERIFY-01 | Local build produced no `*ngsw*` files; browser preview reproduced registration 404s/NG05604. Installed Angular service-worker source identifies 5604 as registration failure. Netlify deployment and standalone listening remain unverified. | Verify generated output and actual Netlify routes/feed/SSR/cache lifecycle; do not infer PWA success from registration source. |
 | VERIFY-02 | Resolved locally: fresh strict checks/build/feed tests passed; Karma passed outside sandbox after sandbox Chrome capture timeouts. | Keep deployment evidence separate; future capture failures need environment diagnosis rather than weakening tests. |
+| VERIFY-03 | Local Cypress package is installed but its browser binary is absent. | Install/verify the Cypress binary before claiming the Cypress runner passed; installed Chrome/CDP checks are separately reported browser evidence. |
 
 ## Goal and constraints
 
@@ -88,6 +90,27 @@ Write or update regression tests and establish measurements before changing appl
 - On a production preview, check service-worker registration on a clean visit, page control after reload, and updates between two builds. Verify standalone URLs still render and `/feed` returns feed data. Inspect whether JavaScript prefetching downloads lazy route chunks before navigation.
 
 ### 1D. Publication data
+
+Implementation sequence for MIG-01 (approved dry run, November 7):
+
+- [x] Freeze all 14 rendered citations and their resources; add a failing stable-ID rendering check.
+- [x] Introduce typed shared core, resource references, ordered selected IDs and lazy citation details; preserve the five selections and existing author formatting.
+- [x] Render full bibliography from records and resolve research links/figure citation facts from shared records; keep arXiv association unresolved unless established.
+- [x] Verify citation fidelity, IDs/references, SSR/browser routes, eager/lazy output and compiler/tests; update content ownership and close only completed work.
+
+#### MIG-01 implementation and validation — November 7, 2026
+
+Core facts/resources and selected ordering now live in `publication-core.ts`; model/format helpers are separate. `publication-details.ts` holds plain-text citation parts and references to shared facts, imported at runtime only by the lazy bibliography component. No stored HTML or additional content database was introduced. Narrative and figure-specific attribution remain with their feature. The frozen fixture is test-only and excluded from production inputs.
+
+- Red/green evidence: the original bibliography passed the new complete citation/resource baseline check but failed the stable-ID check (0 IDs versus 14). After migration, both passed.
+- Final review found a current-tab publisher link changed to a new tab. The strengthened baseline reproduced that single failure; resource presentation now retains the original target, and unit/browser-spec checks cover targets alongside text and URLs.
+- Full Jasmine/Karma suite: **44 passed**. App/spec/Cypress strict typechecks passed. The production build with stats passed and prerendered **11 routes**. Guidance and whitespace checks passed. Independent read-only review found no actionable issues.
+- Preservation: **14 complete citations**, category/entry ordering, author names/order/highlighting and alternate links; **5 selected view records** and URLs; **8 research links** and **4 figure captions** matched frozen pre-migration expectations.
+- Local Chrome/CDP checks: direct `/publications/` at desktop/mobile widths, selected/research content comparison, hydrated CTA navigation to the lazy page, reload, and all 14 citations/resources in prerendered HTML with JavaScript disabled. These prove local prerender/browser behavior, not live Netlify handler behavior or the separate no-JS navbar migration.
+- Before/after desktop and mobile screenshots were captured outside the repository. Initial generic Windows preview served scripts as `text/plain`; a correct local MIME configuration resolved that harness problem. Existing service-worker 404/NG05604 diagnostics were retained and classified under VERIFY-01, not counted as a migration regression.
+- Browser build stats: citation details appear only in `chunk-QONCJCH2.js` via a **dynamic import** from the main bundle. Server details appear only in `chunk-G53JXUMM.mjs`, also dynamically imported. The snapshot fixture and specs are absent from both production input graphs.
+- Measured browser sizes: initial JavaScript grew **6,218 raw bytes** because shared core records are eager; the lazy bibliography changed **10,549 → 10,175 bytes** (−374). Initial total is approximately **1.05 MB raw / 216.92 kB estimated transfer**, versus **1.04 MB / 215.19 kB** before. This is a maintainability change, not a claimed performance improvement. Existing warning budgets were not changed.
+- Added Cypress publication journeys, but the **Cypress runner was not executed** because its binary is absent (VERIFY-03). Chrome/CDP provided separate browser evidence. Existing BUG-01 remains open in the unrelated smoke spec. No publication URLs, external bibliographic facts, arXiv association or deployed Netlify state were independently verified; no deployment occurred.
 
 - Establish tests for all bibliography entries, categories, ordering, complete authors and citation details, links, and the five selected entries. Cover the existing author-shortening cases and ensure research links remain correct. Preserve the copyright disclosure and Scholar link.
 - Record initial and lazy-chunk sizes before consolidation so the effect on the homepage can be measured.
