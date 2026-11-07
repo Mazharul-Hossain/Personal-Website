@@ -135,6 +135,32 @@ describe("Portfolio smoke tests", () => {
         });
     }
 
+    it('keeps homepage metadata when a section click changes the URL', () => {
+        cy.intercept('GET', '/feed', []);
+        cy.visit('/home');
+        cy.title().should('eq', 'Mazharul Hossain | Computational Imaging & Scientific Machine Learning');
+        cy.document().then(document => {
+            const description = document.querySelector('meta[name="description"]')?.getAttribute('content');
+            const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href');
+            expect(description).to.be.a('string').and.not.be.empty;
+            expect(canonical).to.eq('https://www.hmazharul.com/');
+
+            cy.get('.navigation [data-custom-id="research"]').click();
+            cy.location('pathname').should('eq', '/research');
+            cy.get('#home').should('exist');
+            expectSectionBelowNavigation('research');
+            cy.title().should('eq', 'Mazharul Hossain | Computational Imaging & Scientific Machine Learning');
+            cy.get('meta[name="description"]').should('have.attr', 'content', description);
+            cy.get('link[rel="canonical"]').should('have.attr', 'href', canonical);
+        });
+
+        cy.reload();
+        cy.get('#home').should('not.exist');
+        cy.get('#research').should('exist');
+        cy.title().should('eq', 'Research | Mazharul Hossain');
+        cy.get('link[rel="canonical"]').should('have.attr', 'href', 'https://www.hmazharul.com/research');
+    });
+
     it('shows the About heading below navigation on the standalone page', () => {
         cy.visit('/about');
         cy.contains('#about h2', 'About Me').should('be.visible');
