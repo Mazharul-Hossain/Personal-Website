@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Template: src/app/nav-bar/nav-bar.component.html; Styles: src/app/nav-bar/nav-bar.component.css */
+// TODO<Migration>[MIG-02]: guarded global DOM access remains; migrate to WindowRef/injected DOCUMENT preserving navigation; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Inject, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
@@ -22,7 +26,7 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
     constructor(
         private router: Router,
         private location: Location,
-        @Inject(WindowRef) private windowRef: any,
+        @Inject(WindowRef) private windowRef: WindowRef,
         private scrollAnimation: ScrollAnimationService
     ) {
         this.winRef = this.windowRef.nativeWindow();

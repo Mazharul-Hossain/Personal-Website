@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Implementation: src/writing-feed.ts */
 import { afterEach, test, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { writingFeedResponse } from './writing-feed.ts';

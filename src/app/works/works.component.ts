@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Template: src/app/works/works.component.html; Styles: src/app/works/works.component.css */
+// TODO<Bug>[BUG-02]: add accessible popup controls/focus handling and teardown disposal with regression coverage; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 import { Component, Inject, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -17,7 +21,7 @@ export class WorksComponent implements OnInit {
 
     constructor(
         @Inject(Overlay) private overlay: Overlay, private viewContainerRef: ViewContainerRef,
-        @Inject(WindowRef) private windowRef: any
+        @Inject(WindowRef) private windowRef: WindowRef
     ) { }
 
     ngOnInit(): void { }

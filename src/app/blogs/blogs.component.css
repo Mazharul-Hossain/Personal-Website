@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-design/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Controller: src/app/blogs/blogs.component.ts; Template: src/app/blogs/blogs.component.html */
 .writing-area {
     background: #f8f7ff;
 }

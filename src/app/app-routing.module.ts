@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IndexPageComponent } from './index-page/index-page.component';

@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Implementation: src/app/shared/scroll-animation.service.ts */
 import { TestBed } from '@angular/core/testing';
 import { ScrollAnimationService } from './scroll-animation.service';
 import { WindowRef } from './window.token';

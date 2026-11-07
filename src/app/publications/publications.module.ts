@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-content/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';

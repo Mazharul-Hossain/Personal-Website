@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-design/SKILL.md; .agents/skills/portfolio-content/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Inline templates/styles; routes: src/app/app-routing.module.ts */
 import { Component } from '@angular/core';
 
 @Component({

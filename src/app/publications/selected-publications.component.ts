@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-content/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Template: src/app/publications/selected-publications.component.html; Styles: src/app/publications/selected-publications.component.css */
+// TODO<Migration>[MIG-01]: reference shared publication IDs/core records without importing the lazy bibliography; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 interface SelectedPublication {

@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Build replacements: angular.json; keep credentials out of source. */
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.

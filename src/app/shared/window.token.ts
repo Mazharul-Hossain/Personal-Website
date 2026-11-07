@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 

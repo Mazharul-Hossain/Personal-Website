@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-design/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Controller: src/app/home/selected-research/selected-research.component.ts; Template: src/app/home/selected-research/selected-research.component.html */
 .selected-research {
     padding: 50px 0;
     background: #fff;

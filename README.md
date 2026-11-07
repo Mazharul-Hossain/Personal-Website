@@ -2,100 +2,106 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3b24fe33-de72-4b5d-8129-3b8005b34d4b/deploy-status)](https://app.netlify.com/sites/stoic-lamport-e2ed9d/deploys)
 
-This repository contains the Angular application for [hmazharul.com](https://www.hmazharul.com/), Mazharul Hossain's personal research and professional portfolio. The site presents research publications, selected work, technical experience, writing, and contact information in a responsive, server-rendered interface.
+The Angular portfolio for [hmazharul.com](https://www.hmazharul.com/) presents research, publications, experience, writing, and contact information. It uses NgModules, server rendering, hydration, and a Netlify request handler. This is modern Angular, not AngularJS.
 
-The application is built with Angular 22 and deployed through Netlify's connected CI/CD workflow. The production build supports server-side rendering, hydration, prerendered routes, and service-worker registration.
+## Sources of truth
 
-## Run and Test Locally
+Keep facts in their authoritative location and link to them elsewhere.
 
-### Prerequisites
+| Information | Authority |
+| --- | --- |
+| Dependency ranges and executable commands | [package.json](package.json) |
+| Exact dependency versions | [package-lock.json](package-lock.json) |
+| Build entries, global style/script order, output, budgets | [angular.json](angular.json) |
+| TypeScript and Angular compiler policy | [tsconfig.json](tsconfig.json) and its app/test/Cypress extensions |
+| Whitespace and formatting | [.editorconfig](.editorconfig), Prettier settings in the manifest |
+| Routes | [app-routing.module.ts](src/app/app-routing.module.ts), feature route declarations |
+| Shared policy and behavioral contracts | This README |
+| Plan status, bugs, content ownership | [docs/README.md](docs/README.md) and its linked active plan |
+| Agent-only instructions and skill routing | [AGENTS.md](AGENTS.md) |
 
-- Node.js compatible with Angular 22; Node 24.15 or newer is recommended.
-- npm, included with Node.js.
-- Chrome or Chromium for Karma's headless unit tests.
+Do not restate dependency versions in prose. Match Node to the installed Angular toolchain's supported engines. Chrome/Chromium is needed for Karma. Install locked dependencies with `npm ci`.
 
-Install the locked dependency tree:
+## Development and verification
 
-```bash
-npm ci
-```
+The manifest's `scripts` section is authoritative. Use `npm run` to list commands.
 
-Start the development server:
+The build's `prebuild` hook runs the guidance integrity check. Behavioral contracts also require the applicable runtime tests; a link check alone does not enforce navigation or accessibility.
 
-```bash
-npm start
-```
+| Script | Purpose / prerequisite |
+| --- | --- |
+| `start` | Development server; use the URL printed by the CLI |
+| `build` | Optimized browser/server output and configured prerendering; baseline release check |
+| `watch` | Continuous development rebuild |
+| `typecheck`, `typecheck:tests`, `typecheck:cypress` | No-output compiler checks for app, unit specs, and browser specs |
+| `check:guidance` | Check local documentation/header targets, simple skill frontmatter, and strict-mode policy; does not prove runtime behavior |
+| `test` | Jasmine/Karma; single run: `npm test -- --watch=false --progress=false` |
+| `test:feed` | Node tests with simulated upstream RSS |
+| `cypress:run`, `cypress:open` | Browser journeys; start the app first; base URL is in [cypress.config.ts](cypress.config.ts) |
+| `serve:ssr:my-app` | Existing server-bundle command; standalone listening behavior is unverified, see Netlify notes |
 
-Open `http://localhost:4200`. Angular rebuilds and reloads the application when source files change.
+Keep unit specs beside components/services and browser journeys in `cypress/e2e/`. Test meaningful behavior and failure cases. There is no lint script or numeric coverage gate. Do not commit generated output, dependencies, coverage, or browser recordings.
 
-### Verification Commands
+### Local and Netlify verification
 
-```bash
-npm run build
-```
+Locally, run compiler checks and affected tests. For runtime changes, run the production build and relevant browser journeys. Compare desktop/mobile screenshots for visible changes. For performance work, retain comparable build/Lighthouse evidence and distinguish raw bundle size from transfer size. Never raise budgets to hide regressions.
 
-Creates the optimized browser and SSR bundles in `dist/my-app/` and prerenders configured routes. This is the primary release check.
+A local pass does not prove Netlify deployment behavior. Against a Netlify Deploy Preview (preferred) or deployed site, record the URL and deploy/commit identity. Verify direct route requests and refreshes, returned server HTML, `/feed`, redirects, and cache behavior. For caching/PWA changes, check service-worker registration, control after reload, and updates using clean and warm browser state. A manifest or registration call is not proof of a working PWA.
 
-```bash
-npm test -- --watch=false --progress=false
-```
+Inspect deployment logs, generated handlers and account settings when relevant and accessible. Publishing or changing live settings requires task authorization. Report unavailable deployed checks as unverified. See [Netlify SSR notes](docs/NETLIFY_SSR_NOTES.md) for known uncertainties, including the standalone server command.
 
-Runs the Jasmine/Karma unit suite once in the CI-safe headless Chrome launcher.
+## Project and content map
 
-```bash
-npm run test:feed
-```
+| Location | Responsibility |
+| --- | --- |
+| `src/app/` | Components, services, templates, styles, adjacent specs |
+| `src/app/index-page/` | Homepage composition and hero |
+| `src/app/home/standalone-pages.component.ts` | Route wrappers reusing homepage sections |
+| `src/app/shared/` | Browser abstraction, metadata, scroll animation |
+| `src/app/publications/` | Selected records and lazy-loaded bibliography |
+| `src/assets/` | Theme CSS, vendor scripts, fonts, images, attribution-bearing assets |
+| `src/main.ts`, `src/main.server.ts`, `src/server.ts` | Browser/server bootstrap and Netlify request handling |
+| `src/writing-feed.ts` | Server-side RSS integration |
 
-Tests the server-side writing feed using simulated Medium responses.
+TypeScript records are authoritative for structured portfolio facts; templates render them. The [content map](docs/README.md#content-ownership-and-migration) identifies legacy locations and consolidation work. Do not introduce another independent publication record or invent personal facts.
 
-```bash
-npm run cypress:run
-```
+## Behavioral contracts
 
-Runs Cypress smoke tests. Start the application with `npm start` in another terminal first. Use `npm run cypress:open` for interactive test development.
+These are mandatory acceptance criteria. Preserve them unless the user explicitly changes the requirement. Preserve regression coverage; never weaken a test to hide a regression. Update tests and the contract together for an authorized behavior change.
 
-```bash
-npm run watch
-```
+| ID | Required behavior | Evidence / acceptance checks |
+| --- | --- | --- |
+| NAV-01 | Homepage navigation scrolls to the section, changes the visible pathname, and retains homepage composition and metadata. | Navbar; Cypress section-navigation and metadata journeys |
+| NAV-02 | Direct requests and refreshes open standalone pages with route metadata. Keep `/home` as a homepage alias, lazy `/publications`, and `/blog`. | Router, page wrappers, metadata; direct-load/reload journeys |
+| NAV-03 | Preserve seven nav items, mobile open/close, active indication, heading clearance, and back-to-top. The latest scroll/navigation action takes control. | Navbar/footer/shared animation; desktop/mobile and cancellation checks |
+| NAV-04 | Current `javascript:void(0)` links are a compatibility exception. Adopt alternatives only after equivalent mobile, keyboard, URL and metadata behavior is demonstrated. | Active plan Phase 1A; do not replace by assumption |
+| UI-01 | Preserve moving hero shapes and existing animated interactions while improving quality. Share common CSS; keep feature styling with its component. | Rendered desktop/mobile comparison; parallax/navigation checks |
+| MOTION-01 | Prefer CSS for presentation/motion. Use JS only where CSS cannot supply the required effect, recording why. Optional enhancements may be absent without JS. | CSS/JS inspection; browser session with JS disabled |
+| MOTION-02 | Server-rendered content and ordinary links should remain usable without JS. CSS reduced-motion rules and JS motion are separate; current JS animations remain intentional. Audit reduced-motion and no-JS states independently. | Existing motion journey; no-JS navigation is a tracked gap, not a claimed pass |
+| CONTENT-01 | Structured facts have one TypeScript authority. Preserve full citations, authors, categories, selected ordering, research links and lazy bibliography during consolidation. | Citation inventory, author specs, bibliography/bundle comparisons |
+| CONTENT-02 | Preserve writing discovery/fallbacks, LinkedIn-first contact, disclosure boundaries and attribution. Do not add a public CV download or private contact details. | Content specs, feed tests, writing journeys, approved evidence |
+| RENDER-01 | Support SSR/hydration. Guard browser APIs; release timers, listeners, subscriptions, overlays and animation frames at teardown. | Browser/server checks and lifecycle tests; known gaps in active bug register |
 
-Continuously rebuilds using the development configuration without starting the dev server.
+Some checks still need implementation. The active plan records gaps; a contract states required behavior, not that all current code already complies.
 
-Before requesting review, run the production build, unit tests, and Cypress suite. Do not commit `dist/`, coverage output, Cypress screenshots/videos, or `node_modules/`.
+## Engineering and design policy
 
-## Project Structure
+Use full TypeScript `strict` mode and strict Angular templates/injection checks. Do not disable strictness to pass a delivery. Narrow external data and type injected abstractions. If a migration is too large for the delivery, explain the exception and track the work. Strict mode alone does not eliminate explicit `any` or validate runtime input.
 
-```text
-src/app/                 Angular components, routing, services, and specs
-src/app/publications/    Homepage selection and lazy-loaded full bibliography
-src/assets/              Images, fonts, documents, CSS, and legacy scripts
-src/server.ts            Angular SSR and Netlify `/feed` request handling
-cypress/e2e/             Browser-level smoke tests
-docs/                    Redesign and optimization plans
-```
+Prefer current supported patterns within the installed toolchain. Existing NgModules do not justify an unrelated architecture rewrite. Use kebab-case filenames and PascalCase classes; keep templates/styles beside components.
 
-## Angular Engineering Demonstrated
+Common visual rules belong in the loaded global theme; feature-specific layout/state rules belong in component styles. Inspect build entries: a similarly named minified asset may not be loaded. Reuse common patterns deliberately rather than moving all CSS globally. Establish shared tokens when changing the visual system; avoid a theme rewrite during a content edit.
 
-This portfolio is also a practical Angular showcase. It demonstrates:
+Design changes must demonstrate hierarchy, readable typography, deliberate spacing, distinctive research-focused composition, keyboard usability and mobile layouts. Evaluate rendered screenshots and interactions. The design skill supplies the working method; the current palette is not permanent policy.
 
-- Angular 22 NgModule architecture with strict TypeScript 6 compilation.
-- SSR, client hydration, event replay, and route prerendering.
-- Lazy-loaded feature routing for the complete publications page.
-- Data-driven templates using Angular control-flow syntax such as `@for`.
-- SSR-safe browser access through an injectable `WindowRef` abstraction.
-- Explicit change-detection strategies and lifecycle-driven UI behavior.
-- Responsive, component-scoped styling alongside an established global theme.
-- A custom Netlify-compatible server handler for the Medium RSS feed.
-- PWA support through Angular's service worker and web manifest.
-- Unit testing with Jasmine/Karma and browser regression testing with Cypress.
-- Production budgets, optimized output hashing, and separate development/production configurations.
+### Deferred work markers
 
-## Deployment
+Use `TODO<Category>[ID]: reason; next action; plan reference` at the owning code boundary. Categories: `Migration`, `Bug`, `Design`, `Verification`, `Content`. Use stable active-plan IDs; multiple markers may reference one item. Record the rationale and exit condition in the plan. Avoid vague "fix later" notes.
 
-Netlify owns the deployment configuration and CI/CD connection outside this repository.
+Example: `TODO<Migration>[MIG-02]: legacy guarded globals; use typed WindowRef/injected DOCUMENT while preserving navigation; see docs/BUNDLE_OPTIMIZATION_PLAN.md.`
 
-## Further Work
+Search with `rg 'TODO<' src docs`. Resolve markers and plan entries together. Legacy editorial `TODO:<ADD TRUE DETAILS>` means missing facts; keep it only when a fact remains unresolved, not as a permanent test fixture.
 
-The implementation roadmap is documented in:
+## Review and configuration
 
-- [`docs/HOMEPAGE_REDESIGN_PLAN.md`](docs/HOMEPAGE_REDESIGN_PLAN.md)
-- [`docs/BUNDLE_OPTIMIZATION_PLAN.md`](docs/BUNDLE_OPTIMIZATION_PLAN.md)
+Keep changes scoped, commit subjects concise and imperative, and review descriptions clear about motivation, behavior, validation, screenshots and SSR/Netlify/dependency impacts. Never commit credentials. Review deployment/cache configuration and bundle budgets when those behaviors change.

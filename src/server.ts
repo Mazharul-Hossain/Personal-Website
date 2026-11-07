@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
+// TODO<Verification>[VERIFY-01]: Netlify handler export does not prove standalone HTTP listening; see docs/NETLIFY_SSR_NOTES.md and active plan.
 import { AngularAppEngine, createRequestHandler } from '@angular/ssr'
 import { getAllowedHosts, getContext, getTrustProxyHeaders } from '@netlify/angular-runtime/app-engine.js'
 

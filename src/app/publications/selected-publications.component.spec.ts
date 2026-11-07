@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Implementation: src/app/publications/selected-publications.component.ts */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { formatSelectedAuthors, SelectedPublicationsComponent } from './selected-publications.component';

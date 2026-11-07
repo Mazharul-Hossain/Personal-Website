@@ -1,3 +1,7 @@
+# Status: historical / superseded
+
+This document preserves an earlier proposal. Read [the documentation index](README.md) and root [behavioral contracts](../README.md#behavioral-contracts) for current authority. Do not execute this proposal or restore its old layout/content decisions.
+
 # Homepage Research-First Redesign Plan
 
 ## Objective and positioning

@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
+// TODO<Bug>[BUG-01]: replace the obsolete About TODO assertion with verified current content; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 describe("Portfolio smoke tests", () => {
     function expectSectionBelowNavigation(section: string): void {
         cy.get(`#${section} h2`).should($heading => {

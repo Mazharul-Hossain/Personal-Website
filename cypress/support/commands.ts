@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
 // ***********************************************
 // This example namespace declaration will help
 // with Intellisense and code completion in your

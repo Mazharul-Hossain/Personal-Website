@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Template: src/app/app.component.html; Styles: src/app/app.component.css */
+// TODO<Bug>[BUG-05]: reproduce fragment scrolling versus route scroll-to-top before changing navigation; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 import { Component, OnInit, OnDestroy, Inject, ElementRef, isDevMode, ChangeDetectionStrategy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';

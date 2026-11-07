@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Implementation: src/app/nav-footer/nav-footer.component.ts */
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { NavFooterComponent } from './nav-footer.component';

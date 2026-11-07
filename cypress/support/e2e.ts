@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
 // ***********************************************************
 // This example support/e2e.ts is processed and
 // loaded automatically before your test files.

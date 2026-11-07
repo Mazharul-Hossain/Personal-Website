@@ -1,32 +1,26 @@
-# Repository Guidelines
+# Agent instructions
 
-## Project Structure & Module Organization
+Read [README.md](README.md) first: it owns shared project guidance, source-of-truth links, behavioral contracts, and verification requirements. Read [docs/README.md](docs/README.md) to find the active plan before editing. Do not copy versions, commands, or product policies into this file.
 
-This is an Angular 21 server-rendered portfolio. Application code lives in `src/app/`; features such as `about-me/`, `publications/`, and `works/` contain component TypeScript, HTML, CSS, and unit specs. Shared services and browser abstractions belong in `src/app/gtag/` and `src/app/shared/`. Entry points are `src/main.ts`, `src/main.server.ts`, and `src/server.ts`. Static files are under `src/assets/`; Cypress files live in `cypress/`. Do not commit generated `dist/` output or `node_modules/`.
+## Load relevant skills
 
-## Build, Test, and Development Commands
+Repository skills live in `.agents/skills/`. Read the actual `SKILL.md` before applying it; file comments are routing hints, not substitutes.
 
-- `npm ci` installs the exact dependency versions from `package-lock.json`.
-- `npm start` serves the development build at `http://localhost:4200` with reloads.
-- `npm run build` creates the production browser and SSR output in `dist/my-app/`.
-- `npm run watch` rebuilds continuously using the development configuration.
-- `npm test` runs Jasmine component tests through Karma and Chrome.
-- `npm run cypress:open` opens the interactive Cypress runner.
-- `npm run cypress:run` executes Cypress tests headlessly; start the app first when needed.
-- `npm run serve:ssr:my-app` serves an already-built SSR bundle.
+| Task | Required skill |
+| --- | --- |
+| Angular, TypeScript, HTML behavior, JS integration, SSR | [portfolio-angular](.agents/skills/portfolio-angular/SKILL.md) |
+| CSS, layout, GUI, responsive design, accessibility, motion | [portfolio-design](.agents/skills/portfolio-design/SKILL.md) |
+| Publications, research, biography, experience, figures | [portfolio-content](.agents/skills/portfolio-content/SKILL.md) |
+| Tests, performance, production checks, Netlify verification | [portfolio-verification](.agents/skills/portfolio-verification/SKILL.md) |
 
-## Coding Style & Naming Conventions
+Load only relevant skills; a visual component change usually needs engineering, design, and verification.
 
-Follow `.editorconfig`: UTF-8, four-space indentation, final newlines, trimmed trailing whitespace, and double quotes in TypeScript. Use Angular naming conventions: kebab-case feature directories and files (`page-not-found.component.ts`), PascalCase classes, and camelCase members. Keep templates and styles beside their components. Prettier is configured to use the Angular parser for HTML; avoid unrelated formatting churn. There is currently no lint script, so treat a clean TypeScript build as the baseline static check.
+## Execution rules
 
-## Testing Guidelines
-
-Place unit tests beside implementation files as `*.component.spec.ts`; use Jasmine/Karma for component behavior. Put browser journeys in `cypress/e2e/*.cy.ts`, with reusable commands in `cypress/support/`. Test changed routes, rendered content, and browser interactions. No numeric coverage threshold is configured; preserve meaningful coverage and run relevant suites before review.
-
-## Commit & Pull Request Guidelines
-
-Recent history favors brief, change-focused subjects such as `Updated ReadMe` and `Upgraded to 21.0.3`; use a concise imperative subject and keep each commit scoped to one concern. Pull requests should explain the motivation and implementation, list verification commands, and link related issues. Include before/after screenshots for visible portfolio changes and call out SSR, Netlify, dependency, or configuration impacts.
-
-## Security & Configuration
-
-Keep environment-specific values in `src/environments/` and never commit credentials or tokens. Review `netlify.toml`, `ngsw-config.json`, and production bundle budgets when changing deployment, caching, or large assets.
+- Treat README behavioral contracts as mandatory acceptance criteria. Explain a requested contract change and update its regression coverage with the implementation. Do not silently normalize unusual behavior.
+- Check Git status first and preserve unrelated user edits. Do not commit, push, publish, or change live Netlify settings unless requested.
+- Trace templates to their component, content source, and loaded styles before editing. Maintain `@agent` comments when relationships change; paths are repository-root-relative.
+- Register new bugs in the active plan with evidence and status. Add categorized TODOs at owning code boundaries for deferred work, following README. Do not turn discovery into an unrelated refactor.
+- Run the manifest guidance check when changing skills, documentation, file ownership or reading pointers; runtime contract enforcement still needs the relevant behavior tests.
+- Prefer patterns supported by the installed toolchain. Consult current official Angular/TypeScript documentation for unfamiliar or changed APIs; do not upgrade dependencies merely to satisfy the word "latest".
+- Report changes, checks actually run, failures/limits, and tracked remaining work. Distinguish source inspection, local execution, and deployed evidence.

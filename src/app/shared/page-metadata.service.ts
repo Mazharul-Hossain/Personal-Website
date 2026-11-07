@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-content/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
 import { DOCUMENT } from "@angular/common";
 import { Injectable, inject } from "@angular/core";
 import { Meta, Title } from "@angular/platform-browser";

@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-design/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Build owner: angular.json; component-specific rules stay in components */
 /* Deafult Margin & Padding */
 /*-- Margin Top --*/
 .mt-5 {

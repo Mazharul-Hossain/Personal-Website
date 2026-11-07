@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-verification/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Implementation: src/app/about-me/about-me.component.ts */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AboutMeComponent } from './about-me.component';

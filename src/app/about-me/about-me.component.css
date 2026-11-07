@@ -1,3 +1,6 @@
+/* @agent Read: .agents/skills/portfolio-design/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Controller: src/app/about-me/about-me.component.ts; Template: src/app/about-me/about-me.component.html */
 .about-kicker {
     margin-bottom: 8px;
     color: #754ef9;

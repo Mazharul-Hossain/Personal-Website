@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Architecture and content ownership: docs/README.md */
+// TODO<Verification>[VERIFY-01]: validate generated service-worker output and actual Netlify cache lifecycle; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 import { BrowserModule, provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
 import { NgModule, isDevMode } from '@angular/core';
 import { provideHttpClient, withFetch } from '@angular/common/http';

@@ -1,3 +1,7 @@
+# Status: editorial handoff / reference
+
+Use this document for evidence and disclosure boundaries, not as a current content snapshot. Implementation status and current behavioral authority are indexed in [docs/README.md](README.md). Later explicit user decisions take precedence.
+
 # Portfolio–CV/Resume Content Review Plan
 
 Prepared: October 31, 2026

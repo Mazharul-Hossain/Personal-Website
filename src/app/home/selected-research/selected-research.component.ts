@@ -1,3 +1,7 @@
+/* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-content/SKILL.md
+Policy: README.md#behavioral-contracts; docs/README.md
+Template: src/app/home/selected-research/selected-research.component.html; Styles: src/app/home/selected-research/selected-research.component.css */
+// TODO<Migration>[MIG-01]: resolve paper links from shared publication IDs; preserve evidence and attribution; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 interface ResearchStudy {
