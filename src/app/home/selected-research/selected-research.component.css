@@ -54,6 +54,7 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Templ
     color: #6c6f7d;
     font-size: 13px;
     line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .research-figure-placeholder {
