@@ -38,7 +38,7 @@ The build's `prebuild` hook runs the guidance integrity check. Behavioral contra
 | `test` | Jasmine/Karma; single run: `npm test -- --watch=false --progress=false` |
 | `test:feed` | Node tests with simulated upstream RSS |
 | `cypress:run`, `cypress:open` | Browser journeys; start the app first; base URL is in [cypress.config.ts](cypress.config.ts) |
-| `serve:ssr:my-app` | Existing server-bundle command; standalone listening behavior is unverified, see Netlify notes |
+| `serve:ssr:my-app` | Runs the existing server bundle; the local check exits without a listener, see Netlify notes |
 
 Keep unit specs beside components/services and browser journeys in `cypress/e2e/`. Test meaningful behavior and failure cases. There is no lint script or numeric coverage gate. Do not commit generated output, dependencies, coverage, or browser recordings.
 
