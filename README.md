@@ -59,6 +59,7 @@ Inspect deployment logs, generated handlers and account settings when relevant a
 | `src/app/home/standalone-pages.component.ts` | Route wrappers reusing homepage sections |
 | `src/app/shared/` | Browser abstraction, metadata, scroll animation |
 | `src/app/publications/` | Selected records and lazy-loaded bibliography |
+| `src/app/works/` | Lazy Works feature module, project gallery and accessible CDK popup |
 | `src/assets/` | Theme CSS, vendor scripts, fonts, images, attribution-bearing assets |
 | `src/main.ts`, `src/main.server.ts`, `src/server.ts` | Browser/server bootstrap and Netlify request handling |
 | `src/writing-feed.ts` | Server-side RSS integration |
@@ -72,7 +73,7 @@ These are mandatory acceptance criteria. Preserve them unless the user explicitl
 | ID | Required behavior | Evidence / acceptance checks |
 | --- | --- | --- |
 | NAV-01 | Homepage navigation scrolls to the section, changes the visible pathname, and retains homepage composition and metadata. | Navbar; Cypress section-navigation and metadata journeys |
-| NAV-02 | Direct requests and refreshes open standalone pages with route metadata. Keep `/home` as a homepage alias, lazy `/publications`, and `/blog`. | Router, page wrappers, metadata; direct-load/reload journeys |
+| NAV-02 | Direct requests and refreshes open standalone pages with route metadata. Keep `/home` as a homepage alias, lazy `/publications` and `/work`, and `/blog`. | Router, page wrappers, metadata; direct-load/reload journeys and initial/lazy bundle checks |
 | NAV-03 | Preserve seven nav items, mobile open/close, active indication, heading clearance, and back-to-top. The latest scroll/navigation action takes control. | Navbar/footer/shared animation; desktop/mobile and cancellation checks |
 | NAV-04 | Current `javascript:void(0)` links are a compatibility exception. Adopt alternatives only after equivalent mobile, keyboard, URL and metadata behavior is demonstrated. | Active plan Phase 1A; do not replace by assumption |
 | UI-01 | Preserve moving hero shapes and existing animated interactions while improving quality. Share common CSS; keep feature styling with its component. | Rendered desktop/mobile comparison; parallax/navigation checks |

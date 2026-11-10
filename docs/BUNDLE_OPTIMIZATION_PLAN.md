@@ -47,11 +47,12 @@ Add newly discovered issues here. Every entry needs evidence (source or reproduc
 | BUG-10 | Resolved locally in fix #10: one root main wraps routed content; five standalone wrappers use div rather than nested main. Production checks find exactly one main on ten routes, outside navbar/footer. Homepage Lighthouse accessibility is 100 in the sampled local run. | Retain shell/route landmark tests. Automated results do not replace manual accessibility checks or other-browser verification. |
 | DESIGN-01 | Source-confirmed fragmented template/component styling, repeated colors/spacing and empty component stylesheets. [Stylesheet refinement reference](STYLESHEET_REFINEMENT_PLAN.md) records the scoped contrast proposal and sample. | Establish reusable common tokens/patterns and component ownership during visual work; rendered desktop/mobile evidence, no unrequested theme rewrite. |
 | VERIFY-01 | Production output again contains no ngsw worker/manifest; preview has no service-worker registrations or controller on clean visit/reload. Two-build SW update testing is blocked by that missing output. Documented standalone command exits 0 without listening. Direct exported-handler probe rejects localhost routes (host configuration), while /feed returns real upstream JSON 200. This is not evidence of deployed route failure. | Verify generated output and actual Netlify routes/feed/SSR/cache lifecycle with deploy identity. Separate host configuration from rendering failures and supply a deliberate local listening adapter if required. |
-| PERF-01 | Production HTML preloads LineIcons EOT (147,388 bytes); Chrome actually uses TTF (147,216 bytes). Network confirms both responses. Loaded source lists EOT before TTF/WOFF/SVG. | Investigate a modern font source/preload configuration; retain every used glyph and validate supported browsers before removal. Vendor/native configuration files are indexed here rather than receiving authored-code TODO comments. |
-| CONTENT-FIGURES | GMoE primary PDF confirms CC BY; MDPI general reuse policy supports attributed figure reuse. Specific publisher pages returned 429, GE PDF exceeded web-reader size, and UPIGAN-specific reuse permission remains unverified. Candidate image files are outside the repository; existing attribution/assets are unchanged. | Before replacing images, verify the particular source/credit lines and any SPIE reuse conditions, retain attribution and inspect fine text at intended sizes. |
+| PERF-01 | Resolved locally in the November 9 performance pass: WOFF2 first, WOFF fallback; generated preload and Chrome request use the same 71,516-byte WOFF2. All 464 glyphs, outlines, metrics, mappings and license metadata match the original. Chrome and Firefox icon rendering checked. | Retain font source/fallback files and complete glyphs. Safari remains unverified. Vendor/native configuration files are indexed here rather than receiving authored-code TODO comments. |
+| CONTENT-FIGURES | Partially verified: GMoE and GE primary PDFs explicitly state CC BY 4.0. Pixel-identical, full-resolution WebP alternatives now serve those two figures; PNG sources/fallbacks, captions and attribution remain. UPIGAN/Map901 assets unchanged; their specific reuse evidence remains unresolved. | Preserve figure quality/attribution and verify particular source/credit lines and SPIE reuse conditions before changing the remaining images. See November 9 performance record. |
 | VERIFY-02 | Resolved locally: fresh strict checks/build/feed tests passed; Karma passed outside sandbox after sandbox Chrome capture timeouts. | Keep deployment evidence separate; future capture failures need environment diagnosis rather than weakening tests. |
 | VERIFY-03 | Resolved for this environment: matching Cypress binary was already cached outside sandbox visibility; install command skipped downloading, verification passed, and Chrome ran the existing 25 browser tests. | Run browser verification with access to the cached binary and required local-server/browser permissions. Prior sandbox-only version output did not establish physical absence. |
 | VERIFY-04 | Diagnosed and Chromium coverage restored: installed Cypress sends Enter without text, producing keydown/up but no keypress/button activation. A scoped native CDP helper supplies the complete trusted sequence; a plain control and Works opener both pass. The application uses standard buttons with no key-handler workaround. | Retain native keyboard assertions and trusted-click control. Upstream cy.press behavior is not changed; other-browser helper paths remain unverified. See cypress/support/native-keyboard.ts. |
+| VERIFY-05 | November 9 Lighthouse timing is inconclusive: sequential warm score 95→76/TBT 231→1,234ms; alternating warm controls score 79→76/TBT 953→1,188ms while CPU benchmark medians differ 1,014.5→829.5. The unchanged baseline also slowed substantially. Bundle/network byte savings are confirmed; no causal warm-load speed/regression claim is justified. | Repeat alternating production controls on a stable, otherwise idle machine with comparable CPU benchmark indices and external requests; inspect hydration/layout/analytics traces if blocking remains higher. Preserve every run rather than selecting favorable samples. No owning application defect has been established. |
 
 ## Goal and constraints
 
@@ -69,17 +70,17 @@ On the homepage, clicking a navigation item scrolls to its section, changes the 
 
 ## Phase 1 — Tests and investigation
 
-### Overall status — November 8, 2026
+### Overall status — November 9, 2026
 
-The recorded Phase 1 defects and the November 9 native-scroll review finding are now fixed and verified locally. Latest validation is **73/73 browser and 70/70 unit tests**, plus strict compiler/build checks. Historical red/pass results remain dated evidence. Deployment, cross-browser and some rights/caching checks remain explicitly unverified.
+The recorded Phase 1 defects and the November 9 native-scroll review finding are fixed and verified locally. The performance pass adopts the measured script removals and lazy Works feature, resolves PERF-01, and adds two lossless research figures. Latest validation is **73/73 Chrome browser and 71/71 unit tests**, plus four Firefox font-rendering samples, strict compiler/build checks and production inspection. See the performance record below for measurements. Historical red/pass results remain dated evidence. Netlify deployment, service-worker lifecycle, Safari and remaining image rights are unverified.
 
 | Area | Investigation status | Remaining acceptance work |
 | --- | --- | --- |
 | 1A navigation | Existing/new journeys executed; href and Start Bootstrap isolated experiments completed. BUG-09 fixed and its previously blocked assertions now pass. | Recorded navigation defects are fixed locally. Prove any future link/script adoption against all contracts; keep the scoped native keyboard helper until upstream behavior is verified. |
 | 1B overflow/visuals | Desktop/mobile, menu states, pointer extremes and gallery checks executed. | BUG-06 fixed and Chrome visual/focus checks repeated. Other-browser/manual verification remains separate. |
-| 1C performance/assets/cache | Production stats, cold/warm Lighthouse samples, global inventory, font trace and image candidates collected locally. | Netlify deploy identity/headers/SSR/cache, SW update lifecycle, other-browser glyph checks, and source-specific rights gaps below. No optimization has shipped. |
+| 1C performance/assets/cache | Baseline collected; November 9 performance optimizations implemented and verified locally. | Netlify deploy identity/headers/SSR/cache, SW update lifecycle, Safari and remaining source-specific rights gaps. No deployment performed. |
 | 1D publications | Completed and validated locally; prior consolidation commit unchanged. | Deployment verification remains separate; CONTENT-ARXIV unresolved. |
-| 1E popup/lifecycle | Browser interaction/SPA teardown and timer/listener regressions executed; isolated lazy Works build compared. | BUG-02/03/04 fixed and tested locally. Lazy Works/CDK replacement remains a separate measured optimization. |
+| 1E popup/lifecycle | Browser interaction/SPA teardown and timer/listener regressions pass; lazy Works adopted with CDK retained. | Retain popup/focus/disposal coverage; replacing CDK is unnecessary for this pass. |
 
 ### Remaining Phase 1 investigation batch — November 8, 2026
 
@@ -224,6 +225,50 @@ Core facts/resources and selected ordering now live in `publication-core.ts`; mo
 
 Implement only after the relevant Phase 1 tests and evidence exist. Each part can be reviewed and verified independently.
 
+### Performance implementation — November 9, 2026
+
+User-authorized scope: remove Start Bootstrap, evaluate/adopt lazy Works, and optimize fonts, images and proven-unused assets. Baseline is commit `1e792dc`; changes are on `codex/performance-optimization`. The stylesheet proposal remains separate. This record supersedes the earlier experiment-only statuses for these optimizations.
+
+- Removed Start Bootstrap, jQuery, Popper v1, Bootstrap JS, jquery.appear, Waypoints, counterup2, jquery.easing and Modernizr from the global build. Removed the seven corresponding direct npm dependencies and their lock entries; Bootstrap remains for its used CSS. Source/DOM/CSS inventories found no live plugin/data-API/feature-class consumers. Old calls existed only in unloaded backup scripts. Navigation and pointer-driven parallax checks still pass; parallax is the sole retained global script. Analytics is unchanged.
+- Removed 20 unused copied duplicate/vendor assets totaling **614,981 source bytes**, including `retainable.css`. Required Bootstrap CSS, theme/spacing/icon CSS, source map, logos, portraits, research originals, PDFs, parallax and license-bearing font sources remain. Deleted files with no prior requests reduce copied output, not page transfer; do not add this figure to bundle/network savings. The obsolete commented Retainable script reference was removed.
+- Adopted a lazy NgModule for `/work`, retaining CDK Overlay/focus management. Browser/server graphs keep Works/CDK outside the initial graph and full citation details in a separate lazy chunk. A same-document production navigation requests Works only after leaving Home; direct prerendered Works still has both projects. Shared overlay CSS remains global. No CDK replacement was needed.
+- Added a lossless **71,516-byte WOFF2** from the existing LineIcons font, with WOFF fallback. All 464 glyphs, 463 character mappings, 460 CSS mappings, outlines/hints/metrics and licensing metadata were preserved. The generated preload and Chrome request now agree on WOFF2, replacing the previous EOT-plus-TTF requests (**294,604 raw font bytes**). Original formats remain as source/fallback assets. Poppins remains unchanged.
+- Added full-resolution, pixel-identical lossless WebP alternatives for GMoE (**105,197 → 57,556 bytes**, 550×184) and GE (**175,078 → 99,118 bytes**, 550×293): combined **123,601 bytes / 44%** smaller. `<picture>` retains original PNG fallbacks, alt text, lazy loading, image resolution, CSS geometry and complete captions. Four research figures retain their prior geometry/content. No lossy conversion, resizing or upscaling.
+- Figure evidence: the primary [GMoE PDF](https://www.cs.memphis.edu/~lanwang/paper/sensors-26-05661-v2.pdf) and [GE PDF](https://www.cs.memphis.edu/~lanwang/paper/jimaging-10-00131.pdf) state CC BY 4.0. GE's first page was retrieved and parsed locally after the earlier web-reader size limit. Existing attribution remains. UPIGAN/Map901 assets were not converted because their particular reuse evidence remains unresolved; CONTENT-FIGURES stays partially open.
+
+#### Bundle and execution evidence
+
+| Initial JS/CSS graph | Before | After | Reduction |
+| --- | ---: | ---: | ---: |
+| Raw bytes | 1,059,219 | 718,728 | 340,491 (32.1%) |
+| Independently gzipped bytes | 261,006 | 172,383 | 88,623 (34.0%) |
+
+Gzip is a reproducible file-size calculation, not a Netlify transfer observation. Budgets are unchanged; the **500 kB initial warning still fires** at 718.73 kB. Research-image savings apply when those lazy images are viewed, not necessarily hero LCP. Optimizations overlap in the aggregate initial graph; individual estimates must not be added again.
+
+Lighthouse **13.6.0 / Chrome 156**, default simulated mobile throttling (412×823), identical static preview implementation, analytics enabled, three sequential cold and three warm samples per build:
+
+| Median | Before | After |
+| --- | ---: | ---: |
+| Cold performance score | 87 | 92 |
+| Cold LCP | 1,514 ms | 1,577 ms |
+| Cold blocking time | 312 ms | 308 ms |
+| Cold layout shift | 0.038 | 0.056 |
+| Cold observed transfer | 2,099,689 bytes | 1,412,864 bytes |
+| Warm performance score | 95 | 76 |
+| Warm blocking time | 231 ms | 1,234 ms |
+
+These results do **not** establish an overall speed improvement. The warm-score drop triggered an investigation: no leftover content tabs were present; the unchanged baseline was also slower under current conditions. Added a priming sample per build, then three alternating-order warm pairs with unchanged Lighthouse settings. Their median scores are **79→76**, blocking **953→1,188ms**, LCP **557→221ms**, and CPU benchmark **1,014.5→829.5** (after samples experienced a slower host). The original baseline warm benchmark was approximately 1,686.5. Timing/CLS varied and external analytics remained enabled; no application cause can be isolated from this unstable environment. All initial/control reports are retained, with priming excluded from paired medians. Stable-environment warm performance remains **VERIFY-05**; no budget increase or unsupported LCP claim.
+
+- Full Chrome Cypress regressions **73/73**, unit tests **71/71** (one added PNG-fallback/alt regression, observed red before implementation), all three strict compiler checks, guidance and production build passed; **11 routes** prerendered. No existing assertion was weakened, skipped or retried. Independent read-only review found no actionable issue.
+- Production browser inspection covers desktop/mobile Home/Research, moving parallax, absent vendor globals, a single WOFF2 request, identical glyph mappings and figure geometry/captions, same-document lazy Works navigation, modal close/focus return, no runtime exceptions, and no-JS Works/publication prerendered content. Before/after screenshots were inspected.
+- Firefox 153 production font/rendering samples pass on Home, Works, Service and Contact (**4/4**). Diagnostic harness initially assumed each visit produced a Resource Timing entry and every duplicate critical-CSS FontFace was loaded; Firefox cache reuse/unused duplicate declarations invalidate those assumptions. Final checks verify the used loaded face and every sampled icon's family/content, with screenshots. Temporary diagnostics were archived outside the repository. This is sampled font coverage, not a full Firefox interaction certification; Safari remains unverified.
+- Evidence is retained in the session artifact directory `performance-pass/`: frozen before/after production builds/stats, Lighthouse reports, `summary.json`, `browser-verification.json`, screenshots, image/pixel audit, font diagnostic, full Chrome/unit logs and harnesses. Local preview serves prerendered static HTML and a mocked empty feed; it does not prove Netlify SSR/feed/cache behavior.
+- At initial validation these changes were uncommitted. No push, deployment, live configuration change or service-worker change. Missing service-worker output and real Netlify checks remain VERIFY-01. Remaining scope: stable warm-load measurement (VERIFY-05), Safari, unresolved figure rights and further measured CSS/font opportunities; the separate visual proposal still awaits approval.
+
+#### Local integration handoff — November 9, 2026
+
+The user requested a label on the existing master before local integration. Annotated tag `pre-performance-optimization` preserves commit `1e792dc`, the pre-performance master. Performance changes are grouped into focused commits for unused dependency/assets removal, lazy Works, lossless media, and documentation, then fast-forwarded into master. Compiler/guidance/feed checks and the full unit suite are repeated for integration; prior Chrome/Firefox/production evidence above applies to the unchanged runtime tree. Nothing is pushed or deployed. VERIFY-01, VERIFY-05, Safari and remaining figure rights stay open.
+
 ### Pre-commit review — November 9, 2026
 
 - Independent source review found one P2 issue: pending initial-anchor restoration checks shared-animation revision but does not observe native viewport scrolling. On `/home#research` with delayed `/feed`, manual scrolling before stability can be undone when the promise resolves. BUG-05 is reopened and marked at the owning callback.
@@ -304,9 +349,9 @@ Review was independent and read-only. Source-specific figure rights, other-brows
 
 Review the following removals together after the Phase 1 tests and evidence are in place. Remove only items whose consumers and effects have been verified; defer uncertain items for separate investigation.
 
-- **Agreed:** Remove the `startbootstrap-scrolling-nav/dist/js/scripts.js` build entry and its direct dependency after navigation coverage confirms the current behavior.
-- **Candidates:** Remove or defer individually verified unused global scripts, direct dependencies, CSS rules, font formats, and duplicate assets. Review Google Analytics separately before any change to it.
-- **CDK Overlay:** Review the measured effect of lazy-loading `/work` before deciding whether to replace and remove CDK Overlay. Require the popup and cleanup tests to pass for any replacement.
+- **Implemented locally November 9:** Start Bootstrap build entry/direct dependency removed with the complete navigation regression gate passing.
+- **Implemented subset:** Verified unused globals/dependencies, legacy feed CSS and duplicate assets removed as recorded above. Original font formats and uncertain assets remain. Review Google Analytics separately before any change to it.
+- **CDK Overlay retained:** Lazy `/work` removes it from the initial graph while preserving the popup/focus/disposal implementation. Replacing it is not necessary for this pass.
 - Keep the local parallax library and moving hero, existing mobile navigation and animations, and the site's reusable CSS. Preserve all required assets and attributions.
 
 ## Acceptance criteria
