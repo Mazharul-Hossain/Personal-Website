@@ -30,19 +30,9 @@
               "./node_modules/bootstrap/dist/css/bootstrap.css",
               "src/assets/css/LineIcons.css",
               "src/assets/css/default.css",
-              "src/assets/css/style.css",
-              "src/assets/css/retainable.css"
+              "src/assets/css/style.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/popper.js/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/jquery.appear/jquery.appear.js",
-              "./node_modules/waypoints/lib/jquery.waypoints.js",
-              "./node_modules/counterup2/dist/index.js",
-              "./node_modules/startbootstrap-scrolling-nav/dist/js/scripts.js",
-              "./node_modules/jquery.easing/jquery.easing.min.js",
-              "src/assets/js/vendor/modernizr-3.6.0.min.js",
               "src/assets/js/parallax.min.js"
             ],
             "server": "src/main.server.ts",
