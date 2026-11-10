@@ -24,6 +24,19 @@ describe('SelectedResearchComponent', () => {
         expect(element.querySelectorAll('.research-figure img').length).toBe(4);
     });
 
+    it("offers lossless WebP figures while retaining original PNG fallbacks and alternative text", () => {
+        const pictures = Array.from(fixture.nativeElement.querySelectorAll("picture")) as HTMLPictureElement[];
+        expect(pictures.length).toBe(2);
+        for (const picture of pictures) {
+            const source = picture.querySelector("source");
+            const fallback = picture.querySelector("img");
+            expect(source?.type).toBe("image/webp");
+            expect(source?.getAttribute("srcset")).toMatch(/\.webp$/);
+            expect(fallback?.getAttribute("src")).toMatch(/\.png$/);
+            expect(fallback?.getAttribute("alt")?.length).toBeGreaterThan(0);
+        }
+    });
+
     it("preserves all research resources and complete figure attribution", () => {
         const element: HTMLElement = fixture.nativeElement;
         expect(fixture.componentInstance.studies.flatMap(study => study.links.map(link => ({ label: link.label, url: link.href }))))

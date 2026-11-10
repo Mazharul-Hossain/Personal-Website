@@ -14,7 +14,14 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Style
                         @for (figure of study.figures; track figure.src || figure.placeholder) {
                             @if (figure.src) {
                                 <figure class="research-figure">
-                                    <img [src]="figure.src" [alt]="figure.alt" loading="lazy">
+                                    @if (figure.webpSrc) {
+                                        <picture>
+                                            <source type="image/webp" [srcset]="figure.webpSrc">
+                                            <img [src]="figure.src" [alt]="figure.alt" loading="lazy">
+                                        </picture>
+                                    } @else {
+                                        <img [src]="figure.src" [alt]="figure.alt" loading="lazy">
+                                    }
                                     @if (figure.caption) {
                                         <figcaption>{{ figure.caption }}</figcaption>
                                     }

@@ -21,6 +21,7 @@ interface ResearchStudy {
 
 interface ResearchFigure {
     src?: string;
+    webpSrc?: string;
     alt?: string;
     caption?: string;
     placeholder?: string;
@@ -43,11 +44,13 @@ export class SelectedResearchComponent {
             figures: [
                 {
                     src: 'assets/images/work/gmoe-ad-graphical-abstract.png',
+                    webpSrc: 'assets/images/work/gmoe-ad-graphical-abstract.webp',
                     alt: 'GMoE-AD graphical abstract',
                     caption: `GMoE-AD combines neural experts and domain-adversarial learning for cross-domain detection. Graphical abstract: Hossain et al., ${gmoe.venue}, ${gmoe.year}, doi:${publicationDoi(gmoe.id)}. © 2026 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).`
                 },
                 {
                     src: 'assets/images/work/ge-ad-graphical-abstract.png',
+                    webpSrc: 'assets/images/work/ge-ad-graphical-abstract.webp',
                     alt: 'GE-AD graphical abstract',
                     caption: `GE-AD selects and combines complementary anomaly detectors using a greedy ensemble. Graphical abstract: Hossain et al., ${gead.venue}, ${gead.year}, doi:${publicationDoi(gead.id)}. © 2024 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).`
                 }
