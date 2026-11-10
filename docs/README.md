@@ -7,6 +7,7 @@ Shared policy and contracts live in [README](../README.md); agent routing lives 
 | Document | Status / scope |
 | --- | --- |
 | [BUNDLE_OPTIMIZATION_PLAN.md](BUNDLE_OPTIMIZATION_PLAN.md) | **Active implementation plan and bug register.** Reliability, content consolidation, performance and agent-readiness work. Add defects here rather than creating competing plans. |
+| [STYLESHEET_REFINEMENT_PLAN.md](STYLESHEET_REFINEMENT_PLAN.md) | Visual proposal and sample for DESIGN-01. Reuse the existing theme with scoped navy/white contrast and fewer boxed sections. Implementation awaits approval. |
 | [PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md](PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md) | Editorial handoff/reference. Evidence/privacy rules remain relevant; its old inventory is not a current verified content snapshot or implementation authority. |
 | [HOMEPAGE_REDESIGN_PLAN.md](HOMEPAGE_REDESIGN_PLAN.md) | Historical/superseded proposal. Do not restore its layout, six-paper selection, CV download or no-parallax proposals. |
 | [NETLIFY_SSR_NOTES.md](NETLIFY_SSR_NOTES.md) | Deployment investigation notes; unverified server/account behavior remains unverified until observed. |
