@@ -15,7 +15,6 @@ import { ServicesComponent } from './services/services.component';
 import { IndexPageComponent } from './index-page/index-page.component';
 import { AboutMeComponent } from './about-me/about-me.component';
 import { SelectedPublicationsComponent } from './publications/selected-publications.component';
-import { WorksComponent } from './works/works.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { ResearchOverviewComponent } from './home/research-overview/research-overview.component';
 import { SelectedResearchComponent } from './home/selected-research/selected-research.component';
@@ -33,7 +32,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     IndexPageComponent,
     AboutMeComponent,
     SelectedPublicationsComponent,
-    WorksComponent,
     BlogsComponent,
     ResearchOverviewComponent,
     SelectedResearchComponent,

@@ -1,6 +1,7 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
-Template: src/app/works/works.component.html; Styles: src/app/works/works.component.css */
+Template: src/app/works/works.component.html; Styles: src/app/works/works.component.css
+Module: src/app/works/works.module.ts */
 import { Component, Inject, OnDestroy, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';

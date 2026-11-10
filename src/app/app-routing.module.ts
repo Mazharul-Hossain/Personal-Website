@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IndexPageComponent } from './index-page/index-page.component';
 import { ServicesComponent } from './services/services.component';
-import { WorksComponent } from './works/works.component';
 import { AboutPageComponent, ContactPageComponent, ExperiencePageComponent, ResearchPageComponent, WritingPageComponent } from './home/standalone-pages.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
@@ -19,7 +18,10 @@ const routes: Routes = [
     loadChildren: () => import('./publications/publications.module').then(module => module.PublicationsModule)
   },
   { path: 'service', component: ServicesComponent },
-  { path: 'work', component: WorksComponent },
+  {
+    path: 'work',
+    loadChildren: () => import('./works/works.module').then(module => module.WorksModule)
+  },
   { path: 'blog', component: WritingPageComponent },
   { path: 'about', component: AboutPageComponent },
   { path: 'contact', component: ContactPageComponent },
