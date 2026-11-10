@@ -2,9 +2,13 @@
 Policy: README.md#behavioral-contracts; docs/README.md
 Implementation: src/app/app.component.ts */
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { ApplicationRef } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
+import { NavigationStart, Router, RouterModule } from '@angular/router';
+import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
+import { ScrollAnimationService } from './shared/scroll-animation.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -39,4 +43,102 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('router-outlet')).not.toBeNull();
     expect(compiled.querySelector('app-nav-footer')).not.toBeNull();
   });
+
+  it('cancels the old scroll animation when route navigation starts', () => {
+    const events = new Subject<NavigationStart>();
+    TestBed.overrideProvider(Router, { useValue: { url: '/home', events } });
+    const fixture = TestBed.createComponent(AppComponent);
+    const cancel = spyOn(TestBed.inject(ScrollAnimationService), 'cancel');
+    fixture.detectChanges();
+    events.next(new NavigationStart(2, '/publications'));
+    expect(cancel).toHaveBeenCalled();
+  });
+
+  it('provides a single main landmark around routed content', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('main').length).toBe(1);
+    expect(fixture.nativeElement.querySelector('main router-outlet')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('main app-nav-bar')).toBeNull();
+    expect(fixture.nativeElement.querySelector('main app-nav-footer')).toBeNull();
+  });
+
+  it('restores the initial fragment after hydration readiness', fakeAsync(() => {
+    spyOn(TestBed.inject(ApplicationRef), 'whenStable').and.returnValue(Promise.resolve());
+    spyOnProperty(TestBed.inject(Router), 'url', 'get').and.returnValue('/research#selected-research');
+    const scroll = spyOn(TestBed.inject(ViewportScroller), 'scrollToAnchor');
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    flushMicrotasks();
+    expect(scroll).toHaveBeenCalledWith('selected-research', { behavior: 'instant' });
+  }));
+
+  it('does not let initial fragment restoration override a newer scroll action', fakeAsync(() => {
+    spyOn(TestBed.inject(ApplicationRef), 'whenStable').and.returnValue(Promise.resolve());
+    spyOnProperty(TestBed.inject(Router), 'url', 'get').and.returnValue('/home#research');
+    const scroll = spyOn(TestBed.inject(ViewportScroller), 'scrollToAnchor');
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const animation = TestBed.inject(ScrollAnimationService);
+    animation.scrollTo(0, 1500);
+    animation.cancel();
+    flushMicrotasks();
+    expect(scroll).not.toHaveBeenCalled();
+  }));
+
+  it('does not restore an anchor after the root is destroyed', fakeAsync(() => {
+    spyOn(TestBed.inject(ApplicationRef), 'whenStable').and.returnValue(Promise.resolve());
+    spyOnProperty(TestBed.inject(Router), 'url', 'get').and.returnValue('/research#selected-research');
+    const scroll = spyOn(TestBed.inject(ViewportScroller), 'scrollToAnchor');
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    fixture.destroy();
+    flushMicrotasks();
+    expect(scroll).not.toHaveBeenCalled();
+  }));
+
+  it('preserves native scrolling before initial hydration settles', fakeAsync(() => {
+    spyOn(TestBed.inject(ApplicationRef), 'whenStable').and.returnValue(Promise.resolve());
+    spyOnProperty(TestBed.inject(Router), 'url', 'get').and.returnValue('/home#research');
+    const viewport = TestBed.inject(ViewportScroller);
+    let position: [number, number] = [0, 0];
+    spyOn(viewport, 'getScrollPosition').and.callFake(() => position);
+    const restore = spyOn(viewport, 'scrollToAnchor');
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    position = [0, 500];
+    flushMicrotasks();
+    expect(restore).not.toHaveBeenCalled();
+  }));
+
+  it('preserves manual scrolling even when it returns to the original position', fakeAsync(() => {
+    spyOn(TestBed.inject(ApplicationRef), 'whenStable').and.returnValue(Promise.resolve());
+    spyOnProperty(TestBed.inject(Router), 'url', 'get').and.returnValue('/home#research');
+    const viewport = TestBed.inject(ViewportScroller);
+    let position: [number, number] = [0, 0];
+    spyOn(viewport, 'getScrollPosition').and.callFake(() => position);
+    const restore = spyOn(viewport, 'scrollToAnchor');
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    position = [0, 500];
+    window.dispatchEvent(new Event('scroll'));
+    position = [0, 0];
+    window.dispatchEvent(new Event('scroll'));
+    flushMicrotasks();
+    expect(restore).not.toHaveBeenCalled();
+  }));
+
+  it('releases initial scroll tracking on stability or destruction', fakeAsync(() => {
+    spyOn(TestBed.inject(ApplicationRef), 'whenStable').and.returnValue(Promise.resolve());
+    const remove = spyOn(window, 'removeEventListener').and.callThrough();
+    const settled = TestBed.createComponent(AppComponent);
+    settled.detectChanges();
+    flushMicrotasks();
+    settled.destroy();
+    const departing = TestBed.createComponent(AppComponent);
+    departing.detectChanges();
+    departing.destroy();
+    flushMicrotasks();
+    expect(remove.calls.allArgs().filter(args => args[0] === 'scroll').length).toBe(2);
+  }));
 });

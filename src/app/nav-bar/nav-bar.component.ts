@@ -129,8 +129,8 @@ export class NavBarComponent implements AfterViewInit, OnDestroy {
             // section.scrollIntoView({ behavior: 'smooth' });
 
             // Custom smooth scrolling
-            const expandedMenuHeight = document.querySelector('.navbar-collapse.show')?.getBoundingClientRect().height || 0;
-            const headerHeight = (document.querySelector('.navigation')?.getBoundingClientRect().height || 0) - expandedMenuHeight;
+            // The mobile menu is absolute, so its height is outside the fixed header's layout.
+            const headerHeight = document.querySelector('.navigation')?.getBoundingClientRect().height || 0;
             const targetPosition = Math.max(0, section.getBoundingClientRect().top + window.scrollY - headerHeight - 16);
             if (!animate) {
                 window.scrollTo({ top: targetPosition, behavior: 'instant' });

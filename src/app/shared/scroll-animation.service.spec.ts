@@ -51,4 +51,13 @@ describe('ScrollAnimationService', () => {
         expect(() => service.scrollTo(0, 1500)).not.toThrow();
         expect(callbacks.size).toBe(0);
     });
+
+    it('ignores a stale frame callback after cancellation', () => {
+        service.scrollTo(0, 1500);
+        const staleFrame = callbacks.get(1)!;
+        service.cancel();
+        staleFrame(100);
+        expect(fakeWindow.scrollTo).not.toHaveBeenCalled();
+        expect(callbacks.size).toBe(0);
+    });
 });
