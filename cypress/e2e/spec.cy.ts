@@ -1,7 +1,6 @@
 /* @agent Read: .agents/skills/portfolio-verification/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Architecture and content ownership: docs/README.md */
-// TODO<Bug>[BUG-01]: replace the obsolete About TODO assertion with verified current content; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
 describe("Portfolio smoke tests", () => {
     function expectSectionBelowNavigation(section: string): void {
         cy.get(`#${section} h2`).should($heading => {
@@ -117,7 +116,11 @@ describe("Portfolio smoke tests", () => {
         cy.get("#publications .publication-list li").should("have.length", 5);
         cy.get('#publications a[href="/publications"]').should("contain.text", "View all publications");
         cy.get("#about").should("exist");
-        cy.get("#about").should("contain.text", "TODO:<ADD TRUE DETAILS>");
+        cy.get("#about .about-content").should("contain.text", "Ph.D. in Computer Science")
+            .and("contain.text", "University of Memphis");
+        cy.get("#about .about-skills").should("contain.text", "Selected Skills")
+            .and("contain.text", "Machine Learning Tools");
+        cy.get("#about").should("not.contain.text", "TODO:<ADD TRUE DETAILS>");
         cy.get("#contact").should("exist");
     });
 
