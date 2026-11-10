@@ -15,9 +15,11 @@ Controller: src/app/works/works.component.ts; Styles: src/app/works/works.compon
         </div> <!-- row -->
 
         <div class="container-fluid">
-            <ng-template #cdkPopup let-imageSrc>
-                <div class="popup-container">
-                    <img [src]="imageSrc" alt="Popup Image" class="popup-image" />
+            <ng-template #cdkPopup let-imageSrc let-imageName="imageName">
+                <div class="popup-container" role="dialog" aria-modal="true" [attr.aria-label]="imageName + ' image preview'">
+                    <button type="button" class="popup-close" cdkFocusInitial aria-label="Close image preview"
+                        (click)="closeImagePopup()">Close <span aria-hidden="true">&times;</span></button>
+                    <img [src]="imageSrc" [alt]="imageName + ' project preview'" class="popup-image" />
                 </div>
             </ng-template>
             <div class="row flex-row flex-nowrap overflow-auto">
@@ -34,8 +36,9 @@ Controller: src/app/works/works.component.ts; Styles: src/app/works/works.compon
                                 <h3 class="work-title">Map901</h3>
                                 <p>Indoor LiDAR and Image Dataset | Indoor Object Detection using DNN</p>
                                 <ul>
-                                    <li><a class="image-popup" (click)="openImagePopup('assets/images/work/w-1.png')">
-                                            <i class="lni-plus"></i></a></li>
+                                    <li><button #map901Opener type="button" class="image-popup" aria-label="Preview Map901 image"
+                                            aria-haspopup="dialog" (click)="openImagePopup('assets/images/work/w-1.png', 'Map901', map901Opener)">
+                                            <i class="lni-plus" aria-hidden="true"></i></button></li>
                                     <li><a href="http://map901.memphis.edu/" target="_blank"
                                             rel="nofollow noopener noreferrer">
                                             <i class="lni-link"></i></a></li>
@@ -57,8 +60,9 @@ Controller: src/app/works/works.component.ts; Styles: src/app/works/works.compon
                             <div class="work-content">
                                 <h3 class="work-title">Personal Website</h3>
                                 <ul>
-                                    <li><a class="image-popup" (click)="openImagePopup('assets/images/work/w-2.png')">
-                                            <i class="lni-plus"></i></a></li>
+                                    <li><button #websiteOpener type="button" class="image-popup" aria-label="Preview Personal Website image"
+                                            aria-haspopup="dialog" (click)="openImagePopup('assets/images/work/w-2.png', 'Personal Website', websiteOpener)">
+                                            <i class="lni-plus" aria-hidden="true"></i></button></li>
                                     <li><a href="https://github.com/Mazharul-Hossain/Personal-Website" target="_blank"
                                             rel="nofollow noopener noreferrer"><i class="lni-link"></i></a></li>
                                 </ul>
