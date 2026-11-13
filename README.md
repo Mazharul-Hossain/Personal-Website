@@ -13,6 +13,7 @@ Keep facts in their authoritative location and link to them elsewhere.
 | Dependency ranges and executable commands | [package.json](package.json) |
 | Exact dependency versions | [package-lock.json](package-lock.json) |
 | Build entries, global style/script order, output, budgets | [angular.json](angular.json) |
+| Service-worker resource caching and navigation rules | [ngsw-config.json](ngsw-config.json); CACHE-01 below states required behavior |
 | TypeScript and Angular compiler policy | [tsconfig.json](tsconfig.json) and its app/test/Cypress extensions |
 | Whitespace and formatting | [.editorconfig](.editorconfig), Prettier settings in the manifest |
 | Routes | [app-routing.module.ts](src/app/app-routing.module.ts), feature route declarations |
@@ -37,10 +38,14 @@ The build's `prebuild` hook runs the guidance integrity check. Behavioral contra
 | `check:guidance` | Check local documentation/header targets, simple skill frontmatter, and strict-mode policy; does not prove runtime behavior |
 | `test` | Jasmine/Karma; single run: `npm test -- --watch=false --progress=false` |
 | `test:feed` | Node tests with simulated upstream RSS |
+| `test:deployment` | Local HTTP fixtures validating deployment-check failure detection |
+| `verify:deployment` | Read-only HTTP comparison with exact local browser output; requires URL/build path; see Netlify notes |
+| `check:service-worker` | Check generated worker/cache rules and every manifest content hash; accepts a browser-output directory |
+| `test:service-worker` | Build production A/B and run maintained Chrome cache/update/recovery/offline/feed-fallback tests; owns its browser/server; see Netlify notes |
 | `cypress:run`, `cypress:open` | Browser journeys; start the app first; base URL is in [cypress.config.ts](cypress.config.ts) |
 | `serve:ssr:my-app` | Runs the existing server bundle; the local check exits without a listener, see Netlify notes |
 
-Keep unit specs beside components/services and browser journeys in `cypress/e2e/`. Test meaningful behavior and failure cases. There is no lint script or numeric coverage gate. Do not commit generated output, dependencies, coverage, or browser recordings.
+Keep unit specs beside components/services and normal browser journeys in `cypress/e2e/`. Production worker/update tests live in [tests/service-worker](tests/service-worker/service-worker.test.mjs), outside the Cypress proxy, and run through the manifest command above. Run them for changes to worker rules, lazy boundaries or chunk recovery. Test meaningful behavior and failure cases. There is no lint script or numeric coverage gate. Do not commit generated output, dependencies, coverage, or browser recordings.
 
 ### Local and Netlify verification
 
@@ -58,6 +63,7 @@ Inspect deployment logs, generated handlers and account settings when relevant a
 | `src/app/index-page/` | Homepage composition and hero |
 | `src/app/home/standalone-pages.component.ts` | Route wrappers reusing homepage sections |
 | `src/app/shared/` | Browser abstraction, metadata, scroll animation |
+| `tests/service-worker/` | Maintained Node/Chrome production A/B, cache, recovery, offline and feed-fallback tests |
 | `src/app/publications/` | Selected records and lazy-loaded bibliography |
 | `src/app/works/` | Lazy Works feature module, project gallery and accessible CDK popup |
 | `src/assets/` | Theme CSS, vendor scripts, fonts, images, attribution-bearing assets |
@@ -82,6 +88,8 @@ These are mandatory acceptance criteria. Preserve them unless the user explicitl
 | CONTENT-01 | Structured facts have one TypeScript authority. Preserve full citations, authors, categories, selected ordering, research links and lazy bibliography during consolidation. | Citation inventory, author specs, bibliography/bundle comparisons |
 | CONTENT-02 | Preserve writing discovery/fallbacks, LinkedIn-first contact, disclosure boundaries and attribution. Do not add a public CV download or private contact details. | Content specs, feed tests, writing journeys, approved evidence |
 | RENDER-01 | Support SSR/hydration. Guard browser APIs; release timers, listeners, subscriptions, overlays and animation frames at teardown. | Browser/server checks and lifecycle tests; known gaps in active bug register |
+| CACHE-01 | Production service worker caches entry assets and on-demand chunks/images/fonts. Page navigation and `/feed` remain network-only; offline pages are not promised. Keep unused lazy Works/bibliography chunks out of installation prefetch. | Generated-output check; controlled browser, no-JS routes, offline assets, real asset-changing update and lazy-route checks; platform evidence remains separate |
+| CACHE-02 | Future application versions recover recognized lazy-chunk navigation failures by hard-navigating to the failed same-origin route, preserving query/fragment. Permit one automatic attempt per document and at most one per tab in five minutes. Do not reload ordinary data errors or known-offline failures; blocked storage disables automatic recovery. Existing tabs without this code need manual reload. | Recovery unit/router tests, changed-build old-tab navigation and persistent-failure loop guard; retain CACHE-01 lazy boundaries |
 
 Some checks still need implementation. The active plan records gaps; a contract states required behavior, not that all current code already complies.
 
