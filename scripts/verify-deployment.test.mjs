@@ -81,6 +81,22 @@ test('detects stale HTML entry references even with matching content and availab
 test('rejects a manifest that omits the expected launch/icon settings', async () => fixture(report => {
     assert.ok(report.failures.some(message => message.includes('Web manifest: differs')));
 }, { '/manifest.webmanifest': [200, 'application/manifest+json', '{}'] }));
+
+test('rejects a correct manifest body served with a generic binary MIME type', async () => fixture(report => {
+    assert.ok(report.failures.includes('Web manifest: unexpected MIME'));
+    assert.ok(!report.failures.some(message => message.includes('Web manifest: differs')));
+}, { '/manifest.webmanifest': [200, 'application/octet-stream', '{"icons":[]}'] }));
+
+test('rejects a missing script redirected to a successful HTML error page', async () => fixture(report => {
+    assert.ok(report.failures.some(message => message.includes('Missing JS asset')));
+    const missing = report.requests.find(row => row.path === '/__deployment-verification-missing__.js');
+    assert.equal(missing.status, 200);
+    assert.equal(missing.redirects.length, 1);
+}, {
+    '/__deployment-verification-missing__.js': [302, 'text/plain', '', { location: '/404/' }],
+    '/404/': [200, 'text/html', '<title>Not found</title><h2>Not found</h2>']
+}));
+
 test('detects HTML served for a generated font', async () => fixture(report => {
     assert.ok(report.failures.some(message => message.includes('media/icon.woff2: missing asset')));
 }, { '/media/icon.woff2': [200, 'text/html', '<app-root></app-root>'] }));

@@ -13,6 +13,7 @@
     "typecheck:cypress": "tsc -p cypress/tsconfig.json --noEmit",
     "check:guidance": "node scripts/check-guidance.mjs",
     "test:feed": "node --test src/writing-feed.test.mjs",
+    "test:server": "node --test src/server.test.mjs",
     "test:deployment": "node --test scripts/verify-deployment.test.mjs",
     "verify:deployment": "node scripts/verify-deployment.mjs",
     "check:service-worker": "node scripts/check-service-worker.mjs",

@@ -13,6 +13,7 @@ Keep facts in their authoritative location and link to them elsewhere.
 | Dependency ranges and executable commands | [package.json](package.json) |
 | Exact dependency versions | [package-lock.json](package-lock.json) |
 | Build entries, global style/script order, output, budgets | [angular.json](angular.json) |
+| Netlify response-header overrides | [netlify.toml](netlify.toml) |
 | Service-worker resource caching and navigation rules | [ngsw-config.json](ngsw-config.json); CACHE-01 below states required behavior |
 | TypeScript and Angular compiler policy | [tsconfig.json](tsconfig.json) and its app/test/Cypress extensions |
 | Whitespace and formatting | [.editorconfig](.editorconfig), Prettier settings in the manifest |
@@ -38,6 +39,7 @@ The build's `prebuild` hook runs the guidance integrity check. Behavioral contra
 | `check:guidance` | Check local documentation/header targets, simple skill frontmatter, and strict-mode policy; does not prove runtime behavior |
 | `test` | Jasmine/Karma; single run: `npm test -- --watch=false --progress=false` |
 | `test:feed` | Node tests with simulated upstream RSS |
+| `test:server` | Production-handler response regressions; run after `build`, or set `SERVER_TEST_BUILD_DIR` to a matching build directory |
 | `test:deployment` | Local HTTP fixtures validating deployment-check failure detection |
 | `verify:deployment` | Read-only HTTP comparison with exact local browser output; requires URL/build path; see Netlify notes |
 | `check:service-worker` | Check generated worker/cache rules and every manifest content hash; accepts a browser-output directory |
