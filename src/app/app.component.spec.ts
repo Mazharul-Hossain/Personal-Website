@@ -5,10 +5,11 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ApplicationRef } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
 import { TestBed, fakeAsync, flushMicrotasks } from '@angular/core/testing';
-import { NavigationStart, Router, RouterModule } from '@angular/router';
+import { NavigationError, NavigationStart, Router, RouterModule } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { ScrollAnimationService } from './shared/scroll-animation.service';
+import { ChunkLoadRecoveryService } from './shared/chunk-load-recovery.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -52,6 +53,42 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     events.next(new NavigationStart(2, '/publications'));
     expect(cancel).toHaveBeenCalled();
+  });
+
+  it('sends the latest failed route to chunk recovery and unsubscribes on destruction', () => {
+    const events = new Subject<NavigationStart | NavigationError>();
+    TestBed.overrideProvider(Router, { useValue: { url: '/home', events } });
+    const recover = spyOn(TestBed.inject(ChunkLoadRecoveryService), 'tryReload');
+    const fixture = TestBed.createComponent(AppComponent); fixture.detectChanges();
+    const error = new TypeError('Failed to fetch dynamically imported module: /old.js');
+    events.next(new NavigationStart(2, '/publications?q=one#papers'));
+    events.next(new NavigationError(2, '/publications?q=one#papers', error));
+    expect(recover).toHaveBeenCalledOnceWith('/publications?q=one#papers', error);
+    fixture.destroy(); events.next(new NavigationError(2, '/publications', error));
+    expect(recover).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not reload for an obsolete navigation failure after a newer action', () => {
+    const events = new Subject<NavigationStart | NavigationError>();
+    TestBed.overrideProvider(Router, { useValue: { url: '/home', events } });
+    const recover = spyOn(TestBed.inject(ChunkLoadRecoveryService), 'tryReload');
+    const fixture = TestBed.createComponent(AppComponent); fixture.detectChanges();
+    events.next(new NavigationStart(2, '/publications'));
+    events.next(new NavigationStart(3, '/about'));
+    events.next(new NavigationError(2, '/publications', new TypeError('Failed to fetch dynamically imported module: /old.js')));
+    expect(recover).not.toHaveBeenCalled();
+  });
+
+  it('preserves a newer section or back-to-top action while a lazy route is pending', () => {
+    const events = new Subject<NavigationStart | NavigationError>();
+    TestBed.overrideProvider(Router, { useValue: { url: '/home', events } });
+    const recover = spyOn(TestBed.inject(ChunkLoadRecoveryService), 'tryReload');
+    const fixture = TestBed.createComponent(AppComponent); fixture.detectChanges();
+    events.next(new NavigationStart(2, '/publications'));
+    // Section navigation changes shared scroll ownership without a Router NavigationStart.
+    TestBed.inject(ScrollAnimationService).cancel();
+    events.next(new NavigationError(2, '/publications', new TypeError('Failed to fetch dynamically imported module: /old.js')));
+    expect(recover).not.toHaveBeenCalled();
   });
 
   it('provides a single main landmark around routed content', () => {

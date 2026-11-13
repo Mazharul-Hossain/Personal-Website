@@ -35,8 +35,10 @@ const authored = [
     ...walk("src/environments").filter(path => path.endsWith(".ts")),
     ...readdirSync(join(root, "src")).filter(path => /\.(ts|mjs)$/.test(path)).map(path => `src/${path}`),
     ...walk("cypress").filter(path => /\.(ts|html)$/.test(path)),
+    ...walk("tests/service-worker").filter(path => path.endsWith(".mjs")),
     "src/index.html", "src/assets/css/style.css", "src/assets/css/default.css",
-    "cypress.config.ts", "karma.conf.js", "scripts/check-guidance.mjs"
+    "cypress.config.ts", "karma.conf.js", "scripts/check-guidance.mjs",
+    "scripts/verify-deployment.mjs", "scripts/verify-deployment.test.mjs", "scripts/check-service-worker.mjs"
 ];
 let links = 0;
 const activePlan = read("docs/BUNDLE_OPTIMIZATION_PLAN.md");
@@ -49,7 +51,7 @@ for (const path of authored) {
     const header = text.match(/^(?:\/\*|<!--) @agent Read: ([\s\S]*?)(?:\*\/|-->)/)?.[1];
     check(Boolean(header), `${path}: missing @agent reading pointer`);
     if (!header) continue;
-    const targets = header.match(/(?:\.agents\/skills\/[a-z0-9-]+\/SKILL\.md|(?:src|docs|scripts|cypress)\/[\w./-]+\.[a-z]+|(?:README|AGENTS)\.md|angular\.json)/g) || [];
+    const targets = header.match(/(?:\.agents\/skills\/[a-z0-9-]+\/SKILL\.md|(?:src|docs|scripts|cypress|tests)\/[\w./-]+\.[a-z]+|(?:README|AGENTS)\.md|angular\.json)/g) || [];
     for (const target of targets) {
         check(exists(target), `${path}: missing header target ${target}`);
         links++;

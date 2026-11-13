@@ -1,14 +1,16 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
-Template: src/app/app.component.html; Styles: src/app/app.component.css */
+Template: src/app/app.component.html; Styles: src/app/app.component.css
+Chunk recovery: src/app/shared/chunk-load-recovery.service.ts */
 import { ApplicationRef, Component, DOCUMENT, OnInit, OnDestroy, Inject, ElementRef, isDevMode, ChangeDetectionStrategy } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { GtagService } from './gtag/gtag.service';
 import { WindowRef } from './shared/window.token';
 import { PageMetadataService } from './shared/page-metadata.service';
 import { ScrollAnimationService } from './shared/scroll-animation.service';
+import { ChunkLoadRecoveryService } from './shared/chunk-load-recovery.service';
 
 @Component({
     selector: 'app-root',
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private scrollAnimation: ScrollAnimationService,
         private viewportScroller: ViewportScroller,
         private applicationRef: ApplicationRef,
+        private chunkRecovery: ChunkLoadRecoveryService,
         @Inject(DOCUMENT) private document: Document
     ) { }
 
@@ -44,6 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
         let initialScrollRevision = this.scrollAnimation.revision;
         let initialScrollPosition = this.viewportScroller.getScrollPosition();
         let viewportScrolled = false;
+        let latestNavigationId = 0;
         this.pageMetadata.update(this.router.url);
         if (browserWindow) {
             this.gtagService.addGtagScript();
@@ -68,10 +72,15 @@ export class AppComponent implements OnInit, OnDestroy {
         }
         this.routerSubscription = this.router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
+                latestNavigationId = event.id;
                 this.scrollAnimation.cancel();
                 initialScrollRevision = this.scrollAnimation.revision;
                 initialScrollPosition = this.viewportScroller.getScrollPosition();
                 viewportScrolled = false;
+            }
+            if (event instanceof NavigationError && event.id === latestNavigationId &&
+                this.scrollAnimation.revision === initialScrollRevision) {
+                this.chunkRecovery.tryReload(event.url, event.error);
             }
             if (event instanceof NavigationEnd) {
                 this.pageMetadata.update(event.urlAfterRedirects);
