@@ -4,7 +4,7 @@
 - Commit `46cedde` replaced that server with a Netlify `CommonEngine` handler. The current `src/server.ts` uses `AngularAppEngine` and `netlifyAppEngineHandler`; it handles `/feed` through `src/writing-feed.ts` and does not import Express.
 - The installed `@netlify/angular-runtime` generates an Angular SSR Edge Function that imports `netlifyAppEngineHandler` from the built server. This generated function is separate from user-authored functions. Netlify's [Angular documentation](https://docs.netlify.com/build/frameworks/framework-setup-guides/angular/) describes automatic SSR configuration.
 - Netlify's [functions documentation](https://docs.netlify.com/build/functions/configuration/) identifies `netlify/functions` under the site base directory as the default directory for user-authored functions. The directory can also be configured in the Netlify UI.
-- This checkout has no `netlify/functions` directory, and its `netlify.toml` is empty. No files under `netlify/functions` appear in the locally available Git history. This does not establish what is configured or deployed in Netlify, in another repository, or in an earlier deploy whose source is unavailable locally.
+- This checkout has no `netlify/functions` directory. Its `netlify.toml` now supplies an explicit web-manifest MIME header; it does not define functions. No files under `netlify/functions` appear in the locally available Git history. This does not establish what is configured or deployed in Netlify, in another repository, or in an earlier deploy whose source is unavailable locally.
 - Before deploying dependency removals, inspect the Netlify project's current deploy and Functions/Edge Functions lists, build base directory, and functions directory. If any separately maintained function imports Express, verify how it obtains dependencies before removing Express from its package.
 - The manifest's standalone server command was executed locally on November 8, 2026: it exits successfully without starting a listener. The exported handler's localhost route probe encounters the allowed-host guard; that is not a deployed rendering failure. See the [active plan's Phase 1 investigation evidence](BUNDLE_OPTIMIZATION_PLAN.md#remaining-phase-1-investigation-batch--november-8-2026) for the separate feed, prerender and caching results. A standalone listening adapter remains separate work if Node hosting is needed.
 
@@ -22,6 +22,14 @@ Browser service-worker caching and Netlify edge/CDN caching are separate systems
 | Netlify integration | Netlify Dev can simulate the local framework/function/edge routing, redirects and headers with appropriate configuration. The current CLI command alone is not a listening adapter. | CDN hit/miss, TTL, invalidation and account/edge configuration. Local edge caching is not emulated. |
 
 References: [Angular local service-worker testing](https://angular.dev/ecosystem/service-workers/getting-started), [Angular version/update behavior](https://angular.dev/ecosystem/service-workers/devops), [Netlify local development](https://docs.netlify.com/api-and-cli-guides/cli-guides/local-development/), and [Netlify edge limitations](https://docs.netlify.com/build/edge-functions/limits/). Use a Deploy Preview for the final platform check; publishing is separate authorization.
+
+## Preview response fixes — November 13, 2026
+
+The first public preview exposed VERIFY-07/08. The local source now sets the exact `/manifest.webmanifest` response header to `application/manifest+json` in `netlify.toml`, using [Netlify's custom-header syntax](https://docs.netlify.com/manage/routing/headers/). This config applies to static files; it does not establish the deployed MIME until Netlify rebuilds the preview.
+
+The installed adapter excludes existing browser-output files from its SSR handler. Unmatched `.js`/`.mjs` paths that do reach `src/server.ts` now return 404 before Angular's wildcard document redirect. Existing assets still use static serving; document routes and `/feed` retain their behavior. `npm run test:server` tests the actual compiled handler after `npm run build`; set `SERVER_TEST_BUILD_DIR` only when testing a different matching output directory. No server is published or started by this command.
+
+The missing-script regression was observed red (302 versus expected 404), with three control tests passing. After the fix, all four compiled-handler tests and 14 HTTP-verifier fixtures pass, including both observed deployed failure patterns. Recheck the new preview's manifest MIME, a nonexistent script, an existing script and page/feed routes before closing these deployed issues. Local execution does not change the existing immutable preview.
 
 ## Maintained local production tests
 
@@ -93,7 +101,7 @@ The command-line HTTP verifier does not inherit Chrome's login and has no authen
 3. First verify the deployed source contains the new recovery handler. Keep that tab open across a later authorized A→B deploy and try both warmed and previously unopened lazy pages. Test reload recovery and inspect any missing old asset URL. Do not clear browser storage between versions. A legacy tab without the handler needs a manual reload; it cannot be repaired retroactively. This is the remaining VERIFY-01 platform check for recovery.
 4. Record the immutable preview/deploy identity, statuses, response types, selected cache headers and observed behavior. Share those observations if needed; no cookies or unredacted authenticated network archive is required. Login/redirect HTML is not a passing app response.
 
-CI/CD remains disabled per the user. A push alone is not evidence of a new deployed build. The authenticated preview/Netlify logs remain outside this local validation.
+At the earlier local-only checkpoint, the user reported disabled CI/CD. A public preview was subsequently built and inspected on November 13; see the active plan's public-preview checkpoint. A push alone does not establish a deployment's identity or passing platform checks. The authenticated-preview instructions above still apply when a future preview requires login.
 
 ## Service-worker investigation — November 9, 2026
 
@@ -122,9 +130,9 @@ A child-process probe supplied explicit localhost values for the adapter's allow
 
 ## Prepared deployment verification
 
-The user reports that CI/CD is disabled and requests local preparation only. A push does not establish a deploy. No preview URL, deployment, account inspection or live-site probe was performed in this batch.
+This runbook was prepared during the earlier local-only batch. The November 13 public-preview evidence and response fixes are recorded above and in the active plan. Netlify account metadata and a same-origin A/B rollout remain unverified; use this procedure for the next preview without assuming the local fixes are already deployed.
 
-1. When a preview is created separately, retain its immutable deploy URL, Netlify deploy ID, source commit, build log, build base/publish directories and generated Functions/Edge Functions list. Confirm the deployed artifact uses the intended commit and configuration. Local `.netlify/` state/generated configuration is not account evidence; root `netlify.toml` is currently empty.
+1. When a preview is created separately, retain its immutable deploy URL, Netlify deploy ID, source commit, build log, build base/publish directories and generated Functions/Edge Functions list. Confirm the deployed artifact uses the intended commit and configuration. Local `.netlify/` state/generated configuration is not account evidence; root `netlify.toml` supplies the web-manifest MIME override.
 2. Build that exact commit with the same lockfile/toolchain and build-time public environment, retaining its browser output. Run the manifest's `test:deployment` fixtures before the HTTP check.
 3. Run the read-only comparison (replace placeholders; this command does not deploy):
 
