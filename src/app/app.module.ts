@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NavFooterComponent } from './nav-footer/nav-footer.component';
 import { ContactMeComponent } from './contact-me/contact-me.component';
-import { ServicesComponent } from './services/services.component';
 import { IndexPageComponent } from './index-page/index-page.component';
 import { AboutMeComponent } from './about-me/about-me.component';
 import { SelectedPublicationsComponent } from './publications/selected-publications.component';
@@ -28,7 +27,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     NavBarComponent,
     NavFooterComponent,
     ContactMeComponent,
-    ServicesComponent,
     IndexPageComponent,
     AboutMeComponent,
     SelectedPublicationsComponent,

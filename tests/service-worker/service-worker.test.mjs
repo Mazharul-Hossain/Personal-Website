@@ -38,6 +38,17 @@ function buildInfo(path) {
     const browser = join(path, 'browser');
     const html = route => readFileSync(join(browser, route, 'index.html'), 'utf8');
     const stats = JSON.parse(readFileSync(join(path, 'browser-stats.json')));
+    const eager = new Set();
+    const visit = name => {
+        if (eager.has(name)) return;
+        eager.add(name);
+        for (const dependency of stats.outputs[name]?.imports || []) {
+            if (dependency.kind !== 'dynamic-import' && !dependency.external) visit(dependency.path);
+        }
+    };
+    for (const script of html('research').matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)) visit(script[1].replace(/^\//, ''));
+    assert.ok(eager.size > 0, 'Prerendered entry scripts must be discoverable');
+    assert.ok(![...eager].some(name => Object.keys(stats.outputs[name]?.inputs || {}).some(input => input.includes('node_modules/@angular/cdk/'))), 'CDK popup dependencies must remain outside the eager script graph');
     const owner = suffix => {
         const matches = Object.entries(stats.outputs).filter(([, output]) => Object.keys(output.inputs).some(input => input.endsWith(suffix)));
         assert.equal(matches.length, 1, `Expected one browser chunk for ${suffix}`); return '/' + matches[0][0];
@@ -47,10 +58,9 @@ function buildInfo(path) {
     assert.ok(font, 'Generated local icon font missing');
     const fontBytes = readFileSync(join(browser, font));
     const publications = [...html('publications').matchAll(/data-publication-id=/g)].length;
-    const works = [...html('work').matchAll(/class="single-work\b/g)].length;
     const figures = [...html('research').matchAll(/class="research-figure"/g)].length;
-    assert.ok(publications > 0 && works > 0 && figures > 0, 'Prerendered expected content missing');
-    return { browser, manifest, font, fontBytes: fontBytes.length, fontHash: createHash('sha256').update(fontBytes).digest('hex'), publications, works, figures, worksChunk: owner('works.component.ts'), detailsChunk: owner('publication-details.ts'), researchHtml: html('research') };
+    assert.ok(publications > 0 && figures > 0, 'Prerendered expected content missing');
+    return { browser, manifest, font, fontBytes: fontBytes.length, fontHash: createHash('sha256').update(fontBytes).digest('hex'), publications, figures, popupChunk: owner('shared/image-popup.ts'), detailsChunk: owner('publication-details.ts'), researchHtml: html('research') };
 }
 
 before(async context => {
@@ -73,11 +83,12 @@ before(async context => {
     }
     for (const [index, path] of paths.entries()) await command(`output-${index}`, [join(root, 'scripts/check-service-worker.mjs'), join(path, 'browser')], signal);
     [a, b] = paths.map(buildInfo);
-    assert.notEqual(a.worksChunk, b.worksChunk, 'A/B need different real chunk URLs; build B with named chunks');
+    assert.notEqual(a.popupChunk, b.popupChunk, 'A/B need different real chunk URLs; build B with named chunks');
+    assert.notEqual(a.detailsChunk, b.detailsChunk, 'Bibliography URLs must change for recovery coverage');
     assert.notDeepEqual(a.manifest.hashTable, b.manifest.hashTable, 'A/B must contain changed compiled assets');
-    assert.equal(a.publications, b.publications); assert.equal(a.works, b.works);
+    assert.equal(a.publications, b.publications); assert.equal(a.figures, b.figures);
     assert.equal(a.fontHash, b.fontHash, 'These build variants should share the unchanged font');
-    await writeFile(join(directory, 'builds.json'), JSON.stringify({ paths, reused: Boolean(suppliedA), works: [a.worksChunk, b.worksChunk], details: [a.detailsChunk, b.detailsChunk], expected: { publications: a.publications, works: a.works, figures: a.figures } }, null, 2));
+    await writeFile(join(directory, 'builds.json'), JSON.stringify({ paths, reused: Boolean(suppliedA), popup: [a.popupChunk, b.popupChunk], details: [a.detailsChunk, b.detailsChunk], expected: { publications: a.publications, figures: a.figures } }, null, 2));
     chrome = await launchChrome({ directory, signal });
 }, { timeout: 1200000 });
 
@@ -117,7 +128,7 @@ for (const pendingManifest of [false, true]) {
                 assert.equal(await page.evaluate('fetch("/manifest.webmanifest").then(response=>response.status)'), 200);
                 await page.wait(`(async()=> (await ${cachePaths}).some(path=>path.startsWith('/main-')))()`, 'worker cache initialization');
                 const cached = await page.evaluate(cachePaths);
-                assert.ok(!cached.includes(a.worksChunk) && !cached.includes(a.detailsChunk), 'Unused lazy chunks must not be prefetched');
+                assert.ok(!cached.includes(a.popupChunk) && !cached.includes(a.detailsChunk), 'Unused lazy chunks must not be prefetched');
             });
             if (!pendingManifest) await step('Medium 502/504 keep a visible fallback without automatic reload', async () => {
                 report.feedFallback = [];
@@ -138,11 +149,11 @@ for (const pendingManifest of [false, true]) {
                 }
                 server.state.feedStatus = 200; await page.go('/home/');
             });
-            await step('warm Works remains usable while bibliography stays deferred', async () => {
-                await page.spa('/work'); await page.wait(`document.querySelectorAll('.single-work').length === ${a.works}`, 'Works activation');
-                await page.evaluate('document.querySelector(".image-popup").click()'); await page.wait('!!document.querySelector(".popup-image")', 'popup open');
-                await page.evaluate('document.querySelector(".popup-close").click()'); assert.equal(await page.evaluate('document.activeElement === document.querySelector(".image-popup")'), true);
-                await page.spa('/home'); await page.wait(`(async()=> (await ${cachePaths}).includes(${JSON.stringify(a.worksChunk)}))()`, 'Works caching');
+            await step('research popup warms on demand while bibliography stays deferred', async () => {
+                await page.spa('/research'); await page.wait(`document.querySelectorAll('.research-figure').length === ${a.figures}`, 'Research activation');
+                await page.evaluate('document.querySelector(".research-image-preview").click()'); await page.wait('!!document.querySelector(".popup-image")', 'popup open');
+                await page.evaluate('document.querySelector(".popup-close").click()'); assert.equal(await page.evaluate('document.activeElement === document.querySelector(".research-image-preview")'), true);
+                await page.spa('/home'); await page.wait(`(async()=> (await ${cachePaths}).includes(${JSON.stringify(a.popupChunk)}))()`, 'Popup caching');
                 assert.ok(!(await page.evaluate(cachePaths)).includes(a.detailsChunk));
             });
             server.state.build = 'b'; server.state.holdManifest = pendingManifest;
@@ -155,7 +166,9 @@ for (const pendingManifest of [false, true]) {
                 assert.ok(server.requests.some(row => row.path === '/ngsw.json' && row.build === 'b' && row.servedBuild === 'a'));
             });
             await step('old warmed code works; missing old chunk reloads the requested B route', async () => {
-                await page.spa('/work'); await page.wait(`document.querySelectorAll('.single-work').length === ${a.works}`, 'old warmed Works');
+                await page.spa('/research'); await page.wait(`document.querySelectorAll('.research-figure').length === ${a.figures}`, 'old research page');
+                await page.evaluate('document.querySelector(".research-image-preview").click()'); await page.wait('!!document.querySelector(".popup-image")', 'old warmed popup');
+                await page.evaluate('document.querySelector(".popup-close").click()');
                 const previous = await page.evaluate('performance.timeOrigin');
                 await page.spa('/publications?category=journal#papers'); await page.wait(publicationReady, 'automatic recovery and hydrated bibliography');
                 report.recovery = await page.evaluate('({timeOrigin:performance.timeOrigin,path:location.pathname,query:location.search,fragment:location.hash})');
@@ -165,7 +178,7 @@ for (const pendingManifest of [false, true]) {
                 if (pendingManifest) assert.ok(server.requests.some(row => row.path === '/ngsw.json' && row.build === 'b' && row.servedBuild === 'a'));
             });
             if (!pendingManifest) await step('network-rendered no-JS pages, cached font and uncached offline pages/feed', async () => {
-                await page.go('/work/'); await page.evaluate('document.querySelector(".image-popup").click()'); await page.wait('!!document.querySelector(".popup-image")', 'new Works popup'); await page.evaluate('document.querySelector(".popup-close").click()');
+                await page.go('/research/'); await page.evaluate('document.querySelector(".research-image-preview").click()'); await page.wait('!!document.querySelector(".popup-image")', 'new Research popup'); await page.evaluate('document.querySelector(".popup-close").click()');
                 await page.send('Emulation.setScriptExecutionDisabled', { value: true });
                 const before = server.requests.length; await page.go('/research/', false);
                 assert.equal(await page.evaluate('document.querySelectorAll(".research-figure").length'), a.figures);
@@ -188,16 +201,31 @@ for (const pendingManifest of [false, true]) {
             });
             await step('persisted guard prevents another reload after another missing chunk', async () => {
                 server.state.available = true; await page.send('Emulation.setScriptExecutionDisabled', { value: false });
-                await page.go('/publications?category=journal#papers'); await page.wait(publicationReady, 'healthy bibliography before negative case');
-                report.evicted = await page.evaluate(`(async()=>{let deleted=0;for(const key of await caches.keys())if(await(await caches.open(key)).delete(${JSON.stringify(server.origin + b.worksChunk)}))deleted++;return deleted;})()`);
-                if (!pendingManifest) assert.ok(report.evicted > 0, 'Evict exactly the warmed latest-version Works resource');
+                // A fresh research document leaves the bibliography cold in the JS module map,
+                // while sessionStorage retains the cooldown from the earlier recovery.
+                await page.go('/research');
+                report.evicted = await page.evaluate(`(async()=>{let deleted=0;for(const key of await caches.keys())if(await(await caches.open(key)).delete(${JSON.stringify(server.origin + b.detailsChunk)}))deleted++;return deleted;})()`);
+                if (!pendingManifest) assert.ok(report.evicted > 0, 'Evict exactly the latest-version bibliography resource');
                 const origin = await page.evaluate('performance.timeOrigin'), before = page.documentNavigations;
-                server.state.blocked.add(b.worksChunk); await page.spa('/work');
-                await page.wait(`location.pathname === '/publications' && document.querySelectorAll('app-publications li[data-publication-id]').length === ${b.publications} && (window.getAllAngularTestabilities?.().length || 0) > 0 && window.getAllAngularTestabilities().every(testability=>testability.isStable())`, 'failed navigation leaves the working page');
+                server.state.blocked.add(b.detailsChunk); await page.spa('/publications');
+                await page.wait(`location.pathname === '/research' && document.querySelectorAll('.research-figure').length === ${b.figures} && (window.getAllAngularTestabilities?.().length || 0) > 0 && window.getAllAngularTestabilities().every(testability=>testability.isStable())`, 'failed navigation leaves the working page');
                 await delay(300, signal);
-                assert.ok(server.requests.some(row => row.path === b.worksChunk && row.status === 404), 'The second chunk must actually fail');
+                assert.ok(server.requests.some(row => row.path === b.detailsChunk && row.status === 404), 'The latest-version chunk must actually fail');
                 assert.equal(await page.evaluate('performance.timeOrigin'), origin); assert.equal(page.documentNavigations, before, 'Cooldown must prevent another automatic document navigation');
                 report.loopGuard = { timeOrigin: origin, documentNavigations: before, preventedReload: true };
+            });
+            await step('unavailable popup offers its original image when reload recovery is guarded', async () => {
+                await page.evaluate(`(async()=>{for(const key of await caches.keys())await(await caches.open(key)).delete(${JSON.stringify(server.origin + b.popupChunk)});})()`);
+                server.state.blocked.add(b.popupChunk);
+                const origin = await page.evaluate('performance.timeOrigin'), before = page.documentNavigations;
+                const source = await page.evaluate('document.querySelector(".research-image-preview img").getAttribute("src")');
+                await page.evaluate('document.querySelector(".research-image-preview").click()');
+                await page.wait('!!document.querySelector("app-selected-research [role=alert] a")', 'original-image fallback');
+                assert.equal(await page.evaluate('document.querySelector("app-selected-research [role=alert] a").getAttribute("href")'), source);
+                assert.ok(server.requests.some(row => row.path === b.popupChunk && row.status === 404), 'The popup module must actually fail to download');
+                assert.equal(await page.evaluate('document.querySelector("[role=dialog]")'), null);
+                assert.equal(await page.evaluate('performance.timeOrigin'), origin);
+                assert.equal(page.documentNavigations, before, 'Popup failure must respect the same persisted cooldown');
             });
             report.passed = true;
         } finally {

@@ -25,7 +25,7 @@ test('missing JavaScript returns a real 404 without redirecting to an HTML page'
 });
 
 test('known document routes retain their rendered content', async () => {
-    for (const [path, title] of [['/research', 'Research'], ['/publications', 'Publications'], ['/work', 'Projects']]) {
+    for (const [path, title] of [['/research', 'Research'], ['/publications', 'Publications'], ['/experience', 'Experience']]) {
         const response = await request(path);
         assert.equal(response.status, 200, path);
         assert.match(response.headers.get('content-type'), /text\/html/);
@@ -33,10 +33,12 @@ test('known document routes retain their rendered content', async () => {
     }
 });
 
-test('unknown document routes retain the existing 404-page redirect', async () => {
-    const response = await request('/unknown-document');
-    assert.equal(response.status, 302);
-    assert.equal(response.headers.get('location'), '/404');
+test('unknown and retired document routes use the existing 404-page redirect', async () => {
+    for (const path of ['/unknown-document', '/work', '/service']) {
+        const response = await request(path);
+        assert.equal(response.status, 302, path);
+        assert.equal(response.headers.get('location'), '/404', path);
+    }
 });
 
 test('the writing feed still uses its upstream response rather than the asset guard', async () => {

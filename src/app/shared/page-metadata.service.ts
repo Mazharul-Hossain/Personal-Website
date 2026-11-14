@@ -16,7 +16,7 @@ export class PageMetadataService {
         const labels: Record<string, string> = {
             "/research": "Research", "/experience": "Experience",
             "/publications": "Publications", "/blog": "Writing", "/about": "About Me",
-            "/contact": "Contact", "/work": "Projects", "/service": "Expertise", "/404": "Page Not Found"
+            "/contact": "Contact", "/404": "Page Not Found"
         };
         const label = labels[path];
         const title = label ? `${label} | Mazharul Hossain` : "Mazharul Hossain | Computational Imaging & Scientific Machine Learning";

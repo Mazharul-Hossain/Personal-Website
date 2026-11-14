@@ -1,6 +1,6 @@
 /* @agent Read: .agents/skills/portfolio-verification/SKILL.md; .agents/skills/portfolio-design/SKILL.md
 Policy: README.md#behavioral-contracts; docs/BUNDLE_OPTIMIZATION_PLAN.md
-Implementation: src/app/index-page/index-page.component.html; src/app/home/selected-research/selected-research.component.html; src/app/works/works.component.html; src/assets/css/style.css */
+Implementation: src/app/index-page/index-page.component.html; src/app/home/selected-research/selected-research.component.html; src/assets/css/style.css */
 export {};
 
 for (const width of [360, 390, 1280]) {
@@ -50,36 +50,5 @@ for (const width of [360, 390, 1280]) {
             });
         });
 
-        it('keeps project previews proportional before and after loading inside the scrolling gallery', () => {
-            let blockImages = true;
-            cy.intercept('GET', '**/assets/images/**', request => {
-                if (blockImages) request.destroy();
-                else request.continue();
-            });
-            cy.visit('/work');
-            cy.get('.work-image img').should('have.length', 2).each($image => {
-                const image = $image[0] as HTMLImageElement;
-                const width = Number(image.getAttribute('width'));
-                const height = Number(image.getAttribute('height'));
-                expect(width).to.be.greaterThan(0);
-                expect(height).to.be.greaterThan(0);
-                const rect = image.getBoundingClientRect();
-                expect(rect.width).to.be.greaterThan(0);
-                expect(rect.height / rect.width).to.be.closeTo(height / width, 0.01);
-            });
-            cy.then(() => { blockImages = false; });
-            cy.reload();
-            cy.get('.work-image img').should('have.length', 2).each($image => {
-                const image = $image[0] as HTMLImageElement;
-                cy.wrap($image).scrollIntoView().should(() => {
-                    expect(image.naturalWidth, image.src).to.be.greaterThan(0);
-                    expect(Number(image.getAttribute('width'))).to.equal(image.naturalWidth);
-                    expect(Number(image.getAttribute('height'))).to.equal(image.naturalHeight);
-                    const rect = image.getBoundingClientRect();
-                    expect(rect.height / rect.width).to.be.closeTo(image.naturalHeight / image.naturalWidth, 0.01);
-                });
-            });
-            cy.document().should(doc => expect(doc.documentElement.scrollWidth).to.be.at.most(doc.documentElement.clientWidth + 1));
-        });
     });
 }
