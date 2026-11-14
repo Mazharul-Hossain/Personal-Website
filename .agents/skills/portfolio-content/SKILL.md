@@ -5,7 +5,7 @@ description: Use when editing this portfolio's publications, research records, e
 
 # Portfolio content maintenance
 
-Read the [content map](../../../docs/README.md#content-ownership-and-migration), [README contracts](../../../README.md#behavioral-contracts), and [active-plan MIG-01/MIG-06](../../../docs/BUNDLE_OPTIMIZATION_PLAN.md) before moving facts. Code paths are repository-root-relative.
+Read the [content map](../../../docs/README.md#content-ownership-and-migration), [README contracts](../../../README.md#behavioral-contracts), and [content records MIG-01/MIG-06](../../../docs/BUNDLE_OPTIMIZATION_PLAN.md) before moving facts. Code paths are repository-root-relative.
 
 ## Evidence and disclosure
 

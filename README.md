@@ -19,7 +19,7 @@ Keep facts in their authoritative location and link to them elsewhere.
 | Whitespace and formatting | [.editorconfig](.editorconfig), Prettier settings in the manifest |
 | Routes | [app-routing.module.ts](src/app/app-routing.module.ts), feature route declarations |
 | Shared policy and behavioral contracts | This README |
-| Plan status, bugs, content ownership | [docs/README.md](docs/README.md) and its linked active plan |
+| Plan status, bugs, content ownership | [docs/README.md](docs/README.md) and its linked owning plans/registers |
 | Implementation plan structure and refactoring pre-test gate | [Plan template](docs/PLAN_TEMPLATE.md) |
 | Agent-only instructions and skill routing | [AGENTS.md](AGENTS.md) |
 
@@ -60,6 +60,8 @@ Keep unit specs beside components/services and normal browser journeys in `cypre
 Locally, run compiler checks and affected tests. For runtime changes, run the production build and relevant browser journeys. Compare desktop/mobile screenshots for visible changes. For performance work, retain comparable build/Lighthouse evidence and distinguish raw bundle size from transfer size. Never raise budgets to hide regressions.
 
 A local pass does not prove Netlify deployment behavior. Against a Netlify Deploy Preview (preferred) or deployed site, record the URL and deploy/commit identity. Verify direct route requests and refreshes, returned server HTML, `/feed`, redirects, and cache behavior. For caching/PWA changes, check service-worker registration, control after reload, and updates using clean and warm browser state. A manifest or registration call is not proof of a working PWA.
+
+Use Lighthouse as diagnostic evidence, not a release-score target. Prioritize a polished, readable, accessible portfolio with reliable interactions. Investigate reproducible user-facing regressions; a lower score alone does not justify speculative changes or repeated optimization work.
 
 Inspect deployment logs, generated handlers and account settings when relevant and accessible. Publishing or changing live settings requires task authorization. Report unavailable deployed checks as unverified. See [Netlify SSR notes](docs/NETLIFY_SSR_NOTES.md) for known uncertainties, including the standalone server command.
 
@@ -116,7 +118,7 @@ Design changes must demonstrate hierarchy, readable typography, deliberate spaci
 
 Use `TODO<Category>[ID]: reason; next action; plan reference` at the owning code boundary. Categories: `Migration`, `Bug`, `Design`, `Verification`, `Content`. Use stable active-plan IDs; multiple markers may reference one item. Record the rationale and exit condition in the plan. Avoid vague "fix later" notes.
 
-Example: `TODO<Migration>[MIG-02]: legacy guarded globals; use typed WindowRef/injected DOCUMENT while preserving navigation; see docs/BUNDLE_OPTIMIZATION_PLAN.md.`
+Example: `TODO<Migration>[MIG-02]: legacy guarded globals; use typed WindowRef/injected DOCUMENT while preserving navigation; see docs/STYLESHEET_REFINEMENT_PLAN.md.`
 
 Search with `rg 'TODO<' src docs`. Resolve markers and plan entries together. Legacy editorial `TODO:<ADD TRUE DETAILS>` means missing facts; keep it only when a fact remains unresolved, not as a permanent test fixture.
 

@@ -1,5 +1,5 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-verification/SKILL.md
-Policy: README.md#behavioral-contracts; docs/BUNDLE_OPTIMIZATION_PLAN.md
+Policy: README.md#behavioral-contracts; docs/STYLESHEET_REFINEMENT_PLAN.md
 Implementation: src/app/nav-bar/nav-bar.component.ts; src/app/app.component.ts; src/app/shared/scroll-animation.service.ts */
 export {};
 

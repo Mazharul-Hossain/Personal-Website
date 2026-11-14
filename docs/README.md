@@ -7,16 +7,16 @@ Shared policy and contracts live in [README](../README.md); agent routing lives 
 | Document | Status / scope |
 | --- | --- |
 | [PLAN_TEMPLATE.md](PLAN_TEMPLATE.md) | Reusable implementation-plan skeleton and mandatory refactoring/migration pre-test gate. A template, not an active project plan. |
-| [PERFORMANCE_CLOSEOUT_REPORT.md](PERFORMANCE_CLOSEOUT_REPORT.md) | Bounded analytics/application investigation evidence. Records measurement limits and the decision to leave production behavior unchanged. |
+| [PERFORMANCE_CLOSEOUT_REPORT.md](PERFORMANCE_CLOSEOUT_REPORT.md) | Closed performance investigation and Lighthouse concern. Preserves measurement limits; no score target or further score-driven work. |
 | [NETLIFY_ROLLOVER_CHECK.md](NETLIFY_ROLLOVER_CHECK.md) | Source-identified A/B journey record and historical procedure. Retained-tab navigation succeeded; deployed chunk-failure/reload mechanism remains unverified. Test branch/worktree were cleaned up. |
-| [BUNDLE_OPTIMIZATION_PLAN.md](BUNDLE_OPTIMIZATION_PLAN.md) | **Completed optimization and research-popup/retirement batches; current bug register.** Read Start here for evidence/deferred work. New changes are locally verified, not deployed. |
+| [BUNDLE_OPTIMIZATION_PLAN.md](BUNDLE_OPTIMIZATION_PLAN.md) | **Completed optimization record; remaining content/data, deployment and tooling register.** User reported production deploy `1e8de2f`; CSS/browser-interaction ownership moved to the stylesheet plan. |
 | [BUNDLE_OPTIMIZATION_HISTORY.md](BUNDLE_OPTIMIZATION_HISTORY.md) | Historical implementation/investigation evidence. Dated checkpoints do not override current statuses or authorize new work. Consult only the records relevant to the task. |
-| [STYLESHEET_REFINEMENT_PLAN.md](STYLESHEET_REFINEMENT_PLAN.md) | Visual proposal and sample for DESIGN-01. Reuse the existing theme with scoped navy/white contrast and fewer boxed sections. Implementation awaits approval. |
+| [STYLESHEET_REFINEMENT_PLAN.md](STYLESHEET_REFINEMENT_PLAN.md) | **Current CSS and browser-interaction plan/register**, using the plan template. Consolidation is complete; future implementation is Draft. Existing site is the accepted baseline; the old contrast concept is optional, not approval for redesign. |
 | [PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md](PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md) | Editorial handoff/reference. Evidence/privacy rules remain relevant; its old inventory is not a current verified content snapshot or implementation authority. |
 | [HOMEPAGE_REDESIGN_PLAN.md](HOMEPAGE_REDESIGN_PLAN.md) | Historical/superseded proposal. Do not restore its layout, six-paper selection, CV download or no-parallax proposals. |
 | [NETLIFY_SSR_NOTES.md](NETLIFY_SSR_NOTES.md) | Deployment investigation notes; unverified server/account behavior remains unverified until observed. |
 
-Agent-readiness implementation is recorded within the active plan. Historical proposals do not authorize a UI redesign. Future visual work follows README contracts and its actual task brief.
+Choose the owning register above before editing: presentation/browser interaction belongs to the stylesheet plan; content/data, deployment and tooling remain in the completed optimization register. Historical proposals do not authorize a UI redesign. Future visual work follows README contracts and its actual task brief.
 
 ## Content ownership and migration
 

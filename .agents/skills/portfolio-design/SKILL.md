@@ -5,7 +5,7 @@ description: Use when designing or changing this portfolio's CSS, HTML layout, G
 
 # Portfolio design and UX
 
-Read [README contracts](../../../README.md#behavioral-contracts) and the [documentation index](../../../docs/README.md). Work within the actual design task: historical plans do not authorize rebuilding the site. Code paths are repository-root-relative.
+Read [README contracts](../../../README.md#behavioral-contracts) and the [documentation index](../../../docs/README.md). The [presentation/interaction plan](../../../docs/STYLESHEET_REFINEMENT_PLAN.md) owns current CSS/browser-interaction issues. Work within the actual design task: historical plans do not authorize rebuilding the site. Code paths are repository-root-relative.
 
 ## Give design a reason
 

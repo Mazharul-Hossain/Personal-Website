@@ -1,7 +1,7 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Template: src/app/nav-footer/nav-footer.component.html; Styles: src/app/nav-footer/nav-footer.component.css */
-// TODO<Migration>[MIG-02]: migrate guarded global browser access without changing scrolling; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
+// TODO<Migration>[MIG-02]: migrate guarded global browser access without changing scrolling; see docs/STYLESHEET_REFINEMENT_PLAN.md.
 import { Component, Renderer2, ElementRef, AfterViewInit, OnDestroy, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
 import { ScrollAnimationService } from '../shared/scroll-animation.service';

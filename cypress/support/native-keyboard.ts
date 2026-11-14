@@ -1,5 +1,5 @@
 /* @agent Read: .agents/skills/portfolio-verification/SKILL.md
-Policy: README.md#behavioral-contracts; docs/BUNDLE_OPTIMIZATION_PLAN.md
+Policy: README.md#behavioral-contracts; docs/STYLESHEET_REFINEMENT_PLAN.md
 Consumers: cypress/e2e/research-popup.cy.ts */
 // VERIFY-04: installed Cypress omits Enter text, so Chromium never emits keypress/button activation.
 // Deliver the full trusted sequence; do not substitute element.click() for keyboard coverage.

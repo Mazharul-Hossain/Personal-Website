@@ -1,5 +1,5 @@
 /* @agent Read: .agents/skills/portfolio-verification/SKILL.md; .agents/skills/portfolio-angular/SKILL.md
-Policy: README.md#behavioral-contracts; docs/BUNDLE_OPTIMIZATION_PLAN.md
+Policy: README.md#behavioral-contracts; docs/STYLESHEET_REFINEMENT_PLAN.md
 Implementation: src/app/nav-footer/nav-footer.component.ts; src/app/index-page/index-page.component.ts; src/app/page-not-found/page-not-found.component.ts */
 import { ElementRef, Renderer2, NgZone } from "@angular/core";
 import { TestBed, fakeAsync, tick } from "@angular/core/testing";

@@ -1,5 +1,5 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md; .agents/skills/portfolio-design/SKILL.md
-Policy: README.md#behavioral-contracts; docs/BUNDLE_OPTIMIZATION_PLAN.md
+Policy: README.md#behavioral-contracts; docs/STYLESHEET_REFINEMENT_PLAN.md
 Consumer and template: src/app/home/selected-research/selected-research.component.ts; src/app/home/selected-research/selected-research.component.html */
 import { Injector, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';

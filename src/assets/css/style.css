@@ -1,7 +1,7 @@
 /* @agent Read: .agents/skills/portfolio-design/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Build owner: angular.json; component-specific rules stay in components */
-/* TODO<Design>[DESIGN-01]: consolidate common tokens during visual work; keep feature-specific layouts in components; see docs/BUNDLE_OPTIMIZATION_PLAN.md. */
+/* TODO<Design>[DESIGN-01]: reuse shared tokens on related approved visual work; keep feature-specific layouts in components; see docs/STYLESHEET_REFINEMENT_PLAN.md. */
 /*-----------------------------------------------------------------------------------
 
     Template Name: Unfold - Personal Resume & CV Template

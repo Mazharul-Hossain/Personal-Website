@@ -43,3 +43,19 @@ Delaying/removing analytics would require an explicit tracking decision, followe
 All 18 Lighthouse reports and trace/devtools artifacts were written. The command then exited **1** because the last Chrome shutdown exceeded the helper's cleanup deadline. A follow-up process inspection filtered to the run's unique profile and found no remaining Chrome process. This is recorded in `analysis.json` and the run summary; the harness is not represented as a fully successful run. No other browser was stopped.
 
 Raw evidence: `tmp/performance-closeout-fEABSI/manifest.json`, individual report/trace files, `analysis.json` and `summary.json`; command log `tmp/final-phase-review/performance-closeout.log`. `analysis.json` corrects the distinction between total URL-attributed CPU and scripting/compilation. Existing payload/byte evidence remains in [implementation history](BUNDLE_OPTIMIZATION_HISTORY.md#performance-implementation--november-9-2026).
+
+## Lighthouse concern closed — November 14, 2026
+
+The user supplied reports for November 13 deploy `6af735ee855853448dba828a` and November 14 production deploy `6af887a4392d9b942ebb9cb1`, reporting the latter's source as `1e8de2f7bf8d25ec3be9379edc3accf9da79218d`. Both reports use the same Lighthouse version and mobile settings. Their performance scores are 90 and 84; accessibility stays 100. The November 14 JSON audits match the data embedded in its HTML report.
+
+| Observation | November 13 | November 14 |
+| --- | ---: | ---: |
+| Largest contentful paint | 2.31s | 2.83s |
+| Total blocking time | 196.5ms | 256.5ms |
+| Cumulative layout shift | 0.056 | 0.002 |
+| Total transferred bytes | 784,068 | 786,290 |
+| Main-thread work | 2.32s | 2.32s |
+
+Both reports identify the hero research-title text as the largest element. LCP and blocking-time metric scores explain most of the score decrease. CPU benchmark values differ by about 32%, and font requests completed later in the new run. The reports span multiple code changes and are one sample per deployment; they do not establish a code regression or isolate the stylesheet change. No root cause is claimed, and no runtime fix follows from this comparison alone.
+
+**User decision: closed.** The current portfolio is an acceptable presentation baseline. The goal is visitor confidence, readability and reliable behavior, not a Lighthouse number. No repeated benchmark exercise, score target or score-driven rewrite remains required. Preserve measurement limits; reopen only for a reproducible user-facing regression or materially new evidence and authorization. CSS/browser-interaction work is tracked in the [presentation plan](STYLESHEET_REFINEMENT_PLAN.md).

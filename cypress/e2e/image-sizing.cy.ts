@@ -1,5 +1,5 @@
 /* @agent Read: .agents/skills/portfolio-verification/SKILL.md; .agents/skills/portfolio-design/SKILL.md
-Policy: README.md#behavioral-contracts; docs/BUNDLE_OPTIMIZATION_PLAN.md
+Policy: README.md#behavioral-contracts; docs/STYLESHEET_REFINEMENT_PLAN.md
 Implementation: src/app/index-page/index-page.component.html; src/app/home/selected-research/selected-research.component.html; src/assets/css/style.css */
 export {};
 

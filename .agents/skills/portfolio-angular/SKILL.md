@@ -29,11 +29,11 @@ focusResearchHeading(): void {
 }
 ```
 
-Retain unlisten callbacks, cancel timers/frames, dispose overlays and unsubscribe on teardown. Use lifecycle-bound RxJS cleanup where appropriate. Never fix a type error by disabling strictness; explain a deferred boundary with a categorized TODO and active-plan ID.
+Retain unlisten callbacks, cancel timers/frames, dispose overlays and unsubscribe on teardown. Use lifecycle-bound RxJS cleanup where appropriate. Never fix a type error by disabling strictness; explain a deferred boundary with a categorized TODO and owning-plan ID.
 
 ## Fragile behavior
 
-Before touching navigation, read README NAV contracts and active plan Phase 1A. Homepage path replacement is intentionally different from router navigation; reload changes the page composition. Preserve homepage metadata during section scrolling. Browser globals in old guarded code are tracked in MIG-02; do not silently rewrite behavior while migrating types.
+Before touching navigation, read README NAV contracts and the [presentation/interaction plan](../../../docs/STYLESHEET_REFINEMENT_PLAN.md), which links the historical navigation investigation. Homepage path replacement is intentionally different from router navigation; reload changes the page composition. Preserve homepage metadata during section scrolling. Browser globals in old guarded code are tracked in MIG-02; do not silently rewrite behavior while migrating types.
 
 Prefer CSS motion under MOTION contracts. Existing parallax and cancellable scrolling are documented JS enhancements (MIG-05); optional effects may disappear without JS. Preserve them until an equivalent CSS implementation is demonstrated. Ordinary links/no-JS navigation are a separate compatibility migration (MIG-04).
 

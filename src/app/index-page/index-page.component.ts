@@ -1,7 +1,7 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Template: src/app/index-page/index-page.component.html; Styles: src/app/index-page/index-page.component.css */
-// TODO<Migration>[MIG-05]: retain pointer/device parallax unless CSS supplies equivalent behavior; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
+// TODO<Migration>[MIG-05]: retain pointer/device parallax unless CSS supplies equivalent behavior; see docs/STYLESHEET_REFINEMENT_PLAN.md.
 import { Component, AfterViewInit, OnDestroy, ElementRef, Inject, ChangeDetectionStrategy, NgZone } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
 interface ParallaxWindow extends Window {

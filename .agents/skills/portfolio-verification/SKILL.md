@@ -5,7 +5,7 @@ description: Use when testing or reviewing portfolio changes, checking regressio
 
 # Portfolio verification
 
-Read [README authorities/contracts](../../../README.md), the [documentation index](../../../docs/README.md) and [active plan](../../../docs/BUNDLE_OPTIMIZATION_PLAN.md). Code paths are repository-root-relative. Preserve existing edits. Run actual checks before claiming success.
+Read [README authorities/contracts](../../../README.md), the [documentation index](../../../docs/README.md) to select the owning plan/register. UI issues belong to the [presentation plan](../../../docs/STYLESHEET_REFINEMENT_PLAN.md); remaining data/deployment/tooling issues belong to the [optimization register](../../../docs/BUNDLE_OPTIMIZATION_PLAN.md). Code paths are repository-root-relative. Preserve existing edits. Run actual checks before claiming success.
 
 ## Match evidence to changes
 
@@ -31,4 +31,4 @@ Compare equivalent production builds and comparable Lighthouse runs for performa
 
 ## Report and record
 
-Record commands, exit status, counts/failures, environment and evidence. Distinguish new from pre-existing failures. For stalls, record output and stopped/unverified status rather than asserting app failure. Add defects and missing acceptance coverage to the active plan with stable IDs, evidence and exit checks. Close TODOs and register entries together only after verification.
+Record commands, exit status, counts/failures, environment and evidence. Distinguish new from pre-existing failures. For stalls, record output and stopped/unverified status rather than asserting app failure. Add defects and missing acceptance coverage to the owning register with stable IDs, evidence and exit checks. Close TODOs and register entries together only after verification.

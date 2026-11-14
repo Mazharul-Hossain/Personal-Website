@@ -41,12 +41,18 @@ const authored = [
     "scripts/verify-deployment.mjs", "scripts/verify-deployment.test.mjs", "scripts/check-service-worker.mjs"
 ];
 let links = 0;
-const activePlan = read("docs/BUNDLE_OPTIMIZATION_PLAN.md");
+const issueOwners = new Map();
+for (const plan of ["docs/BUNDLE_OPTIMIZATION_PLAN.md", "docs/STYLESHEET_REFINEMENT_PLAN.md"]) {
+    for (const entry of read(plan).matchAll(/^\| ([A-Z]+-[A-Z0-9-]+) \|/gm)) {
+        check(!issueOwners.has(entry[1]), `${entry[1]}: duplicate current-register ownership`);
+        issueOwners.set(entry[1], plan);
+    }
+}
 for (const path of authored) {
     const text = read(path);
     for (const marker of text.matchAll(/TODO<([^>]+)>\[([^\]]+)\]/g)) {
         check(["Migration", "Bug", "Design", "Verification", "Content"].includes(marker[1]), `${path}: unknown TODO category ${marker[1]}`);
-        check(activePlan.includes(`| ${marker[2]} |`), `${path}: TODO ${marker[2]} has no active-register entry`);
+        check(issueOwners.has(marker[2]), `${path}: TODO ${marker[2]} has no current-register entry`);
     }
     const header = text.match(/^(?:\/\*|<!--) @agent Read: ([\s\S]*?)(?:\*\/|-->)/)?.[1];
     check(Boolean(header), `${path}: missing @agent reading pointer`);
