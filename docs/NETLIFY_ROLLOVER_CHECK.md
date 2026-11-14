@@ -1,6 +1,10 @@
 # Manual Netlify source and rollover verification
 
-Status: **Ready for manual execution; no platform rollover has been executed by the agent.** Supports VERIFY-01 in the [active plan](BUNDLE_OPTIMIZATION_PLAN.md). The user chose manual steps instead of providing deployment access. The goal is to keep an old tab working across two real deployments on one non-production origin, preserving `hmazharul.com`.
+Status: **Observed rollover journey complete; missing-chunk recovery mechanism unverified on Netlify.** Supports VERIFY-01 in the [active plan](BUNDLE_OPTIMIZATION_PLAN.md). The user chose manual steps instead of providing deployment access. The retained A tab opened Publications after B deployed on the same stable origin. No application-chunk 404 or document reload count was captured. The visible failed requests were identified by the user as Google Analytics requests.
+
+November 14 checkpoint: the user supplied Netlify branch-deploy identity `671f4d612aa13b64453baad53baa8567589e25c8` (empty trigger commit on application baseline `77305f3`), deploy `6af8690e648b42424fdc27e7`. The stable origin is `https://codex-rollover-verification--stoic-lamport-e2ed9d.netlify.app`. The user confirmed the Works popup and a controller URL ending in this origin's `/ngsw-worker.js`. Keep the existing `/work` tab without refreshing. Its later retirement and research-image popups are tracked separately as MIG-07 / BUG-13; do not change application behavior during this test.
+
+Build B was `459a82712ac164887a30a992d872dcb920f5bf35`, deploy `6af873a6cc486fa4388a5891`. Read-only HTTP inspection confirmed the stable origin's manifest matched B and its script URLs differed from A. After the user completed the journey, they authorized cleanup: the test branch/worktree were removed; commit B is retained in local tag `archive/rollover-verification-2026-11-14`. The steps below describe the executed legacy test, not current setup instructions: `/work` is being retired. Future rollover checks should start on Research and navigate to a cold bibliography, matching the maintained production tests.
 
 ## Contract
 
@@ -102,7 +106,7 @@ Keep the test branch/worktree and evidence until review. Cleanup is a separate a
 
 ## Approved and pending decisions
 
-Approved: the user requested manual rollout steps instead of agent account access. Selected procedure: Git-backed branch deployment so Netlify can display source commits and both builds use a stable non-production origin. Pending: enabling/running that branch test and reporting the observations. No remote command above has been executed by the agent.
+Approved: the user requested manual rollout steps instead of agent account access, then performed the pushes/deployments and old-tab navigation. The agent prepared the test-only B commit, checked public manifests and, after separate cleanup authorization, deleted the completed remote test branch. No production publication or Netlify settings change was performed by the agent.
 
 ## Implementation notes for agents
 
@@ -110,18 +114,18 @@ No tokens, cookies or authenticated HAR are needed in the handoff. Do not substi
 
 ## Results and handoff
 
-Fill this in after execution:
+Recorded November 14; user observations and agent HTTP inspection are distinguished below:
 
 | Evidence | Build A | Build B / observed result |
 | --- | --- | --- |
-| Stable origin | Pending | Must be identical |
-| Git source commit confirmed in Netlify | Pending | Pending |
-| Netlify deploy ID | Pending | Pending |
-| Main/chunk URLs changed | Record A | Record B |
-| Original A tab/profile/storage retained | Record preparation | Confirm no reset |
-| Old-tab Publications navigation | Not opened during preparation | 14 records / failure |
-| Old chunk HTTP status | Record old URL | 200 retained / 404 / other |
-| Automatic document reload count | Baseline | Zero retained-path / one recovery / repeated |
-| B routes/feed/popup/manifest/missing JS | Baseline checks | Pass / fail / unverified |
+| Stable origin | `https://codex-rollover-verification--stoic-lamport-e2ed9d.netlify.app` | Identical; agent confirmed stable manifest matched B |
+| Git source commit confirmed in Netlify | User supplied `671f4d612aa13b64453baad53baa8567589e25c8` | User supplied `459a82712ac164887a30a992d872dcb920f5bf35` |
+| Netlify deploy ID | `6af8690e648b42424fdc27e7` | `6af873a6cc486fa4388a5891` |
+| Main/chunk URLs changed | `/main-4VNLZ5JJ.js` | `/main-3WHO3CAG.js`; named bibliography `/publications.module-6EW6RSRT.js`; manifest comparison found three A-only script paths |
+| Original A tab/profile/storage retained | User kept `/work` open and confirmed service-worker control | User followed retained-tab navigation; no reset reported |
+| Old-tab Publications navigation | Not opened during preparation | User reported Publications opened without issue; record count not independently inspected |
+| Old chunk HTTP status | Not captured | Unverified; reported failed requests were Google Analytics |
+| Automatic document reload count | Not instrumented | Unverified; no visible navigation failure reported |
+| B routes/feed/popup/manifest/missing JS | A Works popup and worker confirmed | B manifest inspected; full B route/feed/popup/header sweep not performed in this manual run |
 
-Final platform status stays pending until these observations are supplied. A retained-old-chunk success does not prove the forced missing-chunk branch; the local regression suite remains its existing evidence.
+Result: the observed old-tab navigation succeeded across actual source-identified A/B deployments on one origin. The captured evidence cannot distinguish compatible cached/retained loading from automatic reload recovery. Do not claim deployed missing-chunk recovery or a full platform sweep passed; the local regression suite remains the forced-failure evidence.
