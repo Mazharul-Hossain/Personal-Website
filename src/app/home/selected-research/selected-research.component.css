@@ -17,6 +17,7 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Templ
 }
 
 .research-study {
+    min-width: 0;
     border: 1px solid #e8e8ee;
 }
 
@@ -38,6 +39,7 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Templ
 
 .research-figure,
 .research-figure-placeholder {
+    min-width: 0;
     margin: 0;
 }
 

@@ -17,10 +17,10 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Style
                                     @if (figure.webpSrc) {
                                         <picture>
                                             <source type="image/webp" [srcset]="figure.webpSrc">
-                                            <img [src]="figure.src" [alt]="figure.alt" loading="lazy">
+                                            <img [src]="figure.src" [alt]="figure.alt" [attr.width]="figure.width" [attr.height]="figure.height" loading="lazy">
                                         </picture>
                                     } @else {
-                                        <img [src]="figure.src" [alt]="figure.alt" loading="lazy">
+                                        <img [src]="figure.src" [alt]="figure.alt" [attr.width]="figure.width" [attr.height]="figure.height" loading="lazy">
                                     }
                                     @if (figure.caption) {
                                         <figcaption>{{ figure.caption }}</figcaption>

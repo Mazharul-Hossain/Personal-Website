@@ -22,6 +22,8 @@ interface ResearchStudy {
 interface ResearchFigure {
     src?: string;
     webpSrc?: string;
+    width?: number;
+    height?: number;
     alt?: string;
     caption?: string;
     placeholder?: string;
@@ -44,12 +46,16 @@ export class SelectedResearchComponent {
             figures: [
                 {
                     src: 'assets/images/work/gmoe-ad-graphical-abstract.png',
+                    width: 550,
+                    height: 184,
                     webpSrc: 'assets/images/work/gmoe-ad-graphical-abstract.webp',
                     alt: 'GMoE-AD graphical abstract',
                     caption: `GMoE-AD combines neural experts and domain-adversarial learning for cross-domain detection. Graphical abstract: Hossain et al., ${gmoe.venue}, ${gmoe.year}, doi:${publicationDoi(gmoe.id)}. © 2026 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).`
                 },
                 {
                     src: 'assets/images/work/ge-ad-graphical-abstract.png',
+                    width: 550,
+                    height: 293,
                     webpSrc: 'assets/images/work/ge-ad-graphical-abstract.webp',
                     alt: 'GE-AD graphical abstract',
                     caption: `GE-AD selects and combines complementary anomaly detectors using a greedy ensemble. Graphical abstract: Hossain et al., ${gead.venue}, ${gead.year}, doi:${publicationDoi(gead.id)}. © 2024 the authors; CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).`
@@ -71,6 +77,8 @@ export class SelectedResearchComponent {
             figures: [
                 {
                     src: 'assets/images/work/upigan-gan-block-diagram.png',
+                    width: 1240,
+                    height: 1065,
                     alt: 'UPIGAN GAN block diagram',
                     caption: `UPIGAN discriminator and generator architecture, including the microscope point spread function. ${publicationAuthorSurnames(upigan.id)}, ${upigan.venue}, SPIE, ${upigan.year}, Figure 3, doi:${publicationDoi(upigan.id)}.`
                 }
@@ -88,6 +96,8 @@ export class SelectedResearchComponent {
             figures: [
                 {
                     src: 'assets/images/work/w-1.png',
+                    width: 720,
+                    height: 360,
                     alt: 'Map901 project banner',
                     caption: 'Map901 project website banner. Source: map901.memphis.edu.'
                 }
