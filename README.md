@@ -20,6 +20,7 @@ Keep facts in their authoritative location and link to them elsewhere.
 | Routes | [app-routing.module.ts](src/app/app-routing.module.ts), feature route declarations |
 | Shared policy and behavioral contracts | This README |
 | Plan status, bugs, content ownership | [docs/README.md](docs/README.md) and its linked active plan |
+| Implementation plan structure and refactoring pre-test gate | [Plan template](docs/PLAN_TEMPLATE.md) |
 | Agent-only instructions and skill routing | [AGENTS.md](AGENTS.md) |
 
 Do not restate dependency versions in prose. Match Node to the installed Angular toolchain's supported engines. Chrome/Chromium is needed for Karma. Install locked dependencies with `npm ci`.
@@ -29,6 +30,10 @@ Do not restate dependency versions in prose. Match Node to the installed Angular
 The manifest's `scripts` section is authoritative. Use `npm run` to list commands.
 
 The build's `prebuild` hook runs the guidance integrity check. Behavioral contracts also require the applicable runtime tests; a link check alone does not enforce navigation or accessibility.
+
+Before each implementation batch, state the acceptance scenarios already covered, any missing scenarios requiring new tests, and the checks planned for that batch. Describe test results by scope rather than claiming all regressions are prevented. Run focused checks while iterating and the broader relevant suite at integration; repeat successful checks when changes, failures or unresolved concerns justify it. Distinguish fresh results from prior results against unchanged code.
+
+Use the [plan template](docs/PLAN_TEMPLATE.md) for new implementation plans. Refactoring, migrations and behavior-preserving rewrites require its mandatory pre-test gate before changing the affected implementation: establish the baseline, fill coverage gaps and demonstrate regression sensitivity. Keep existing plans' scope/status authoritative; adopting the template does not restart completed work.
 
 | Script | Purpose / prerequisite |
 | --- | --- |
@@ -41,6 +46,7 @@ The build's `prebuild` hook runs the guidance integrity check. Behavioral contra
 | `test:feed` | Node tests with simulated upstream RSS |
 | `test:server` | Production-handler response regressions; run after `build`, or set `SERVER_TEST_BUILD_DIR` to a matching build directory |
 | `test:deployment` | Local HTTP fixtures validating deployment-check failure detection |
+| `test:browser-helper` | Targeted isolated-Chrome startup recovery, cancellation and cleanup regressions; no app build required |
 | `verify:deployment` | Read-only HTTP comparison with exact local browser output; requires URL/build path; see Netlify notes |
 | `check:service-worker` | Check generated worker/cache rules and every manifest content hash; accepts a browser-output directory |
 | `test:service-worker` | Build production A/B and run maintained Chrome cache/update/recovery/offline/feed-fallback tests; owns its browser/server; see Netlify notes |
@@ -83,7 +89,7 @@ These are mandatory acceptance criteria. Preserve them unless the user explicitl
 | NAV-01 | Homepage navigation scrolls to the section, changes the visible pathname, and retains homepage composition and metadata. | Navbar; Cypress section-navigation and metadata journeys |
 | NAV-02 | Direct requests and refreshes open standalone pages with route metadata. Keep `/home` as a homepage alias, lazy `/publications` and `/work`, and `/blog`. | Router, page wrappers, metadata; direct-load/reload journeys and initial/lazy bundle checks |
 | NAV-03 | Preserve seven nav items, mobile open/close, active indication, heading clearance, and back-to-top. The latest scroll/navigation action takes control. | Navbar/footer/shared animation; desktop/mobile and cancellation checks |
-| NAV-04 | Current `javascript:void(0)` links are a compatibility exception. Adopt alternatives only after equivalent mobile, keyboard, URL and metadata behavior is demonstrated. | Active plan Phase 1A; do not replace by assumption |
+| NAV-04 | Current `javascript:void(0)` links are a compatibility exception. Adopt alternatives only after equivalent mobile, keyboard, URL and metadata behavior is demonstrated. | [Navigation investigation](docs/BUNDLE_OPTIMIZATION_HISTORY.md#1a-navigation-and-scroll-behavior); do not replace by assumption |
 | UI-01 | Preserve moving hero shapes and existing animated interactions while improving quality. Share common CSS; keep feature styling with its component. | Rendered desktop/mobile comparison; parallax/navigation checks |
 | MOTION-01 | Prefer CSS for presentation/motion. Use JS only where CSS cannot supply the required effect, recording why. Optional enhancements may be absent without JS. | CSS/JS inspection; browser session with JS disabled |
 | MOTION-02 | Server-rendered content and ordinary links should remain usable without JS. CSS reduced-motion rules and JS motion are separate; current JS animations remain intentional. Audit reduced-motion and no-JS states independently. | Existing motion journey; no-JS navigation is a tracked gap, not a claimed pass |

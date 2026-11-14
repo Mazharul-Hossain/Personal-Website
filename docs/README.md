@@ -6,7 +6,11 @@ Shared policy and contracts live in [README](../README.md); agent routing lives 
 
 | Document | Status / scope |
 | --- | --- |
-| [BUNDLE_OPTIMIZATION_PLAN.md](BUNDLE_OPTIMIZATION_PLAN.md) | **Active implementation plan and bug register.** Reliability, content consolidation, performance and agent-readiness work. Add defects here rather than creating competing plans. |
+| [PLAN_TEMPLATE.md](PLAN_TEMPLATE.md) | Reusable implementation-plan skeleton and mandatory refactoring/migration pre-test gate. A template, not an active project plan. |
+| [PERFORMANCE_CLOSEOUT_REPORT.md](PERFORMANCE_CLOSEOUT_REPORT.md) | Bounded analytics/application investigation evidence. Records measurement limits and the decision to leave production behavior unchanged. |
+| [NETLIFY_ROLLOVER_CHECK.md](NETLIFY_ROLLOVER_CHECK.md) | Requested manual source-identity and same-origin rollout procedure. Execution/results are still pending; it does not authorize production publication. |
+| [BUNDLE_OPTIMIZATION_PLAN.md](BUNDLE_OPTIMIZATION_PLAN.md) | **Active closeout plan and bug register.** Read its short next-action list first; add defects here rather than creating competing plans. |
+| [BUNDLE_OPTIMIZATION_HISTORY.md](BUNDLE_OPTIMIZATION_HISTORY.md) | Historical implementation/investigation evidence. Dated checkpoints do not override current statuses or authorize new work. Consult only the records relevant to the task. |
 | [STYLESHEET_REFINEMENT_PLAN.md](STYLESHEET_REFINEMENT_PLAN.md) | Visual proposal and sample for DESIGN-01. Reuse the existing theme with scoped navy/white contrast and fewer boxed sections. Implementation awaits approval. |
 | [PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md](PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md) | Editorial handoff/reference. Evidence/privacy rules remain relevant; its old inventory is not a current verified content snapshot or implementation authority. |
 | [HOMEPAGE_REDESIGN_PLAN.md](HOMEPAGE_REDESIGN_PLAN.md) | Historical/superseded proposal. Do not restore its layout, six-paper selection, CV download or no-parallax proposals. |
