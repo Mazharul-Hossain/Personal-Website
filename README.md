@@ -108,7 +108,7 @@ Use full TypeScript `strict` mode and strict Angular templates/injection checks.
 
 Prefer current supported patterns within the installed toolchain. Existing NgModules do not justify an unrelated architecture rewrite. Use kebab-case filenames and PascalCase classes; keep templates/styles beside components.
 
-Common visual rules belong in the loaded global theme; feature-specific layout/state rules belong in component styles. Inspect build entries: a similarly named minified asset may not be loaded. Reuse common patterns deliberately rather than moving all CSS globally. Establish shared tokens when changing the visual system; avoid a theme rewrite during a content edit.
+**Stylesheet standard: reuse shared visual rules, keep feature-specific layout local, and explain necessary exceptions.** Common visual rules belong in the loaded global theme; feature-specific layout/state rules belong in component styles. Before adding a declaration, inspect existing theme rules and tokens. Prefer an existing shared class or token; group repeated rules within a feature. Document necessary overrides beside the owning rule. Do not create global utilities for a single feature merely to move CSS elsewhere. Inspect build entries: a similarly named minified asset may not be loaded. Establish shared tokens when changing the visual system; avoid a theme rewrite during a content edit.
 
 Design changes must demonstrate hierarchy, readable typography, deliberate spacing, distinctive research-focused composition, keyboard usability and mobile layouts. Evaluate rendered screenshots and interactions. The design skill supplies the working method; the current palette is not permanent policy.
 

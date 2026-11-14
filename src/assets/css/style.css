@@ -37,6 +37,14 @@ Build owner: angular.json; component-specific rules stay in components */
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800&display=swap");
 @import "@angular/cdk/overlay-prebuilt.css";
 
+:root {
+  --portfolio-color-accent: #754ef9;
+  --portfolio-color-surface: #fff;
+  --portfolio-color-text-muted: #6c6f7d;
+  --portfolio-color-border: #e8e8ee;
+  --portfolio-color-surface-muted: #f8f7ff;
+}
+
 /** anchor links - smooth scroll effect **/ 
 html {
   scroll-behavior: smooth;
@@ -81,9 +89,9 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 [tabindex]:focus-visible {
-  outline: 3px solid #754ef9;
+  outline: 3px solid var(--portfolio-color-accent);
   outline-offset: 4px;
-  box-shadow: 0 0 0 2px #fff;
+  box-shadow: 0 0 0 2px var(--portfolio-color-surface);
 }
 
 section[id] {
@@ -183,12 +191,12 @@ p {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  border: 1px solid #754ef9;
+  border: 1px solid var(--portfolio-color-accent);
   padding: 0 40px;
   font-size: 15px;
   line-height: 48px;
   border-radius: 50px;
-  color: #fff;
+  color: var(--portfolio-color-surface);
   cursor: pointer;
   z-index: 5;
   -webkit-transition: all 0.3s ease-out 0s;
@@ -199,14 +207,14 @@ p {
   -webkit-box-shadow: 0px 5px 8px 0px rgba(118, 78, 249, 0.55);
   -moz-box-shadow: 0px 5px 8px 0px rgba(118, 78, 249, 0.55);
   box-shadow: 0px 5px 8px 0px rgba(118, 78, 249, 0.55);
-  background-color: #754ef9;
+  background-color: var(--portfolio-color-accent);
   text-transform: uppercase;
 }
 
 .main-btn:hover {
-  background-color: #fff;
-  color: #754ef9;
-  border-color: #754ef9;
+  background-color: var(--portfolio-color-surface);
+  color: var(--portfolio-color-accent);
+  border-color: var(--portfolio-color-accent);
 }
 
 .main-btn.main-btn-2 {

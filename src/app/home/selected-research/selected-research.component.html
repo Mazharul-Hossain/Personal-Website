@@ -9,7 +9,7 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Style
 
         <ng-template #imagePopup let-image>
             <div class="popup-container" role="dialog" aria-modal="true" [attr.aria-label]="image.alt + ' image preview'">
-                <button type="button" class="popup-close" aria-label="Close image preview" (click)="closeImagePopup()">Close <span aria-hidden="true">&times;</span></button>
+                <button type="button" class="main-btn popup-close" aria-label="Close image preview" (click)="closeImagePopup()">Close <span aria-hidden="true">&times;</span></button>
                 <figure>
                     <img class="popup-image" [src]="image.src" [alt]="image.alt" [attr.width]="image.width" [attr.height]="image.height">
                     @if (image.caption) {

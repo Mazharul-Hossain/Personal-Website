@@ -17,6 +17,8 @@ Build on the moving-shape hero and research imagery. Make content-specific decis
 
 Inspect `angular.json` and loaded `src/assets/css/style.css`; trace Bootstrap, theme rules and component selectors to understand the cascade. Empty component stylesheets do not imply all new styles belong globally.
 
+Apply the stylesheet standard in README before adding declarations: inspect existing shared classes/tokens, group repeated feature rules, and document necessary overrides beside their owning selectors.
+
 | Concern | Owner |
 | --- | --- |
 | Repeated palette, typography, spacing, focus treatment | Shared theme/tokens |
