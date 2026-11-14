@@ -92,6 +92,7 @@ export async function launchChrome({ directory, signal }) {
             signal?.throwIfAborted();
             if (spawnError) throw spawnError;
             if (child.exitCode !== null) throw new Error(`Chrome exited (${child.exitCode}); see chrome.log`);
+            // TODO<Verification>[VERIFY-09]: Windows can briefly lock this startup file; handle EBUSY within the existing deadline with regression coverage; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
             try { [port, socketPath] = (await readFile(join(profile, 'DevToolsActivePort'), 'utf8')).trim().split(/\r?\n/); if (port && socketPath) break; await delay(100, signal); }
             catch (error) { if (error.code !== 'ENOENT') throw error; await delay(100, signal); }
         }
