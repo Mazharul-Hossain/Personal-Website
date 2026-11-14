@@ -2,7 +2,10 @@
 Policy: README.md#behavioral-contracts; docs/README.md
 Template: src/app/home/selected-research/selected-research.component.html; Styles: src/app/home/selected-research/selected-research.component.css
 Paper references: src/app/publications/publication-core.ts; attribution remains figure-specific. */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, OnDestroy, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { WindowRef } from '../../shared/window.token';
+import { ChunkLoadRecoveryService } from '../../shared/chunk-load-recovery.service';
+import type { ImagePopup, ImagePreview } from '../../shared/image-popup';
 import { getPublication, publicationAuthorSurnames, publicationDoi, publicationLink } from "../../publications/publication-core";
 import type { PublicationId } from "../../publications/publication-core";
 
@@ -36,7 +39,51 @@ interface ResearchFigure {
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: false
 })
-export class SelectedResearchComponent {
+export class SelectedResearchComponent implements OnDestroy {
+    @ViewChild('imagePopup') private imagePopup!: TemplateRef<{ $implicit: ImagePreview }>;
+    private readonly injector = inject(Injector);
+    private readonly view = inject(ViewContainerRef);
+    private readonly windowRef = inject(WindowRef);
+    private readonly recovery = inject(ChunkLoadRecoveryService);
+    private readonly changeDetector = inject(ChangeDetectorRef);
+    private popup?: ImagePopup;
+    private opening = false;
+    private destroyed = false;
+    previewError?: ImagePreview;
+
+    async openImagePopup(figure: ResearchFigure, opener: HTMLButtonElement): Promise<void> {
+        const browser = this.windowRef.nativeWindow();
+        if (!browser || !figure.src || this.opening || this.popup || this.destroyed) return;
+        this.opening = true;
+        this.previewError = undefined;
+        const image: ImagePreview = { ...figure, src: figure.src, alt: figure.alt || 'Research image' };
+        try {
+            const { ImagePopup } = await import('../../shared/image-popup');
+            if (!this.destroyed && opener.isConnected) {
+                this.popup = new ImagePopup(this.injector, this.imagePopup, this.view, image, opener, () => this.closeImagePopup());
+            }
+        } catch (error) {
+            if (!this.destroyed && !this.recovery.tryReload(browser.location.href, error)) {
+                this.previewError = image;
+                this.changeDetector.markForCheck();
+            }
+        } finally {
+            this.opening = false;
+        }
+    }
+
+    closeImagePopup(): void {
+        this.popup?.dispose(true);
+        this.popup = undefined;
+    }
+
+    ngOnDestroy(): void {
+        this.destroyed = true;
+        // Navigation owns the next focus destination; do not focus the departing view.
+        this.popup?.dispose();
+        this.popup = undefined;
+    }
+
     readonly studies: ResearchStudy[] = [
         {
             title: 'Hyperspectral Anomaly Detection Across Sensors',

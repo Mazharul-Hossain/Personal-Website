@@ -7,6 +7,21 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Style
             <h2 class="title" id="selected-research-heading">Selected Research</h2>
         </div>
 
+        <ng-template #imagePopup let-image>
+            <div class="popup-container" role="dialog" aria-modal="true" [attr.aria-label]="image.alt + ' image preview'">
+                <button type="button" class="popup-close" aria-label="Close image preview" (click)="closeImagePopup()">Close <span aria-hidden="true">&times;</span></button>
+                <figure>
+                    <img class="popup-image" [src]="image.src" [alt]="image.alt" [attr.width]="image.width" [attr.height]="image.height">
+                    @if (image.caption) {
+                        <figcaption>{{ image.caption }}</figcaption>
+                    }
+                </figure>
+            </div>
+        </ng-template>
+        @if (previewError; as image) {
+            <p role="alert">Image preview is unavailable. <a [href]="image.src">Open the original image</a>.</p>
+        }
+
         <div class="research-study-grid">
             @for (study of studies; track study.title; let first = $first) {
                 <article class="research-study" [class.featured]="first">
@@ -14,14 +29,17 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Style
                         @for (figure of study.figures; track figure.src || figure.placeholder) {
                             @if (figure.src) {
                                 <figure class="research-figure">
-                                    @if (figure.webpSrc) {
-                                        <picture>
-                                            <source type="image/webp" [srcset]="figure.webpSrc">
+                                    <button #preview type="button" class="research-image-preview" [attr.aria-label]="'Enlarge ' + figure.alt" aria-haspopup="dialog" (click)="openImagePopup(figure, preview)">
+                                        @if (figure.webpSrc) {
+                                            <picture>
+                                                <source type="image/webp" [srcset]="figure.webpSrc">
+                                                <img [src]="figure.src" [alt]="figure.alt" [attr.width]="figure.width" [attr.height]="figure.height" loading="lazy">
+                                            </picture>
+                                        } @else {
                                             <img [src]="figure.src" [alt]="figure.alt" [attr.width]="figure.width" [attr.height]="figure.height" loading="lazy">
-                                        </picture>
-                                    } @else {
-                                        <img [src]="figure.src" [alt]="figure.alt" [attr.width]="figure.width" [attr.height]="figure.height" loading="lazy">
-                                    }
+                                        }
+                                        <span class="image-preview-hint" aria-hidden="true">Enlarge image</span>
+                                    </button>
                                     @if (figure.caption) {
                                         <figcaption>{{ figure.caption }}</figcaption>
                                     }
