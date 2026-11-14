@@ -1,6 +1,6 @@
 /* @agent Read: .agents/skills/portfolio-verification/SKILL.md
 Policy: README.md#behavioral-contracts; docs/NETLIFY_SSR_NOTES.md
-Consumer: tests/service-worker/service-worker.test.mjs; launches only an owned isolated browser. */
+Consumers: tests/service-worker/service-worker.test.mjs; tests/service-worker/chrome.test.mjs; launches only an owned isolated browser. */
 import { spawn } from 'node:child_process';
 import { existsSync, createWriteStream } from 'node:fs';
 import { mkdir, readFile, rm } from 'node:fs/promises';
@@ -64,7 +64,7 @@ async function connect(url) {
     };
 }
 
-export async function launchChrome({ directory, signal }) {
+export async function launchChrome({ directory, signal, readStartupFile = readFile }) {
     const executable = chromeExecutable(), profile = join(directory, 'chrome-profile');
     await mkdir(profile); // directory is a newly owned per-run artifact folder.
     const log = createWriteStream(join(directory, 'chrome.log'));
@@ -92,9 +92,9 @@ export async function launchChrome({ directory, signal }) {
             signal?.throwIfAborted();
             if (spawnError) throw spawnError;
             if (child.exitCode !== null) throw new Error(`Chrome exited (${child.exitCode}); see chrome.log`);
-            // TODO<Verification>[VERIFY-09]: Windows can briefly lock this startup file; handle EBUSY within the existing deadline with regression coverage; see docs/BUNDLE_OPTIMIZATION_PLAN.md.
-            try { [port, socketPath] = (await readFile(join(profile, 'DevToolsActivePort'), 'utf8')).trim().split(/\r?\n/); if (port && socketPath) break; await delay(100, signal); }
-            catch (error) { if (error.code !== 'ENOENT') throw error; await delay(100, signal); }
+            // Chrome may still be creating or briefly locking this file; the outer deadline bounds retries.
+            try { [port, socketPath] = (await readStartupFile(join(profile, 'DevToolsActivePort'), 'utf8')).trim().split(/\r?\n/); if (port && socketPath) break; await delay(100, signal); }
+            catch (error) { if (!['ENOENT', 'EBUSY'].includes(error.code)) throw error; await delay(100, signal); }
         }
         if (!port || !socketPath) throw new Error('Chrome debugging endpoint did not start; see chrome.log');
         owner = await connect(`ws://127.0.0.1:${port}${socketPath}`);
