@@ -3,7 +3,7 @@ Policy: README.md#behavioral-contracts; docs/README.md
 Controller: src/app/contact-me/contact-me.component.ts; Template: src/app/contact-me/contact-me.component.html */
 .contact-kicker {
     margin-bottom: 8px;
-    color: #754ef9;
+    color: var(--portfolio-color-accent);
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -24,6 +24,6 @@ Controller: src/app/contact-me/contact-me.component.ts; Template: src/app/contac
 }
 
 .contact-links a {
-    color: #754ef9;
+    color: var(--portfolio-color-accent);
     font-weight: 600;
 }

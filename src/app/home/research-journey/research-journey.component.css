@@ -12,7 +12,9 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Templat
 }
 
 .journey-entry {
-    border-top: 3px solid #754ef9;
+    /* Employment is a sequence of entries, rather than interactive service cards. */
+    padding: 24px 0;
+    border-top: 1px solid var(--portfolio-color-border);
 }
 
 .journey-entry h3 {
@@ -22,16 +24,11 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Templat
 
 .journey-stage {
     margin-bottom: 8px;
-    color: #754ef9;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
 }
 
 .journey-role {
     margin-bottom: 12px;
-    color: #6c6f7d;
+    color: var(--portfolio-color-text-muted);
     font-weight: 700;
 }
 

@@ -885,7 +885,7 @@ Build owner: angular.json; component-specific rules stay in components */
 	background: #fbfbfb;
 }
 .white-bg {
-	background: #fff;
+	background: var(--portfolio-color-surface);
 }
 .black-bg {
 	background: #222;
@@ -893,7 +893,7 @@ Build owner: angular.json; component-specific rules stay in components */
 /* Color */
 
 .white {
-	color: #fff;
+	color: var(--portfolio-color-surface);
 }
 .black {
 	color: #222;

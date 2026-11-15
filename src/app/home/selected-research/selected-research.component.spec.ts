@@ -111,9 +111,9 @@ describe('SelectedResearchComponent', () => {
         expect(element.querySelectorAll('.research-figure img').length).toBe(4);
     });
 
-    it("offers lossless WebP figures while retaining original PNG fallbacks and alternative text", () => {
+    it("offers WebP previews while retaining original PNG fallbacks and alternative text", () => {
         const pictures = Array.from(fixture.nativeElement.querySelectorAll("picture")) as HTMLPictureElement[];
-        expect(pictures.length).toBe(2);
+        expect(pictures.length).toBe(3);
         for (const picture of pictures) {
             const source = picture.querySelector("source");
             const fallback = picture.querySelector("img");

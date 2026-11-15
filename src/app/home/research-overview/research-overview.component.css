@@ -4,7 +4,7 @@ Controller: src/app/home/research-overview/research-overview.component.ts; Templ
 .research-overview {
     padding: 90px 0;
     scroll-margin-top: 80px;
-    background: #f8f7ff;
+    background: var(--portfolio-color-surface);
 }
 
 .research-overview .section-title {
@@ -14,15 +14,14 @@ Controller: src/app/home/research-overview/research-overview.component.ts; Templ
 
 .research-pillar {
     height: 100%;
-    padding: 28px;
-    border-top: 3px solid #754ef9;
-    background: #fff;
+    /* Open columns distinguish the overview from the detailed illustrated studies below. */
+    padding-bottom: 24px;
 }
 
 .research-pillar h3 {
     margin-bottom: 14px;
     font-size: 22px;
-    color: #34343d;
+    color: var(--portfolio-color-ink);
 }
 
 @media (max-width: 991px) {

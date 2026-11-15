@@ -5,13 +5,8 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
     padding: 50px 0;
 }
 
-.section-label {
-    color: #754ef9;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+.selected-publications .section-label {
     margin-bottom: 8px;
-    text-transform: uppercase;
 }
 
 .publication-list {
@@ -25,7 +20,7 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
 }
 
 .publication-list li {
-    border-top: 1px solid #e8e8ee;
+    border-top: 1px solid var(--portfolio-color-border);
     display: grid;
     gap: 12px;
     grid-template-columns: 44px 1fr;
@@ -33,7 +28,7 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
 }
 
 .publication-year {
-    color: #754ef9;
+    color: var(--portfolio-color-accent);
     font-weight: 700;
 }
 
@@ -44,16 +39,16 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
 }
 
 .publication-list h3 a {
-    color: #1f2235;
+    color: var(--portfolio-color-ink);
 }
 
 .publication-list h3 a:hover,
 .publication-list h3 a:focus-visible {
-    color: #754ef9;
+    color: var(--portfolio-color-accent);
 }
 
 .publication-list p {
-    color: #6c6f7d;
+    color: var(--portfolio-color-text-muted);
     margin: 0;
 }
 
@@ -64,7 +59,7 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
 }
 
 .publication-cta a {
-    color: #754ef9;
+    color: var(--portfolio-color-accent);
     font-weight: 700;
 }
 

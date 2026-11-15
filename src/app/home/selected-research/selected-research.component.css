@@ -19,7 +19,7 @@ Shared palette, buttons and focus: src/assets/css/style.css */
 
 .research-study {
     min-width: 0;
-    border: 1px solid var(--portfolio-color-border);
+    border-bottom: 1px solid var(--portfolio-color-border);
 }
 
 .research-study.featured {
@@ -28,7 +28,7 @@ Shared palette, buttons and focus: src/assets/css/style.css */
 
 .research-figures {
     display: grid;
-    background: var(--portfolio-color-surface-muted);
+    background: var(--portfolio-color-surface);
     border-bottom: 1px solid var(--portfolio-color-border);
 }
 
@@ -155,14 +155,6 @@ Shared palette, buttons and focus: src/assets/css/style.css */
 .research-study dl > div {
     padding: 10px 0;
     border-top: 1px solid var(--portfolio-color-border);
-}
-
-.research-study dt {
-    color: var(--portfolio-color-accent);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
 }
 
 .research-study dd {

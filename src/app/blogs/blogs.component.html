@@ -5,7 +5,7 @@ Controller: src/app/blogs/blogs.component.ts; Styles: src/app/blogs/blogs.compon
 <section class="writing-area pt-25 pb-30" id="blog" aria-labelledby="writing-heading">
     <div class="container">
         <div class="writing-heading">
-            <p class="writing-kicker">{{ preview ? 'Selected writing' : 'Writing' }}</p>
+            <p class="section-label writing-kicker">{{ preview ? 'Selected writing' : 'Writing' }}</p>
             <h2 id="writing-heading">Notes on research, engineering, and learning</h2>
         </div>
 
@@ -17,7 +17,7 @@ Controller: src/app/blogs/blogs.component.ts; Styles: src/app/blogs/blogs.compon
                     <div class="col-lg-4">
                         <article class="writing-post">
                             @if (post.date) {
-                                <p class="writing-date">{{ post.date }}</p>
+                                <p class="section-label writing-date">{{ post.date }}</p>
                             }
                             <h3><a [href]="post.link" target="_blank" rel="noopener noreferrer">{{ post.title }}</a></h3>
                             <p>{{ post.summary }}</p>

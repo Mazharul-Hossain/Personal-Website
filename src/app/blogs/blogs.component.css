@@ -2,7 +2,7 @@
 Policy: README.md#behavioral-contracts; docs/README.md
 Controller: src/app/blogs/blogs.component.ts; Template: src/app/blogs/blogs.component.html */
 .writing-area {
-    background: #f8f7ff;
+    background: var(--portfolio-color-surface);
 }
 
 .writing-heading {
@@ -12,19 +12,13 @@ Controller: src/app/blogs/blogs.component.ts; Template: src/app/blogs/blogs.comp
 .writing-kicker,
 .writing-date {
     margin-bottom: 8px;
-    color: #754ef9;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
 }
 
 .writing-post {
     height: 100%;
     margin-bottom: 24px;
-    padding: 28px;
-    border-top: 3px solid #754ef9;
-    background: #fff;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--portfolio-color-border);
 }
 
 .writing-post h3 {
@@ -35,17 +29,24 @@ Controller: src/app/blogs/blogs.component.ts; Template: src/app/blogs/blogs.comp
 .writing-link {
     display: inline-block;
     margin-top: 8px;
-    color: #754ef9;
+    color: var(--portfolio-color-accent);
     font-weight: 700;
 }
 
 .writing-state {
     margin-bottom: 24px;
     padding: 20px;
-    border: 1px solid #dedbea;
-    background: #fff;
+    border: 1px solid var(--portfolio-color-border);
+    background: var(--portfolio-color-surface);
 }
 
 .writing-link:hover {
-    color: #34343d;
+    color: var(--portfolio-color-ink);
+}
+
+@media (scripting: none) {
+    /* The ordinary Medium archive link remains available; no feed request will complete here. */
+    .writing-state[role="status"] {
+        display: none;
+    }
 }

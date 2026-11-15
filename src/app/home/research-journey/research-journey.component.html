@@ -17,8 +17,8 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Styles:
                 <ol class="journey-list">
                     @for (entry of entries; track entry.organization) {
                         <li>
-                            <article class="journey-entry single-service mt-30">
-                                <p class="journey-stage">{{ entry.stage }}</p>
+                            <article class="journey-entry mt-30">
+                                <p class="section-label journey-stage">{{ entry.stage }}</p>
                                 <h3>{{ entry.organization }}</h3>
                                 <p class="journey-role">{{ entry.role }}</p>
                                 <p>{{ entry.description }}</p>
@@ -28,7 +28,7 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Styles:
                 </ol>
             </div>
             <aside class="col-lg-4" aria-labelledby="recognition-heading">
-                <div class="journey-entry single-service mt-30">
+                <div class="journey-entry mt-30">
                     <h3 id="recognition-heading">Recognition</h3>
                     <p><strong>First Place, Long Talk · 2026</strong><br>21st Annual Computer Science Research Symposium, University of Memphis</p>
                     <p><strong>First Place · 2021</strong><br>33rd Annual Student Research Forum, University of Memphis</p>

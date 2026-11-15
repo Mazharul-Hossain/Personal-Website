@@ -143,6 +143,7 @@ export class SelectedResearchComponent implements OnDestroy {
             figures: [
                 {
                     src: 'assets/images/work/w-1.png',
+                    webpSrc: 'assets/images/next_gen/work/w-1.webp',
                     width: 720,
                     height: 360,
                     alt: 'Map901 project banner',
