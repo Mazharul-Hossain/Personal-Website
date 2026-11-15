@@ -8,6 +8,16 @@
 - Before deploying dependency removals, inspect the Netlify project's current deploy and Functions/Edge Functions lists, build base directory, and functions directory. If any separately maintained function imports Express, verify how it obtains dependencies before removing Express from its package.
 - The manifest's standalone server command was executed locally on November 8, 2026: it exits successfully without starting a listener. The exported handler's localhost route probe encounters the allowed-host guard; that is not a deployed rendering failure. See the [historical Phase 1 investigation evidence](BUNDLE_OPTIMIZATION_HISTORY.md#remaining-phase-1-investigation-batch--november-8-2026) for the separate feed, prerender and caching results. A standalone listening adapter remains separate work if Node hosting is needed.
 
+## Local and Netlify verification
+
+This is the reusable procedure; the owning plan records the checks selected for a batch and their actual results. [README](../README.md#deployment-and-verification) retains the global deployment contract, and the [development guide](README.md#development-and-verification) maps manifest scripts to their prerequisites.
+
+Locally, run compiler checks and affected tests. For runtime changes, run the production build and relevant browser journeys. Compare desktop/mobile screenshots for visible changes. For performance work, retain comparable build/Lighthouse evidence and distinguish raw bundle size from transfer size. Never raise budgets to hide regressions.
+
+A local pass does not prove Netlify behavior. Record the actual deployment URL and deploy/source identity; verify direct routes and refreshes, returned HTML, `/feed`, redirects, headers and assets. For worker changes, inspect registration, scope and control after reload, then clean/warm cache behavior and asset-changing updates on the same origin without clearing storage. Two immutable deployment URLs do not establish rollover recovery. A manifest or registration call alone does not prove a working PWA.
+
+Inspect deployment logs, generated handlers and account settings when relevant and accessible. Publishing or changing live settings requires task authorization. Mark unavailable deployed checks unverified. Lighthouse is diagnostic evidence, not a release-score target; investigate reproducible visitor-facing regressions rather than optimizing a score alone. Detailed local methods, platform limits and protected-preview instructions follow below.
+
 ## Local checks and deployed evidence
 
 Browser service-worker caching and Netlify edge/CDN caching are separate systems. The following is the verification method. Worker generation/control is now verified locally as recorded below; Netlify deployment checks remain pending.

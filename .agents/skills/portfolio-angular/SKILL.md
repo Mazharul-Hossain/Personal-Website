@@ -33,9 +33,9 @@ Retain unlisten callbacks, cancel timers/frames, dispose overlays and unsubscrib
 
 ## Fragile behavior
 
-Before touching navigation, read README NAV contracts and the [presentation/interaction plan](../../../docs/STYLESHEET_REFINEMENT_PLAN.md), which links the historical navigation investigation. Homepage path replacement is intentionally different from router navigation; reload changes the page composition. Preserve homepage metadata during section scrolling. Browser globals in old guarded code are tracked in MIG-02; do not silently rewrite behavior while migrating types.
+Before touching navigation, read README NAV contracts and the [presentation/interaction plan](../../../docs/STYLESHEET_REFINEMENT_PLAN.md), which links the historical navigation investigation. Homepage path replacement is intentionally different from router navigation; reload changes the page composition. Preserve homepage metadata during section scrolling. Browser/document ownership is covered by MIG-02 regressions; retain those boundaries without silently rewriting navigation behavior.
 
-Prefer CSS motion under MOTION contracts. Existing parallax and cancellable scrolling are documented JS enhancements (MIG-05); optional effects may disappear without JS. Preserve them until an equivalent CSS implementation is demonstrated. Ordinary links/no-JS navigation are a separate compatibility migration (MIG-04).
+Prefer CSS motion under MOTION contracts. Existing parallax and cancellable scrolling are documented JS enhancements (MIG-05); optional effects may disappear without JS. Preserve them until an equivalent CSS implementation is demonstrated. Navbar anchors retain ordinary destinations and modifier-safe JS enhancement (MIG-04); preserve both enhanced and no-JS journeys.
 
 Use typed TS records for structured content; see the content skill for migration. Do not import the full bibliography into the eager app to eliminate a duplicated field.
 

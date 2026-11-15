@@ -83,6 +83,8 @@ Gate status: Pending | Passed | Blocked | Not applicable with reason
 
 ## Verification plan
 
+Use the [development and verification guide](README.md#development-and-verification) to select commands and prerequisites; record this plan’s exact checks and results below. Use [Netlify verification procedures](NETLIFY_SSR_NOTES.md#local-and-netlify-verification) when platform behavior is affected.
+
 Reference the pre-test coverage map instead of repeating it. State focused iteration checks and the broader integration checkpoint. Add tests only for identified gaps or newly discovered failures; explain scope changes.
 
 | Check | Script / invocation | What it proves | Environment / evidence | Status |
@@ -102,6 +104,10 @@ Reference the pre-test coverage map instead of repeating it. State focused itera
 ## Implementation notes for agents
 
 [Task-specific reading order, ownership pointers, fragile behavior, exceptions and conditions requiring clarification. Link shared policy/skills instead of duplicating them. Identify the authoritative tracking location for deferred work.]
+
+### Deferred work tracking
+
+Use the [deferred-work marker convention](README.md#deferred-work-markers). Record each deferred item’s stable ID, owning file, rationale, next action, exit condition and status in this plan or its linked owning register. Add a categorized marker at the owning code boundary when useful. Close markers and register entries together; deferral does not mean completion.
 
 ## Results and handoff
 

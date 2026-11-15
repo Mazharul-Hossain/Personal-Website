@@ -32,7 +32,7 @@ When changing the visual system, establish meaningful CSS custom properties in t
 
 Use semantic headings, useful alt text, named buttons and visible focus. Popups need keyboard opening, a close control, Escape/backdrop dismissal and focus return. Fix overflow at its source; research previews must fit narrow viewports and keep their close control reachable.
 
-Prefer CSS for responsive states and achievable motion. JS requires a documented capability gap, not habit. Pointer/device parallax and cancellable scrolling remain JS exceptions (MIG-05); do not remove them unilaterally. CSS reduced motion and JS-disabled browsing are distinct tests. Essential content/ordinary links should survive without JS; optional enhancements may be absent. Navbar no-JS compatibility is tracked under MIG-04.
+Prefer CSS for responsive states and achievable motion. JS requires a documented capability gap, not habit. Pointer/device parallax and cancellable scrolling remain JS exceptions (MIG-05); do not remove them unilaterally. CSS reduced motion and JS-disabled browsing are distinct tests. Essential content/ordinary links should survive without JS; optional enhancements may be absent. Preserve ordinary navbar destinations and their no-JS fallback layout (MIG-04).
 
 ## Render and judge
 

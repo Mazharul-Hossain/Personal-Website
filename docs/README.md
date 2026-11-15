@@ -2,6 +2,28 @@
 
 Shared policy and contracts live in [README](../README.md); agent routing lives in [AGENTS](../AGENTS.md). Current explicit user decisions supersede historical proposals. Configuration facts come from manifests, not old plan prose.
 
+## Sources of truth
+
+Keep facts in their authoritative location and link to them elsewhere.
+
+| Information | Authority |
+| --- | --- |
+| Dependency ranges and executable commands | [package.json](../package.json) |
+| Exact dependency versions | [package-lock.json](../package-lock.json) |
+| Build entries, global style/script order, output, budgets | [angular.json](../angular.json) |
+| Netlify response-header overrides | [netlify.toml](../netlify.toml) |
+| Service-worker resource caching and navigation rules | [ngsw-config.json](../ngsw-config.json); [CACHE-01 in README](../README.md#behavioral-contracts) states required behavior |
+| TypeScript and Angular compiler policy | [tsconfig.json](../tsconfig.json) and its app/test/Cypress extensions |
+| Whitespace and formatting | [.editorconfig](../.editorconfig), Prettier settings in the manifest |
+| Routes | [app-routing.module.ts](../src/app/app-routing.module.ts), feature route declarations |
+| Shared policy and behavioral contracts | [Project README](../README.md) |
+| Plan status and bugs | This index and its linked owning plans/registers |
+| Project files and content ownership | [CONTENT_MAP.md](../CONTENT_MAP.md) |
+| Implementation plan structure and refactoring pre-test gate | [Plan template](PLAN_TEMPLATE.md) |
+| Agent-only instructions and skill routing | [AGENTS.md](../AGENTS.md) |
+
+Do not restate dependency versions in prose. Match Node to the installed Angular toolchain's supported engines. Chrome/Chromium is needed for Karma. Install locked dependencies with `npm ci`.
+
 ## Document status
 
 | Document | Status / scope |
@@ -11,7 +33,7 @@ Shared policy and contracts live in [README](../README.md); agent routing lives 
 | [NETLIFY_ROLLOVER_CHECK.md](NETLIFY_ROLLOVER_CHECK.md) | Source-identified A/B journey record and historical procedure. Retained-tab navigation succeeded; deployed chunk-failure/reload mechanism remains unverified. Test branch/worktree were cleaned up. |
 | [BUNDLE_OPTIMIZATION_PLAN.md](BUNDLE_OPTIMIZATION_PLAN.md) | **Completed optimization record; remaining content/data, deployment and tooling register.** User reported production deploy `1e8de2f`; CSS/browser-interaction ownership moved to the stylesheet plan. |
 | [BUNDLE_OPTIMIZATION_HISTORY.md](BUNDLE_OPTIMIZATION_HISTORY.md) | Historical implementation/investigation evidence. Dated checkpoints do not override current statuses or authorize new work. Consult only the records relevant to the task. |
-| [STYLESHEET_REFINEMENT_PLAN.md](STYLESHEET_REFINEMENT_PLAN.md) | **Current CSS and browser-interaction plan/register**, using the plan template. Consolidation is complete; future implementation is Draft. Existing site is the accepted baseline; the old contrast concept is optional, not approval for redesign. |
+| [STYLESHEET_REFINEMENT_PLAN.md](STYLESHEET_REFINEMENT_PLAN.md) | **Current CSS and browser-interaction plan/register**, using the plan template. **Visual goal incomplete:** the navy/white reference is required; DESIGN-01 is reopened and Batch 4 is planned. Prior browser/navigation/style groundwork is locally verified and uncommitted. Current instruction is plan-only; no implementation or commit. |
 | [PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md](PORTFOLIO_CV_CONTENT_REVIEW_PLAN.md) | Editorial handoff/reference. Evidence/privacy rules remain relevant; its old inventory is not a current verified content snapshot or implementation authority. |
 | [HOMEPAGE_REDESIGN_PLAN.md](HOMEPAGE_REDESIGN_PLAN.md) | Historical/superseded proposal. Do not restore its layout, six-paper selection, CV download or no-parallax proposals. |
 | [NETLIFY_SSR_NOTES.md](NETLIFY_SSR_NOTES.md) | Deployment investigation notes; unverified server/account behavior remains unverified until observed. |
@@ -20,28 +42,48 @@ Choose the owning register above before editing: presentation/browser interactio
 
 ## Content ownership and migration
 
-**Governing rule:** reusable structured facts are stored once in typed TypeScript records; HTML presents them. There is no application database. Publication templates now render a shared core and lazy citation details. Test fixtures freeze the pre-migration expectations; they are not application content sources.
+The [project and content map](../CONTENT_MAP.md) owns the source inventory, publication synchronization rules and lazy-boundary guidance. Keep those facts there rather than duplicating the map in plans.
 
-| Content | Current source / consumer | Work |
-| --- | --- | --- |
-| Shared publication facts, resource URLs and ordered selected IDs | [publication-core.ts](../src/app/publications/publication-core.ts) | One authority for all 14 records; selected component resolves IDs and derives its view |
-| Full bibliography/thesis citation details and category labels | [publication-details.ts](../src/app/publications/publication-details.ts) → full component → HTML | Runtime details are imported only by the lazy bibliography feature |
-| Research studies and figures | `src/app/home/selected-research/selected-research.component.ts` → sibling HTML | Seven paper links and figure publication facts resolve shared records; arXiv association remains CONTENT-ARXIV |
-| Employment | `src/app/home/research-journey/research-journey.component.ts` → sibling HTML | Existing typed source; verify facts against evidence |
-| Recognition, biography, skills, static introductions | Research-journey/About and section HTML | MIG-06: extract reusable structured facts when editing; narrative presentation may remain in HTML |
-| Hero and section order | `src/app/index-page/index-page.component.html` | Composition is presentation, not a second structured store |
-| Writing | `src/writing-feed.ts` → `blogs.component.ts` view records → HTML | External feed is the source; do not copy articles manually |
-| Metadata | `src/app/shared/page-metadata.service.ts`, initial `src/index.html` | MIG-06: keep shared identity/profile facts consistent |
+## Development and verification
 
-### Maintaining publications
+The manifest's `scripts` section is authoritative. Use `npm run` to list commands.
 
-Edit shared titles, ordered authors, years, venues and semantic resources in the core. `shortVenue` is an intentional abbreviated presentation label only when it differs from the full venue. The core's array order defines entry order within categories; `SELECTED_PUBLICATION_IDS` defines homepage order. Do not sort either implicitly.
+The build's `prebuild` hook runs the guidance integrity check. Behavioral contracts also require the applicable runtime tests; a link check alone does not enforce navigation or accessibility.
 
-Edit citation-specific text, author presentation, category labels and title-link choices in lazy details. Citation parts reference shared year/venue/resources and contain plain text, never stored HTML or a second title/author list. Core author names use initial-first form; the bibliography formatter preserves each original citation's name presentation. Preserve full citation details and alternate manuscript/publisher/DOI/slides/archive targets. A missing ID/resource fails explicitly rather than producing an undefined href.
+Before each implementation batch, state the acceptance scenarios already covered, any missing scenarios requiring new tests, and the checks planned for that batch. Describe test results by scope rather than claiming all regressions are prevented. Run focused checks while iterating and the broader relevant suite at integration; repeat successful checks when changes, failures or unresolved concerns justify it. Distinguish fresh results from prior results against unchanged code.
 
-Research paper links use `publicationLink(id, resource, label)`; figure citations derive shared publication facts while keeping their figure-specific explanation, attribution and rights text. Do not attach the existing arXiv link to a record until its relationship is verified. Never import citation details (directly or through a barrel/provider) into homepage/research code. Import model types with `import type`.
+Use the [plan template](PLAN_TEMPLATE.md) for new implementation plans. Refactoring, migrations and behavior-preserving rewrites require its mandatory pre-test gate before changing the affected implementation: establish the baseline, fill coverage gaps and demonstrate regression sensitivity. Keep existing plans' scope/status authoritative; adopting the template does not restart completed work.
 
-For a changed publication, update only its authoritative records and verify every consuming view. Update frozen test expectations only for intentional editorial changes, not merely to make a regression pass. For additions, include the core record, matching details, any intentional selected/research references, and coverage. Verify category/selection order, complete citations, author shortening, resources, research attribution and initial/lazy bundles.
+| Script | Purpose / prerequisite |
+| --- | --- |
+| `start` | Development server; use the URL printed by the CLI |
+| `build` | Optimized browser/server output and configured prerendering; baseline release check |
+| `watch` | Continuous development rebuild |
+| `typecheck`, `typecheck:tests`, `typecheck:cypress` | No-output compiler checks for app, unit specs, and browser specs |
+| `check:guidance` | Check local documentation/header targets, simple skill frontmatter, and strict-mode policy; does not prove runtime behavior |
+| `test` | Jasmine/Karma; single run: `npm test -- --watch=false --progress=false` |
+| `test:feed` | Node tests with simulated upstream RSS |
+| `test:server` | Production-handler response regressions; run after `build`, or set `SERVER_TEST_BUILD_DIR` to a matching build directory |
+| `test:deployment` | Local HTTP fixtures validating deployment-check failure detection |
+| `test:presentation` | Real Chrome no-JS navigation checks against production output; prerequisites and results belong in the presentation plan |
+| `test:browser-helper` | Targeted isolated-Chrome startup recovery, cancellation and cleanup regressions; no app build required |
+| `verify:deployment` | Read-only HTTP comparison with exact local browser output; requires URL/build path; see Netlify notes |
+| `check:service-worker` | Check generated worker/cache rules and every manifest content hash; accepts a browser-output directory |
+| `test:service-worker` | Build production A/B and run maintained Chrome cache/update/recovery/offline/feed-fallback tests; owns its browser/server; see Netlify notes |
+| `cypress:run`, `cypress:open` | Browser journeys; start the app first; base URL is in [cypress.config.ts](../cypress.config.ts) |
+| `serve:ssr:my-app` | Runs the existing server bundle; the local check exits without a listener, see Netlify notes |
+
+Keep unit specs beside components/services and normal browser journeys in `cypress/e2e/`. Production worker/update tests live in [tests/service-worker](../tests/service-worker/service-worker.test.mjs), outside the Cypress proxy, and run through the manifest command above. Run them for changes to worker rules, lazy boundaries or chunk recovery. Test meaningful behavior and failure cases. Preserve regression coverage; never weaken a test to hide a regression. Update the contract and tests together for an authorized behavior change. There is no lint script or numeric coverage gate. Do not commit generated output, dependencies, coverage, or browser recordings.
+
+For local versus deployed verification procedures, use [Netlify SSR notes](NETLIFY_SSR_NOTES.md#local-and-netlify-verification). Each owning plan records its selected commands, prerequisites, results and remaining checks; this index describes how to choose them, not a result for every edit.
+
+### Deferred work markers
+
+Use `TODO<Category>[ID]: reason; next action; plan reference` at the owning code boundary. Categories: `Migration`, `Bug`, `Design`, `Verification`, `Content`. Use stable active-plan IDs; multiple markers may reference one item. Record the rationale and exit condition in the plan. Avoid vague "fix later" notes.
+
+Syntax example (replace placeholders with a real register entry): `TODO<Category>[ID]: reason; next action; see docs/OWNING_PLAN.md.` Do not add a marker for work already completed.
+
+Search with `rg 'TODO<' src docs`. Resolve markers and plan entries together. Legacy editorial `TODO:<ADD TRUE DETAILS>` means missing facts; keep it only when a fact remains unresolved, not as a permanent test fixture.
 
 ## File guidance conventions
 
@@ -49,6 +91,6 @@ Authored TS/JS, Angular HTML and CSS have a short `@agent` header naming skills,
 
 The manifest guidance check validates local links/header targets, component ownership pointers, simple skill frontmatter, strict mode and TODO register IDs. It runs before the production build. Runtime contract compliance still requires behavior tests and rendered review.
 
-Native JSON, XML, lockfiles, generated files, vendor assets and binary/media files are covered by README's source map and build entries. Do not insert invalid comments or agent instructions into third-party/minified assets or generated output.
+Native JSON, XML, lockfiles, generated files, vendor assets and binary/media files are covered by the [project map](../CONTENT_MAP.md#project-map) and build entries. Do not insert invalid comments or agent instructions into third-party/minified assets or generated output.
 
 Skills are repository-local in `.agents/skills/<name>/SKILL.md`, following [official Codex discovery guidance](https://learn.chatgpt.com/docs/build-skills). They are not installed globally. AGENTS links allow direct reading even before a session refreshes its skill catalog.
