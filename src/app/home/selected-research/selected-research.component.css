@@ -19,7 +19,8 @@ Shared palette, buttons and focus: src/assets/css/style.css */
 
 .research-study {
     min-width: 0;
-    border-bottom: 1px solid var(--portfolio-color-border);
+    /* BUG-14: preserve the live study-card boundaries as well as the grid geometry. */
+    border: 1px solid var(--portfolio-color-border);
 }
 
 .research-study.featured {
@@ -28,7 +29,7 @@ Shared palette, buttons and focus: src/assets/css/style.css */
 
 .research-figures {
     display: grid;
-    background: var(--portfolio-color-surface);
+    background: var(--portfolio-color-surface-muted);
     border-bottom: 1px solid var(--portfolio-color-border);
 }
 
