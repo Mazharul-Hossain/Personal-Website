@@ -48,3 +48,6 @@ Thumbs.db
 
 # Local Netlify folder
 .netlify
+
+# Local visual review artifacts; keep screenshots, comparisons and diagnostics off Git.
+/docs/design-reviews/
