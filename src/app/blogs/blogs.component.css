@@ -2,6 +2,8 @@
 Policy: README.md#behavioral-contracts; docs/README.md
 Controller: src/app/blogs/blogs.component.ts; Template: src/app/blogs/blogs.component.html */
 .writing-area {
+    padding: var(--portfolio-section-space) 0;
+    border-top: 1px solid var(--portfolio-color-border);
     background: var(--portfolio-color-surface);
 }
 

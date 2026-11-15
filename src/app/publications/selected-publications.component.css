@@ -3,6 +3,7 @@ Policy: README.md#behavioral-contracts; docs/README.md
 Controller: src/app/publications/selected-publications.component.ts; Template: src/app/publications/selected-publications.component.html */
 .selected-publications {
     padding: 50px 0;
+    background: var(--portfolio-color-navy);
 }
 
 .selected-publications .section-label {
@@ -20,7 +21,7 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
 }
 
 .publication-list li {
-    border-top: 1px solid var(--portfolio-color-border);
+    border-top: 1px solid var(--portfolio-color-on-navy-muted);
     display: grid;
     gap: 12px;
     grid-template-columns: 44px 1fr;
@@ -28,7 +29,6 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
 }
 
 .publication-year {
-    color: var(--portfolio-color-accent);
     font-weight: 700;
 }
 
@@ -38,17 +38,7 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
     margin: 0 0 2px;
 }
 
-.publication-list h3 a {
-    color: var(--portfolio-color-ink);
-}
-
-.publication-list h3 a:hover,
-.publication-list h3 a:focus-visible {
-    color: var(--portfolio-color-accent);
-}
-
 .publication-list p {
-    color: var(--portfolio-color-text-muted);
     margin: 0;
 }
 
@@ -59,8 +49,30 @@ Controller: src/app/publications/selected-publications.component.ts; Template: s
 }
 
 .publication-cta a {
-    color: var(--portfolio-color-accent);
     font-weight: 700;
+}
+
+/* Approved dark publication surface; use the shared navy palette without a mode switch. */
+.selected-publications .section-title .title,
+.selected-publications p {
+    color: var(--portfolio-color-on-navy);
+}
+
+.selected-publications .section-label,
+.publication-year,
+.publication-list h3 a,
+.publication-cta a {
+    color: var(--portfolio-color-on-navy-accent);
+}
+
+.selected-publications a:focus-visible {
+    outline-color: var(--portfolio-color-on-navy-accent);
+    box-shadow: none;
+}
+
+.publication-list h3 a:hover,
+.publication-list h3 a:focus-visible {
+    color: var(--portfolio-color-on-navy);
 }
 
 @media (max-width: 767px) {

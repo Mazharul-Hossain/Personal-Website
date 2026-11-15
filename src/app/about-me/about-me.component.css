@@ -53,3 +53,12 @@ Controller: src/app/about-me/about-me.component.ts; Template: src/app/about-me/a
         border-top: 1px solid var(--portfolio-color-border);
     }
 }
+
+.about-area {
+    padding: var(--portfolio-section-space) 0;
+    border-top: 1px solid var(--portfolio-color-border);
+}
+
+.about-area .section-title {
+    margin-bottom: 32px;
+}

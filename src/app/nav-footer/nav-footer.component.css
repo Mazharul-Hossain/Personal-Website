@@ -1,3 +1,29 @@
 /* @agent Read: .agents/skills/portfolio-design/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Controller: src/app/nav-footer/nav-footer.component.ts; Template: src/app/nav-footer/nav-footer.component.html */
+
+/* The existing dark footer shares the hero palette; Contact stays independently reviewable. */
+.footer-widget,
+.footer-copyright {
+    background: var(--portfolio-color-navy);
+}
+
+.footer-identity {
+    color: var(--portfolio-color-on-navy);
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.footer-content ul li a {
+    color: var(--portfolio-color-on-navy);
+    border-color: var(--portfolio-color-on-navy-muted);
+}
+
+.footer-copyright .copyright-text a {
+    color: var(--portfolio-color-on-navy-accent);
+}
+
+.footer-area a:focus-visible {
+    outline-color: var(--portfolio-color-on-navy-accent);
+    box-shadow: none;
+}

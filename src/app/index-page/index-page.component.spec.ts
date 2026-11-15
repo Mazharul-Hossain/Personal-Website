@@ -29,6 +29,18 @@ describe('IndexPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('preserves the five existing hero profiles while the footer adds Medium', () => {
+    const element = fixture.nativeElement as HTMLElement;
+    const links = Array.from(element.querySelectorAll<HTMLAnchorElement>('.header-social-icon a'));
+    expect(links.map(link => [link.getAttribute('aria-label'), link.getAttribute('href')])).toEqual([
+      ['Stack Overflow', 'https://stackoverflow.com/u/2049763/'],
+      ['GitHub', 'https://github.com/Mazharul-Hossain/'],
+      ['LeetCode', 'https://leetcode.com/hossainmazhar/'],
+      ['Google Scholar', 'https://scholar.google.com/citations?user=SGyRAu8AAAAJ'],
+      ['LinkedIn', 'https://www.linkedin.com/in/hossainmazhar/']
+    ]);
+  });
+
   it('renders the portfolio owner and primary sections', () => {
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('h1')?.textContent).toContain('Mazharul Hossain');

@@ -1,9 +1,11 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
-Template: src/app/index-page/index-page.component.html; Styles: src/app/index-page/index-page.component.css */
+Template: src/app/index-page/index-page.component.html; Styles: src/app/index-page/index-page.component.css
+Data: src/app/shared/social-profiles.ts */
 // JS enhancement [MIG-05]: pointer/device parallax needs continuous input and physics beyond CSS; see docs/STYLESHEET_REFINEMENT_PLAN.md.
 import { Component, AfterViewInit, OnDestroy, ElementRef, Inject, ChangeDetectionStrategy, NgZone } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
+import { HERO_SOCIAL_PROFILES } from '../shared/social-profiles';
 interface ParallaxWindow extends Window {
     Parallax?: new (element: Element) => { enable(): void; disable(): void };
 }
@@ -16,6 +18,7 @@ interface ParallaxWindow extends Window {
     standalone: false
 })
 export class IndexPageComponent implements AfterViewInit, OnDestroy {
+    readonly socialProfiles = HERO_SOCIAL_PROFILES;
     preloaderVisible = true;
     private winRef: Window | undefined;
     private parallax?: { enable(): void; disable(): void };

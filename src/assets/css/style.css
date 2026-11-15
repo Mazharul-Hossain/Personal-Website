@@ -37,13 +37,19 @@ Build owner: angular.json; component-specific rules stay in components */
 @import "@angular/cdk/overlay-prebuilt.css";
 
 :root {
-  --portfolio-color-accent: #754ef9;
+  --portfolio-color-accent: #6931d9;
   --portfolio-color-surface: #fff;
-  --portfolio-color-text-muted: #6c6f7d;
-  --portfolio-color-border: #e8e8ee;
-  --portfolio-color-surface-muted: #f8f7ff;
-  --portfolio-color-text: #626a7a;
-  --portfolio-color-ink: #32333c;
+  --portfolio-color-text-muted: #536078;
+  --portfolio-color-border: #d5dce8;
+  --portfolio-color-surface-muted: #f5f6fa;
+  --portfolio-color-text: #354361;
+  --portfolio-color-ink: #111e42;
+  --portfolio-color-navy: #2b4367;
+  --portfolio-color-on-navy: #fff;
+  --portfolio-color-on-navy-muted: #e0e7f4;
+  --portfolio-color-on-navy-accent: #d2b9ff;
+  --portfolio-section-space: clamp(40px, 5vw, 64px);
+  --portfolio-heading-size: clamp(28px, 3vw, 38px);
 }
 
 /** anchor links - smooth scroll effect **/ 
@@ -128,8 +134,9 @@ h4,
 h5,
 h6 {
   font-family: "Poppins", sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--portfolio-color-ink);
+  letter-spacing: -0.035em;
   margin: 0px;
 }
 
@@ -138,7 +145,7 @@ h1 {
 }
 
 h2 {
-  font-size: 36px;
+  font-size: var(--portfolio-heading-size);
 }
 
 h3 {
@@ -199,7 +206,7 @@ p {
   display: inline-block;
   font-weight: 500;
   text-align: center;
-  white-space: nowrap;
+  white-space: normal;
   vertical-align: middle;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -208,8 +215,11 @@ p {
   border: 1px solid var(--portfolio-color-accent);
   padding: 0 40px;
   font-size: 15px;
-  line-height: 48px;
-  border-radius: 50px;
+  line-height: 1.5;
+  min-height: 48px;
+  padding-block: 12px;
+  text-decoration: none;
+  border-radius: 6px;
   color: var(--portfolio-color-surface);
   cursor: pointer;
   z-index: 5;
@@ -249,8 +259,8 @@ p {
 /*===== All Section Title Style =====*/
 .section-title .title {
   font-weight: 700;
-  font-size: 45px;
-  color: #000;
+  font-size: var(--portfolio-heading-size);
+  color: var(--portfolio-color-ink);
   padding-bottom: 20px;
 }
 

@@ -4,16 +4,11 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Styles:
 <!-- TODO<Migration>[MIG-06]: move reusable recognition facts to typed records on related content work; see docs/BUNDLE_OPTIMIZATION_PLAN.md. -->
 <section class="research-journey gray-bg pt-25 pb-30" id="experience" aria-labelledby="journey-heading">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="section-title text-center pb-30">
-                    <h2 class="title" id="journey-heading">Experience</h2>
-                </div>
-            </div>
+        <div class="section-title text-center">
+            <h2 class="title" id="journey-heading">Experience</h2>
         </div>
-
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
+        <div class="row journey-columns">
+            <div class="col-lg-7">
                 <ol class="journey-list">
                     @for (entry of entries; track entry.organization) {
                         <li>
@@ -27,7 +22,7 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Styles:
                     }
                 </ol>
             </div>
-            <aside class="col-lg-4" aria-labelledby="recognition-heading">
+            <aside class="col-lg-5" aria-labelledby="recognition-heading">
                 <div class="journey-entry mt-30">
                     <h3 id="recognition-heading">Recognition</h3>
                     <p><strong>First Place, Long Talk · 2026</strong><br>21st Annual Computer Science Research Symposium, University of Memphis</p>

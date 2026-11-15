@@ -30,6 +30,7 @@ For open content migrations such as MIG-06 and CONTENT-ARXIV, consult the [ownin
 | Research studies and figures | `src/app/home/selected-research/selected-research.component.ts` → sibling HTML | Seven paper links and figure publication facts resolve shared records; arXiv association remains CONTENT-ARXIV |
 | Employment | `src/app/home/research-journey/research-journey.component.ts` → sibling HTML | Existing typed source; verify facts against evidence |
 | Recognition, biography, skills, static introductions | Research-journey/About and section HTML | MIG-06: extract reusable structured facts when editing; narrative presentation may remain in HTML |
+| Hero/footer social profiles | [social-profiles.ts](src/app/shared/social-profiles.ts) → hero/footer component properties → templates | One typed source for the six profile labels, URLs and icons; hero keeps its existing five, footer adds Medium. |
 | Hero and section order | `src/app/index-page/index-page.component.html` | Composition is presentation, not a second structured store |
 | Writing | `src/writing-feed.ts` → `blogs.component.ts` view records → HTML | External feed is the source; do not copy articles manually |
 | Metadata | `src/app/shared/page-metadata.service.ts`, initial `src/index.html` | MIG-06: keep shared identity/profile facts consistent |

@@ -3,6 +3,8 @@ Policy: README.md#behavioral-contracts; docs/README.md
 Controller: src/app/home/research-journey/research-journey.component.ts; Template: src/app/home/research-journey/research-journey.component.html */
 .research-journey {
     scroll-margin-top: 80px;
+    padding: var(--portfolio-section-space) 0;
+    background: var(--portfolio-color-surface);
 }
 
 .journey-list {
@@ -13,7 +15,8 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Templat
 
 .journey-entry {
     /* Employment is a sequence of entries, rather than interactive service cards. */
-    padding: 24px 0;
+    padding: 20px 0;
+    margin-top: 0;
     border-top: 1px solid var(--portfolio-color-border);
 }
 
@@ -37,5 +40,38 @@ Controller: src/app/home/research-journey/research-journey.component.ts; Templat
 }
 
 aside .journey-entry p + p {
-    margin-top: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--portfolio-color-border);
+}
+
+.research-journey .section-title {
+    margin-bottom: 32px;
+}
+
+/* Recognition belongs within Experience; use the existing secondary text treatment. */
+#recognition-heading {
+    color: var(--portfolio-color-text-muted);
+}
+
+aside .journey-entry {
+    padding-top: 0;
+    border-top: 0;
+}
+
+@media (min-width: 992px) {
+    .journey-columns > aside {
+        border-left: 1px solid var(--portfolio-color-border);
+        padding-left: 32px;
+    }
+
+    .journey-columns > div {
+        padding-right: 32px;
+    }
+}
+
+@media (max-width: 991px) {
+    .journey-columns > aside {
+        margin-top: 24px;
+    }
 }

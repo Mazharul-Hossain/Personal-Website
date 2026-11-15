@@ -29,6 +29,25 @@ describe('NavFooterComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    it('keeps all hero profiles in the footer and sends the Medium icon to the external archive', () => {
+        const element = fixture.nativeElement as HTMLElement;
+        const links = Array.from(element.querySelectorAll<HTMLAnchorElement>('.footer-content ul a'));
+        expect(links.map(link => [link.getAttribute('aria-label'), link.getAttribute('href')])).toEqual([
+            ['Stack Overflow', 'https://stackoverflow.com/u/2049763/'],
+            ['GitHub', 'https://github.com/Mazharul-Hossain/'],
+            ['LeetCode', 'https://leetcode.com/hossainmazhar/'],
+            ['Google Scholar', 'https://scholar.google.com/citations?user=SGyRAu8AAAAJ'],
+            ['LinkedIn', 'https://www.linkedin.com/in/hossainmazhar/'],
+            ['Medium', 'https://medium.hmazharul.com/']
+        ]);
+        expect(element.querySelector('.lni-medium')?.closest('a')?.getAttribute('href')).toBe('https://medium.hmazharul.com/');
+        for (const link of links) {
+            expect(link.target).toBe('_blank');
+            expect(link.relList.contains('noopener')).toBeTrue();
+            expect(link.relList.contains('noreferrer')).toBeTrue();
+        }
+    });
+
     it('listens to and reads the injected browser instead of the global window', () => {
         const browser = Object.assign(new EventTarget(), { scrollY: 501 });
         const windowRef = new WindowRef('browser');

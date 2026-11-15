@@ -1,8 +1,10 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
-Template: src/app/nav-footer/nav-footer.component.html; Styles: src/app/nav-footer/nav-footer.component.css */
+Template: src/app/nav-footer/nav-footer.component.html; Styles: src/app/nav-footer/nav-footer.component.css
+Data: src/app/shared/social-profiles.ts */
 import { Component, Renderer2, ElementRef, AfterViewInit, OnDestroy, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
+import { SOCIAL_PROFILES } from '../shared/social-profiles';
 import { ScrollAnimationService } from '../shared/scroll-animation.service';
 
 @Component({
@@ -13,6 +15,7 @@ import { ScrollAnimationService } from '../shared/scroll-animation.service';
     standalone: false
 })
 export class NavFooterComponent implements AfterViewInit, OnDestroy {
+    readonly socialProfiles = SOCIAL_PROFILES;
     readonly year = new Date().getFullYear();
     private readonly unlisteners: (() => void)[] = [];
     private hideTimer?: ReturnType<typeof setTimeout>;

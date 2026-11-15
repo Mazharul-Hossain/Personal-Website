@@ -8,3 +8,139 @@ Controller: src/app/index-page/index-page.component.ts; Template: src/app/index-
         display: none;
     }
 }
+
+/* Hero layout stays local; shared palette and controls come from the loaded theme. */
+.header-content {
+    height: auto;
+    min-height: 610px;
+    margin-top: 82px;
+    padding: 44px 0 100px;
+    background: var(--portfolio-color-navy);
+}
+
+.header-content > .container {
+    position: relative;
+    z-index: 1;
+}
+
+.header-content-right .sub-title,
+.header-content-right .title {
+    color: var(--portfolio-color-on-navy);
+}
+
+.header-content-right .sub-title {
+    font-size: 20px;
+    padding-bottom: 12px;
+}
+
+.header-content-right .title {
+    font-size: clamp(38px, 4.8vw, 66px);
+    line-height: 1.04;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    padding-bottom: 18px;
+}
+
+.header-content-right .research-title {
+    font-size: clamp(18px, 1.8vw, 23px);
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.header-content-right p:not(.sub-title),
+.header-image-caption {
+    color: var(--portfolio-color-on-navy-muted);
+}
+
+.header-content-right p.research-title {
+    /* Keep the role as prominent as the name against the navy surface. */
+    color: var(--portfolio-color-on-navy);
+}
+
+.header-content-right p:not(.sub-title) {
+    padding-bottom: 20px;
+}
+
+/* A light boundary separates the purple action from navy; reuse the existing 1px button border. */
+.header-content-right .main-btn {
+    border-color: var(--portfolio-color-on-navy-muted);
+}
+
+.header-image {
+    max-width: 350px;
+}
+
+.header-image::before {
+    /* Preserve the portrait's whimsy: the head sits in front of and above the frame. */
+    content: '';
+    top: 9%;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    border: 8px solid var(--portfolio-color-on-navy-accent);
+    border-bottom: 0;
+    transform: none;
+}
+
+.header-image::after {
+    /* The lower edge crosses the portrait as in the original composition. */
+    content: '';
+    bottom: 11%;
+    height: 8px;
+    background: var(--portfolio-color-on-navy-accent);
+}
+
+.header-image img {
+    width: 100%;
+}
+
+.header-image-caption {
+    max-width: 350px;
+    margin: 12px auto 0;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.header-social {
+    left: 0;
+    bottom: 24px;
+    z-index: 1;
+}
+
+.header-social .header-social-icon::before {
+    content: none;
+}
+
+.header-social .header-social-icon ul li a {
+    color: var(--portfolio-color-on-navy);
+    border-color: var(--portfolio-color-on-navy-muted);
+}
+
+.header-content-right .main-btn:focus-visible,
+.header-social .header-social-icon ul li a:focus-visible {
+    outline-color: var(--portfolio-color-on-navy-accent);
+    box-shadow: none;
+}
+
+.header-shape {
+    /* Keep every animated shape, with restrained contrast behind the content. */
+    opacity: 0.3;
+}
+
+@media (max-width: 767px) {
+    .header-content {
+        min-height: 0;
+        padding: 40px 0 100px;
+    }
+
+    .header-image {
+        max-width: 250px;
+        margin-top: 32px;
+    }
+}
+
+@media (scripting: none) {
+    .header-content {
+        margin-top: 0;
+    }
+}
