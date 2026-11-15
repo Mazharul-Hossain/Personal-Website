@@ -1,7 +1,6 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Template: src/app/nav-footer/nav-footer.component.html; Styles: src/app/nav-footer/nav-footer.component.css */
-// TODO<Migration>[MIG-02]: migrate guarded global browser access without changing scrolling; see docs/STYLESHEET_REFINEMENT_PLAN.md.
 import { Component, Renderer2, ElementRef, AfterViewInit, OnDestroy, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { WindowRef } from '../shared/window.token';
 import { ScrollAnimationService } from '../shared/scroll-animation.service';
@@ -20,7 +19,7 @@ export class NavFooterComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         private renderer: Renderer2,
-        private el: ElementRef,
+        private el: ElementRef<HTMLElement>,
         @Inject(WindowRef) private windowRef: WindowRef,
         private scrollAnimation: ScrollAnimationService
     ) { }
@@ -32,11 +31,12 @@ export class NavFooterComponent implements AfterViewInit, OnDestroy {
             return;
         }
         // windowRef is available
-        const backToTopButton = this.el.nativeElement.querySelector('.back-to-top');
+        const backToTopButton = this.el.nativeElement.querySelector<HTMLAnchorElement>('.back-to-top');
+        if (!backToTopButton) return;
 
         // Show or hide the sticky footer button
-        this.unlisteners.push(this.renderer.listen(window, 'scroll', () => {
-            if ((window.scrollY || 0) > 400) {
+        this.unlisteners.push(this.renderer.listen(winRef, 'scroll', () => {
+            if ((winRef.scrollY || 0) > 400) {
                 clearTimeout(this.hideTimer);
                 this.hideTimer = undefined;
                 this.renderer.setStyle(backToTopButton, 'display', 'block');

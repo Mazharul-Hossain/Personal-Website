@@ -5,6 +5,8 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 
 import { NavFooterComponent } from './nav-footer.component';
 import { ScrollAnimationService } from '../shared/scroll-animation.service';
+import { ElementRef, Renderer2 } from '@angular/core';
+import { WindowRef } from '../shared/window.token';
 
 describe('NavFooterComponent', () => {
     let component: NavFooterComponent;
@@ -25,6 +27,25 @@ describe('NavFooterComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('listens to and reads the injected browser instead of the global window', () => {
+        const browser = Object.assign(new EventTarget(), { scrollY: 501 });
+        const windowRef = new WindowRef('browser');
+        spyOn(windowRef, 'nativeWindow').and.returnValue(browser as unknown as Window);
+        const renderer = jasmine.createSpyObj<Renderer2>('Renderer2', ['listen', 'setStyle']);
+        renderer.listen.and.returnValue(() => {});
+        const host = document.createElement('div');
+        host.innerHTML = '<a class="back-to-top"></a>';
+        const footer = new NavFooterComponent(renderer, new ElementRef(host), windowRef, TestBed.inject(ScrollAnimationService));
+        footer.ngAfterViewInit();
+        try {
+            expect(renderer.listen.calls.argsFor(0)[0]).toBe(browser);
+            const onScroll = renderer.listen.calls.argsFor(0)[2];
+            spyOnProperty(window, 'scrollY', 'get').and.returnValue(0);
+            onScroll(new Event('scroll'));
+            expect(renderer.setStyle).toHaveBeenCalledWith(host.firstElementChild, 'opacity', '1');
+        } finally { footer.ngOnDestroy(); }
     });
 
     it('keeps the button visible when scrolling down during its fade-out', fakeAsync(() => {

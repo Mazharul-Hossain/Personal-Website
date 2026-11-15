@@ -1,7 +1,7 @@
 /* @agent Read: .agents/skills/portfolio-angular/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Architecture and content ownership: docs/README.md */
-// TODO<Migration>[MIG-05]: preserve latest-action cancellation and calculated offsets when evaluating CSS alternatives; see docs/STYLESHEET_REFINEMENT_PLAN.md.
+// JS enhancement [MIG-05]: coordinate calculated offsets, explicit duration and latest-action cancellation across navigation; see docs/STYLESHEET_REFINEMENT_PLAN.md.
 import { Injectable } from '@angular/core';
 import { WindowRef } from './window.token';
 

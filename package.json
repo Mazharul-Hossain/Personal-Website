@@ -16,6 +16,7 @@
     "test:server": "node --test src/server.test.mjs",
     "test:deployment": "node --test scripts/verify-deployment.test.mjs",
     "test:browser-helper": "node --test tests/service-worker/chrome.test.mjs",
+    "test:presentation": "node --test tests/service-worker/presentation.test.mjs",
     "verify:deployment": "node scripts/verify-deployment.mjs",
     "check:service-worker": "node scripts/check-service-worker.mjs",
     "test:service-worker": "node --test --test-concurrency=1 tests/service-worker/chrome.test.mjs tests/service-worker/fixture-server.test.mjs tests/service-worker/service-worker.test.mjs",

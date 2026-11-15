@@ -1,3 +1,10 @@
 /* @agent Read: .agents/skills/portfolio-design/SKILL.md
 Policy: README.md#behavioral-contracts; docs/README.md
 Controller: src/app/index-page/index-page.component.ts; Template: src/app/index-page/index-page.component.html */
+
+/* The preloader is a JS enhancement; never cover the prerendered homepage without scripting. */
+@media (scripting: none) {
+    .preloader {
+        display: none;
+    }
+}
