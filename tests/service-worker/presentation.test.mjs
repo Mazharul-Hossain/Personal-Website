@@ -70,7 +70,7 @@ for (const width of [360, 1280]) {
             }
             await page.go('/home/', false);
             assert.equal(await page.evaluate(visible('.preloader')), false, 'No-JS Home must not be covered by the preloader');
-            assert.equal(await page.evaluate('document.querySelectorAll(".research-figure img").length'), 4);
+            assert.equal(await page.evaluate('document.querySelectorAll(".research-figure img").length'), 5);
             const screenshot = await page.send('Page.captureScreenshot', { format: 'png' });
             await writeFile(join(directory, `no-js-home-${width}.png`), Buffer.from(screenshot.data, 'base64'));
             result.passed = true;

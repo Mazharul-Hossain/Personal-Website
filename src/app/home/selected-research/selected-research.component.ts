@@ -15,6 +15,7 @@ const upigan = getPublication("upigan-2023");
 
 interface ResearchStudy {
     title: string;
+    layout?: 'horizontal';
     problem: string;
     method: string;
     evidence: string;
@@ -117,6 +118,26 @@ export class SelectedResearchComponent implements OnDestroy {
             ]
         },
         {
+            title: 'Continuous Pose Refinement for Cryo-EM',
+            problem: 'Cryo-EM reconstruction depends on estimating the orientations and image-plane shifts of noisy particle images relative to a reference volume.',
+            method: 'Continuous in-plane polishing jointly refines two image-plane shifts and one rotation after discrete matching. Cartesian pose refinement extends this to five parameters—two shifts and three rotational degrees of freedom—using Levenberg–Marquardt optimization. A dedicated local 3D workflow refines existing particle poses against saved reference maps, with optional Gaussian shift and Matrix–Fisher rotation priors to regularize translational and rotational updates.',
+            evidence: 'Public source code and numerical and workflow regression tests document these research-software contributions. Experimental reconstruction-quality results are not reported here.',
+            figures: [
+                {
+                    src: 'assets/images/work/simple-pose-refinement.svg',
+                    width: 720,
+                    height: 440,
+                    alt: 'Conceptual SIMPLE workflow with a real human 80S ribosome density volume, EMDB EMD-2938, illustrating the reference for rotation and shift refinement',
+                    caption: 'Conceptual illustration of continuous pose refinement in SIMPLE; not an experimental result from this work. Example reference volume: human 80S ribosome, EMDB EMD-2938, Khatter et al. (2015), CC0. Source: https://www.ebi.ac.uk/emdb/EMD-2938.'
+                }
+            ],
+            links: [
+                { label: 'SIMPLE software', href: 'https://github.com/hael/SIMPLE' },
+                { label: 'Local refinement code', href: 'https://github.com/hael/SIMPLE/commit/0c4801f6193c605e73c9c3bd82b4d78b91ad7b65' },
+                { label: 'Rotation and shift priors', href: 'https://github.com/hael/SIMPLE/commit/f68dab7b0db3b62f2533cfb3f561292418b0c288' }
+            ]
+        },
+        {
             title: 'Physics-Informed Reconstruction for 3D Microscopy',
             problem: 'Reconstructing 3D structured-illumination microscopy images from noisy measurements requires both fine detail and fidelity to how the microscope forms an image.',
             method: 'USR combines a learned image prior with repeated corrections based on the microscope point spread function. UPIGAN extends this physics-informed, unrolled approach with adversarial learning to improve reconstruction.',
@@ -137,6 +158,7 @@ export class SelectedResearchComponent implements OnDestroy {
         },
         {
             title: 'Map901: Indoor Hazard Mapping for Public Safety',
+            layout: 'horizontal',
             problem: 'Emergency responders need more than floor plans: they need to know where safety-critical objects are inside complex buildings.',
             method: 'The Map901 team combined backpack LiDAR and 360° video, segmented safety objects in images, transferred their labels into 3D point clouds, and stitched and georeferenced the building scans.',
             evidence: 'The studies surveyed seven Memphis buildings totaling 1.86 million square feet and addressed 30 classes of public-safety objects. The expanded study used 2,964 labeled images; its 3D maps still required manual cleanup of some labels.',

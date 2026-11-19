@@ -105,10 +105,28 @@ describe('SelectedResearchComponent', () => {
         expect(container.querySelector('.cdk-overlay-pane')).toBeNull();
     });
 
-    it('renders three studies with image arrays', () => {
+    it('inserts SIMPLE before microscopy while retaining all existing studies', () => {
         const element: HTMLElement = fixture.nativeElement;
-        expect(element.querySelectorAll('.research-study').length).toBe(3);
-        expect(element.querySelectorAll('.research-figure img').length).toBe(4);
+        expect(Array.from(element.querySelectorAll('.research-study h3'), heading => heading.textContent?.trim())).toEqual([
+            'Hyperspectral Anomaly Detection Across Sensors',
+            'Continuous Pose Refinement for Cryo-EM',
+            'Physics-Informed Reconstruction for 3D Microscopy',
+            'Map901: Indoor Hazard Mapping for Public Safety'
+        ]);
+        expect(element.querySelectorAll('.research-figure img').length).toBe(5);
+    });
+
+    it('presents SIMPLE as research software with an illustrative figure and public implementation evidence', () => {
+        const study = fixture.componentInstance.studies.find(item => item.title === 'Continuous Pose Refinement for Cryo-EM');
+        expect(study).toBeDefined();
+        if (!study) return;
+        expect(study.figures.length).toBe(1);
+        expect(study.figures[0].src).toBe('assets/images/work/simple-pose-refinement.svg');
+        expect(study.figures[0].caption).toContain('Conceptual illustration');
+        expect(study.figures[0].caption).toContain('not an experimental result');
+        expect(study.evidence).toContain('Public source code');
+        expect(study.links.map(link => link.href)).toContain('https://github.com/hael/SIMPLE/commit/0c4801f6193c605e73c9c3bd82b4d78b91ad7b65');
+        expect(study.links.every(link => link.publicationId === undefined)).toBeTrue();
     });
 
     it("offers WebP previews while retaining original PNG fallbacks and alternative text", () => {
@@ -126,9 +144,10 @@ describe('SelectedResearchComponent', () => {
 
     it("preserves all research resources and complete figure attribution", () => {
         const element: HTMLElement = fixture.nativeElement;
-        expect(fixture.componentInstance.studies.flatMap(study => study.links.map(link => ({ label: link.label, url: link.href }))))
+        const originalStudies = fixture.componentInstance.studies.filter(study => study.title !== 'Continuous Pose Refinement for Cryo-EM');
+        expect(originalStudies.flatMap(study => study.links.map(link => ({ label: link.label, url: link.href }))))
             .toEqual([...RESEARCH_LINK_BASELINE]);
-        expect(Array.from(element.querySelectorAll("figcaption")).map(caption => caption.textContent?.trim()))
+        expect(originalStudies.flatMap(study => study.figures.map(figure => figure.caption)))
             .toEqual([...RESEARCH_CAPTION_BASELINE]);
         expect(element.querySelectorAll("a[data-publication-id]").length).toBe(7);
         expect(element.querySelector('a[href="https://arxiv.org/abs/2408.07114"]')?.hasAttribute("data-publication-id")).toBeFalse();

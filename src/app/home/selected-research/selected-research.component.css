@@ -23,8 +23,21 @@ Shared palette, buttons and focus: src/assets/css/style.css */
     border: 1px solid var(--portfolio-color-border);
 }
 
-.research-study.featured {
+.research-study.featured,
+.research-study.horizontal {
     grid-column: 1 / -1;
+}
+
+.research-study.horizontal {
+    /* The final Map901 row spans the grid; keep its figure beside readable copy. */
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+
+.research-study.horizontal .research-figures {
+    align-content: center;
+    border-bottom: 0;
+    border-right: 1px solid var(--portfolio-color-border);
 }
 
 .research-figures {
@@ -180,8 +193,18 @@ Shared palette, buttons and focus: src/assets/css/style.css */
         grid-template-columns: 1fr;
     }
 
-    .research-study.featured {
+    .research-study.featured,
+    .research-study.horizontal {
         grid-column: auto;
+    }
+
+    .research-study.horizontal {
+        grid-template-columns: 1fr;
+    }
+
+    .research-study.horizontal .research-figures {
+        border-right: 0;
+        border-bottom: 1px solid var(--portfolio-color-border);
     }
 
     .research-figures.has-multiple-figures {

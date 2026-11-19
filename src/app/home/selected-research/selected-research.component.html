@@ -24,7 +24,7 @@ Controller: src/app/home/selected-research/selected-research.component.ts; Style
 
         <div class="research-study-grid">
             @for (study of studies; track study.title; let first = $first) {
-                <article class="research-study" [class.featured]="first">
+                <article class="research-study" [class.featured]="first" [class.horizontal]="study.layout === 'horizontal'">
                     <div class="research-figures" [class.has-multiple-figures]="study.figures.length > 1">
                         @for (figure of study.figures; track figure.src || figure.placeholder) {
                             @if (figure.src) {

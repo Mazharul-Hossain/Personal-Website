@@ -12,13 +12,16 @@ describe('Selected Research image previews', () => {
             it(`opens every image with attribution and contained geometry on ${route} at ${width}px`, () => {
                 cy.viewport(width, 844);
                 cy.visit(route);
-                cy.get('.research-image-preview').should('have.length', 4).each($opener => {
+                cy.get('.research-image-preview').should('have.length', 5).each($opener => {
                     const image = $opener.find('img')[0];
                     const caption = $opener.parent().find('figcaption').text();
                     cy.wrap($opener).click();
                     cy.get('[role="dialog"]').should('be.visible').and('have.attr', 'aria-modal', 'true');
                     cy.get('.popup-image').should('have.attr', 'src', image.getAttribute('src'))
                         .and('have.attr', 'alt', image.getAttribute('alt'));
+                    cy.get('.popup-image').should($image => {
+                        expect(($image[0] as HTMLImageElement).naturalWidth, 'preview asset loads').to.be.greaterThan(0);
+                    });
                     cy.get('[role="dialog"] figcaption').should('have.text', caption);
                     cy.get('.popup-close').should('have.focus').and('be.visible');
                     cy.document().should(doc => expect(doc.documentElement.scrollWidth, 'document width while preview is open').to.be.at.most(doc.documentElement.clientWidth + 1));
