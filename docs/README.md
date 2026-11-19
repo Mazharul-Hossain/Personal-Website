@@ -28,6 +28,7 @@ Do not restate dependency versions in prose. Match Node to the installed Angular
 
 | Document | Status / scope |
 | --- | --- |
+| [SIMPLE_RESEARCH_CARD_PLAN.md](SIMPLE_RESEARCH_CARD_PLAN.md) | **Complete and user-reviewed; final code/style review and local checks passed.** SIMPLE software evidence, attributed reference-volume figure and approved four-card responsive arrangement; preserves existing studies. No deployment performed. |
 | [PLAN_TEMPLATE.md](PLAN_TEMPLATE.md) | Reusable implementation-plan skeleton and mandatory refactoring/migration pre-test gate. A template, not an active project plan. |
 | [PERFORMANCE_CLOSEOUT_REPORT.md](PERFORMANCE_CLOSEOUT_REPORT.md) | Closed performance investigation and Lighthouse concern. Preserves measurement limits; no score target or further score-driven work. |
 | [NETLIFY_ROLLOVER_CHECK.md](NETLIFY_ROLLOVER_CHECK.md) | Source-identified A/B journey record and historical procedure. Retained-tab navigation succeeded; deployed chunk-failure/reload mechanism remains unverified. Test branch/worktree were cleaned up. |

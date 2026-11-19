@@ -27,7 +27,7 @@ For open content migrations such as MIG-06 and CONTENT-ARXIV, consult the [ownin
 | --- | --- | --- |
 | Shared publication facts, resource URLs and ordered selected IDs | [publication-core.ts](src/app/publications/publication-core.ts) | One authority for all 14 records; selected component resolves IDs and derives its view |
 | Full bibliography/thesis citation details and category labels | [publication-details.ts](src/app/publications/publication-details.ts) → full component → HTML | Runtime details are imported only by the lazy bibliography feature |
-| Research studies and figures | `src/app/home/selected-research/selected-research.component.ts` → sibling HTML | Seven paper links and figure publication facts resolve shared records; arXiv association remains CONTENT-ARXIV |
+| Research studies and figures | `src/app/home/selected-research/selected-research.component.ts` → sibling HTML | Seven paper links and figure publication facts resolve shared records; SIMPLE software evidence and its conceptual SVG with an attributed reference-volume image remain distinct from publications/results; arXiv association remains CONTENT-ARXIV |
 | Employment | `src/app/home/research-journey/research-journey.component.ts` → sibling HTML | Existing typed source; verify facts against evidence |
 | Recognition, biography, skills, static introductions | Research-journey/About and section HTML | MIG-06: extract reusable structured facts when editing; narrative presentation may remain in HTML |
 | Hero/footer social profiles | [social-profiles.ts](src/app/shared/social-profiles.ts) → hero/footer component properties → templates | One typed source for the six profile labels, URLs and icons; hero keeps its existing five, footer adds Medium. |
